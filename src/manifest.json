@@ -15,8 +15,9 @@
     },
     {
       "name": "Generate Button",
-      "identifier": "sketch-webview-kit.my-command2",
-      "script": "./generateButtonCommand.js"
+      "identifier": "sketch-webview-kit.my-command3",
+      "script": "./generateButtonCommand.js",
+      "shortcut" : "shift control z"
     }
   ],
   "menu": {
@@ -26,7 +27,7 @@
       "-",
       "sketch-webview-kit.my-command2",
       "-",
-      "sketch-webview-kit.Generate Button"
+      "sketch-webview-kit.my-command3"
     ]
   }
 }
