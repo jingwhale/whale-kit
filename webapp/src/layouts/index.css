@@ -2,10 +2,12 @@
 .normal {
   font-family: Georgia, sans-serif;
   text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif,
+  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 .title {
-  font-size: 2.5rem;
+  font-size: 14px;
   font-weight: normal;
   letter-spacing: -1px;
   background: darkslateblue;

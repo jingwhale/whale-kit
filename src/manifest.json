@@ -9,9 +9,10 @@
       "script": "./my-command.js"
     },
     {
-      "name": "my-command2",
+      "name": "Make Layout",
       "identifier": "sketch-webview-kit.my-command2",
-      "script": "./my-command2.js"
+      "script": "./makeLayoutCommand.js",
+      "shortcut" : "shift control a"
     },
     {
       "name": "Generate Button",
