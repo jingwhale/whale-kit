@@ -12,14 +12,21 @@
       "name": "my-command2",
       "identifier": "sketch-webview-kit.my-command2",
       "script": "./my-command2.js"
+    },
+    {
+      "name": "Generate Button",
+      "identifier": "sketch-webview-kit.my-command2",
+      "script": "./generateButtonCommand.js"
     }
   ],
   "menu": {
-    "title": "sketch-webview-kit",
+    "title": "Whale",
     "items": [
       "sketch-webview-kit.my-command",
       "-",
-      "sketch-webview-kit.my-command2"
+      "sketch-webview-kit.my-command2",
+      "-",
+      "sketch-webview-kit.Generate Button"
     ]
   }
 }
