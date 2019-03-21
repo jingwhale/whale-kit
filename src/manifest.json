@@ -1,0 +1,25 @@
+{
+  "compatibleVersion": 3,
+  "bundleVersion": 1,
+  "icon": "icon.png",
+  "commands": [
+    {
+      "name": "my-command",
+      "identifier": "sketch-webview-kit.my-command",
+      "script": "./my-command.js"
+    },
+    {
+      "name": "my-command2",
+      "identifier": "sketch-webview-kit.my-command2",
+      "script": "./my-command2.js"
+    }
+  ],
+  "menu": {
+    "title": "sketch-webview-kit",
+    "items": [
+      "sketch-webview-kit.my-command",
+      "-",
+      "sketch-webview-kit.my-command2"
+    ]
+  }
+}
