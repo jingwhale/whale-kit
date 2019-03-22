@@ -26,10 +26,10 @@ if(!buttonRect){//选择一个矩形
         width: 469,
         height: 282,
         title:"Make Layout",
-        resizable:true,
+        resizable:false,
         minimizable:false,
         maximizable:false,
-        closable:false
+        closable:true
     })
     win.on('closed', () => {
         win = null

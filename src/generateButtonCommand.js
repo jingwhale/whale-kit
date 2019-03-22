@@ -1,6 +1,6 @@
 import sketch from 'sketch'
 import Sketch from 'sketch/dom'
-var  Group = Sketch.Group;
+var Group = Sketch.Group;
 var Text = Sketch.Text;
 var Document = Sketch.Document;
 var document = Document.getSelectedDocument();
