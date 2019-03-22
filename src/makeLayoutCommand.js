@@ -33,11 +33,13 @@ if(!buttonRect){//选择一个矩形
     })
     win.on('closed', () => {
         win = null
-    })
+    });
 
     // Load a localhost URL
-    const Panel = `http://localhost:8000/pagelayout.html#${Math.random()}`;
-    win.loadURL(Panel)
+    // const Panel = `http://localhost:8000/pagelayout.html#${Math.random()}`;
+    // win.loadURL(Panel);
+
+    win.loadURL('http://whalexplorer.coding.me/whale-kit/pagelayout.html');
 
 
     const dist = (data,type) => {
@@ -75,8 +77,8 @@ if(!buttonRect){//选择一个矩形
 
         if(data.type==1){
             var frame = {
-                x:  (coordinate.y-1)*(data.frameData.width+data.rowMargin),
-                y:  (coordinate.x-1)*(data.frameData.height+data.columnMargin),
+                x:  (coordinate.y-1)*(data.frameData.width+data.columnMargin),
+                y:  (coordinate.x-1)*(data.frameData.height+data.rowMargin),
                 width: data.frameData.width,
                 height: data.frameData.height
             };

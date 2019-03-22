@@ -4,7 +4,7 @@
   "icon": "icon.png",
   "commands": [
     {
-      "name": "my-command",
+      "name": "Efficient design spec",
       "identifier": "sketch-webview-kit.my-command",
       "script": "./my-command.js"
     },

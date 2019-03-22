@@ -2,7 +2,7 @@
 // ref: https://umijs.org/config/
 export default {
   treeShaking: true,
-  outputPath:'../assets/dist',
+  outputPath:'../src/dist',
   exportStatic: {
     htmlSuffix: true,
     dynamicRoot: true
