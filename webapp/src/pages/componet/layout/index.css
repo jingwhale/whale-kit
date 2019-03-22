@@ -1,5 +1,5 @@
 .body{
-  padding: 40px 0;
+  padding: 10px 0 40px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif,
   "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
@@ -18,7 +18,7 @@
 .name{
   color: #fff;
   margin-right: 5px;
-  width: 110px;
+  width: 95px;
   text-align: right;
   display: inline-block;
 }
@@ -29,7 +29,7 @@
 
 .buttons{
   margin-top: 30px;
-  margin-left: 239px;
+  margin-left: 166px;
 }
 
 .coordinate{
@@ -38,5 +38,39 @@
 
 .coordinateAnt{
   color: #fff!important;
-  margin-left: 283px;
+  margin-left: 217px;
+}
+
+.tab{
+  color: #fff;
+}
+
+.radioName{
+  display: inline-block;
+  width: 70px;
+  text-align: left;
+}
+
+.radioStyle{
+  color: #fff;
+  display: block;
+  height: 30px;
+  lineHeight: 30px;
+  margin-bottom: 20px;
+}
+
+.tabContent{
+  height: 100px;
+  margin-left: -40px;
+}
+
+.tabContent1{
+  height: 100px;
+  margin-left: 60px;
+}
+
+.line{
+  display: inline-block;
+  width: 22px;
+  text-align: center;
 }

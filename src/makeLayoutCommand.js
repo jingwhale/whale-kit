@@ -23,10 +23,10 @@ if(!buttonRect){//选择一个矩形
     sketch.UI.message("请选择一个矩形！")
 }else{
     let win = new BrowserWindow({
-        width: 533,
-        height: 303 ,
+        width: 469,
+        height: 282,
         title:"Make Layout",
-        resizable:false,
+        resizable:true,
         minimizable:false,
         maximizable:false,
         closable:false
@@ -42,11 +42,28 @@ if(!buttonRect){//选择一个矩形
 
     const dist = (data,type) => {
         var dist = "";
-        if(type=="height"){
-            dist = (buttonRect.frame[type]-(data.rows-1)*data.rowMargin)/data.rows;
+        if(data.type == 1){
+            if(type=="height"){
+                dist = (buttonRect.frame[type]-(data.rows-1)*data.rowMargin)/data.rows;
+            }else{
+                dist = (buttonRect.frame[type]-(data.columns-1)*data.columnMargin)/data.columns;
+            }
         }else{
-            dist = (buttonRect.frame[type]-(data.columns-1)*data.columnMargin)/data.columns;
+            if(type=="height"){
+                if(data.proporData.type == 1){
+                    dist = buttonRect.frame[type]/(data.proporData.row1+data.proporData.row2);
+                }else{
+                    dist = buttonRect.frame[type];
+                }
+            }else{
+                if(data.proporData.type == 1){
+                    dist = buttonRect.frame[type];
+                }else{
+                    dist = buttonRect.frame[type]/(data.proporData.column1+data.proporData.column2);
+                }
+            }
         }
+
         return dist;
     }
 
@@ -56,12 +73,32 @@ if(!buttonRect){//选择一个矩形
             y:  (index%data.columns == 0) ? data.columns : index%data.columns
         };
 
-        var frame = {
-            x:  (coordinate.y-1)*(data.frameData.width+data.rowMargin),
-            y:  (coordinate.x-1)*(data.frameData.height+data.columnMargin),
-            width: data.frameData.width,
-            height: data.frameData.height
-        };
+        if(data.type==1){
+            var frame = {
+                x:  (coordinate.y-1)*(data.frameData.width+data.rowMargin),
+                y:  (coordinate.x-1)*(data.frameData.height+data.columnMargin),
+                width: data.frameData.width,
+                height: data.frameData.height
+            };
+        }else{
+            const getCount = (index,type) => {
+                var count = 0;
+                for(var i=index;i>0;i--){
+                    if(type=="x"){
+                        count += data.proporData['row'+coordinate.x];
+                    }else{
+                        count += data.proporData['column'+coordinate.y];
+                    }
+                }
+                return count;
+            };
+            var frame = {
+                x:  data.frameData.width*(getCount(coordinate.y-1,"x")),
+                y:  data.frameData.height*(getCount(coordinate.x-1,"y")),
+                width: data.frameData.width*(data.proporData['column'+coordinate.y]),
+                height: data.frameData.height*(data.proporData['row'+coordinate.x])
+            };
+        }
 
         //Create Body(Group)
         const groupitem = new Group({
@@ -138,7 +175,7 @@ if(!buttonRect){//选择一个矩形
 
         for (var i=1;i<(data.rows*data.columns+1);i++){
             createGrid(data,i,group);
-        };
+        }
     }
 
     const closeWin = () =>{
