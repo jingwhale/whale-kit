@@ -1,10 +1,10 @@
-# sketch-webview-kit
+# Whale-kit
 
 _This plugin was created using `skpm`. For a detailed explanation on how things work, checkout the [Whale-kit Readme](https://www.yuque.com/jingwhale/blog/hdvuwz)._
 
 
 ## Demo
-![examples-styleguide-palette](https://cdn.nlark.com/yuque/0/2019/png/120638/1553266808879-3b826d17-7383-4b61-831c-0ebc668fe268.png?x-oss-process=image/resize,w_760)
+![Whale-kit](https://cdn.nlark.com/yuque/0/2019/png/120638/1553266808879-3b826d17-7383-4b61-831c-0ebc668fe268.png)
 
 ## Usage
 
