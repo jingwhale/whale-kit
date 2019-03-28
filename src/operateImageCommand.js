@@ -1,6 +1,5 @@
 import sketch from 'sketch'
 import Sketch from 'sketch/dom'
-import BrowserWindow from 'sketch-module-web-view'
 
 var Group = Sketch.Group;
 var Text = Sketch.Text;

@@ -31,6 +31,12 @@
       "identifier": "sketch-webview-kit.my-command5",
       "script": "./flowPageCommand.js",
       "shortcut" : "command option shift p"
+    },
+    {
+      "name": "Screen shot",
+      "identifier": "sketch-webview-kit.my-command6",
+      "script": "./screenshotCommand.js",
+      "shortcut" : "command option shift j"
     }
   ],
   "menu": {
@@ -43,7 +49,8 @@
       "sketch-webview-kit.my-command5",
       "-",
       "sketch-webview-kit.my-command3",
-      "sketch-webview-kit.my-command4"
+      "sketch-webview-kit.my-command4",
+      "sketch-webview-kit.my-command6"
     ]
   }
 }
