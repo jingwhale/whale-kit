@@ -1,0 +1,72 @@
+.body{
+  padding: 10px 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif,
+  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  display: inline-block;
+}
+
+.url{
+  width: 360px;
+  padding-top: 10px;
+}
+.itemName{
+  display: inline-block;
+  text-align: right;
+  margin-right: 20px;
+  width: 100px;
+  font-weight: bold;
+}
+.radioName{
+  display: inline-block;
+  text-align: right;
+  margin-right: 20px;
+  width: 53px;
+  font-weight: bold;
+}
+.urlInputCss{
+  width: 180px;
+}
+.line{
+  height: 1px;
+  background-color: #999;
+  width: 100%;
+  margin: 20px 0;
+}
+.part{
+}
+.checkbox{
+  margin-right: 6px;
+}
+.partTips{
+  display: inline-block;
+  width: 180px;
+  text-align: left;
+}
+.partPannel{
+  text-align: left;
+  margin-left: 53px;
+  margin-top: 20px;
+}
+.radioStyle{
+  display: block;
+  height: 40px;
+  lineHeight: 40px
+}
+.buttons{
+  margin-top: 30px;
+  margin-left: 124px;
+}
+.button{
+  margin-right: 20px;
+}
+.rect{
+  border: 1px solid #999;
+}
+.partIdTips{
+  margin-left: 98px;
+  color: rgba(0, 0, 0, 0.25);
+}
+.partIdTipsLight{
+  margin-left: 98px;
+  color: rgba(0, 0, 0, 0.65);
+}
