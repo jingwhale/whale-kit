@@ -3,6 +3,7 @@ import Sketch from 'sketch/dom'
 import BrowserWindow from "sketch-module-web-view";
 
 var Image = Sketch.Image;
+var Text = Sketch.Text;
 
 var Document = Sketch.Document;
 
@@ -14,12 +15,30 @@ var selection = document.selectedLayers;
 
 var artboardRect = "";
 
+var fontSize = 28;
+
+var textLinkFontSize = 12;
+
+var textLinkDist = 16;
+
+var textDistImage = 32;
+
+var textFixDist = 38;
+
+var textReviseWidth = 112;
+
 selection.forEach(layer => (artboardRect=layer));
 
 const getImageFrame = (imageSize) =>{
-    var imageFrame = {
+    var textFrame = {
         x:0,
         y:(artboardRect.frame.width > 834) ? 60:20,
+        width:100,
+        height: fontSize
+    };
+    var imageFrame = {
+        x:0,
+        y:(textFrame.y+textDistImage+fontSize),
         width: imageSize.width,
         height: imageSize.height
     };
@@ -34,28 +53,66 @@ const getImageFrame = (imageSize) =>{
 
     imageFrame.x = (artboardRect.frame.width-imageFrame.width)/2;
 
-    if(imageSize.height>artboardRect.frame.height){
-        artboardRect.frame.height = imageSize.height + imageFrame.y*2
-    }
+    artboardRect.frame.height = imageSize.height + textFrame.y*2+textDistImage + fontSize;
 
-    insertImageToArtbord(imageSize,imageFrame);
+    textFrame.x = imageFrame.x + textFixDist;
+
+    insertImageToArtbord(imageSize,imageFrame,textFrame);
 };
 
-const insertImageToArtbord = (imageSize,imageFrame) =>{
+const insertImageToArtbord = (imageSize,imageFrame,textFrame) =>{
+    //Create screenshot
     var imageLayer = new Image({
         image: {
             base64: imageSize.base64
         },
+        name:"screenshot",
         frame: imageFrame
     });
 
     imageLayer.parent = artboardRect || page;
+
+    //Create 修订记录
+    const text = new Text({
+        text: imageSize.artBoardName,
+        alignment: Text.Alignment.left,
+        frame: textFrame,
+        parent: artboardRect || page,
+        name: imageSize.artBoardName
+    });
+
+    text.style.fontSize = textFrame.height;
+    text.style.lineHeight = textFrame.height;
+    text.style.fontWeight = "bold";
+
+    //Create 修订记录 link
+    const textLink = new Text({
+        text: imageSize.url,
+        alignment: Text.Alignment.left,
+        frame: {
+            x:textFrame.x+textReviseWidth+textLinkDist,
+            y:textFrame.y+(fontSize-textLinkFontSize),
+            width: 300,
+            height: textLinkFontSize
+        },
+        parent: artboardRect || page,
+        name: "link"
+    });
+
+    textLink.style.fontSize = textLinkFontSize;
+    textLink.style.lineHeight = textLinkFontSize;
+
+    var newTextLinkFrame = textLink.frame;
+    textLink.frame.x = imageFrame.x+imageFrame.width-newTextLinkFrame.width;
+
+    //name artBoard
+    artboardRect.name = imageSize.artBoardName;
 };
 
 if(artboardRect && artboardRect.type=="Artboard"){
     let win = new BrowserWindow({
         width: 408,
-        height: 323,
+        height: 356,
         title:"Web Screen Shot",
         resizable:false,
         minimizable:false,

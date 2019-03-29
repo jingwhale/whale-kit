@@ -13,13 +13,13 @@
   display: inline-block;
   text-align: right;
   margin-right: 20px;
-  width: 100px;
+  width: 112px;
   font-weight: bold;
 }
 .radioName{
   display: inline-block;
   text-align: right;
-  margin-right: 20px;
+  margin-right: 26px;
   width: 53px;
   font-weight: bold;
 }
@@ -54,7 +54,7 @@
 }
 .buttons{
   margin-top: 30px;
-  margin-left: 124px;
+  margin-left: 139px;
 }
 .button{
   margin-right: 20px;
@@ -63,7 +63,7 @@
   border: 1px solid #999;
 }
 .partIdTips{
-  margin-left: 98px;
+  margin-left: 104px;
   color: rgba(0, 0, 0, 0.25);
 }
 .partIdTipsLight{

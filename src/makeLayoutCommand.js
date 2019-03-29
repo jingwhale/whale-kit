@@ -20,7 +20,7 @@ selection.forEach(layer => (buttonRect=layer))
 
 
 if(!buttonRect){//选择一个矩形
-    sketch.UI.message("请选择一个矩形！")
+    sketch.UI.message("Please select a Rectangle!")
 }else{
     let win = new BrowserWindow({
         width: 469,

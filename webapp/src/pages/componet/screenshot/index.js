@@ -11,7 +11,8 @@ export default class ScreenShotUI extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      type: 1,//1,Equal layout;2,Proportional layout
+      artBoardName:"修订记录",
+      artBoardNamePlaceholder: "修订记录",
       size: "small",
       button:"Insert Page",
       buttonDisabled: true,
@@ -36,13 +37,26 @@ export default class ScreenShotUI extends PureComponent {
       }
     };
   };
+
   urlChange = (e) => {
     this.setState({
       url: e.target.value
     });
+
+    this.validatorUrl(e);
   };
 
-  urlOnblur = (e) => {
+  artBoardNameChange = (e) => {
+    this.setState({
+      artBoardName: e.target.value
+    });
+
+    if(!e.target.value){
+      message.error('Please fill in ArtBoard Name, it defaults to "修订记录"!',2);
+    }
+  };
+
+  validatorUrl = (e) => {
     if(e.target.value){
       var validatorurl = validator.isURL(e.target.value);
       console.log(validatorurl);
@@ -112,6 +126,7 @@ export default class ScreenShotUI extends PureComponent {
   getImageData = () =>{
     var params = {
       appkey: APPKEY,
+      artBoardName: this.state.artBoardName || "修订记录",
       url: this.state.url,
       isPart: this.state.isPart,
       partType: this.state.partType,//1，自定义类型；其他为字符串定义的类型：githubcommits
@@ -120,17 +135,22 @@ export default class ScreenShotUI extends PureComponent {
     var that = this;
     axios.post('http://127.0.0.1:7001/service/screenshot',params)
       .then(function (response) {
-        console.log(response.data.data);
-        if(response.data.data.base64){
+        var backData = response.data.data;
+        console.log(backData);
+        if(backData.base64){
+          backData.url = that.state.url;
+          backData.artBoardName = that.state.artBoardName;
+          console.log(backData);
           that.setState({
             buttonDisabled:false,
             spinning:false
           });
-          window.postMessage('fromwebview', response.data.data);
+          window.postMessage('fromwebview', backData);
         }
       })
       .catch(function (error) {
         console.log(error);
+        message.error('Please try again!',1);
         that.setState({
           buttonDisabled:false,
           spinning:false
@@ -152,7 +172,7 @@ export default class ScreenShotUI extends PureComponent {
   };
 
   render() {
-    var  { size, button, cancel, url, urlPlaceholder, partId, partIdPlaceholder, partIdDisabled, radioDisabled, partTypeDefalt, dropdownDisabled, buttonDisabled, checkboxDisabled, isPart, spinning} = this.state;
+    var  { size, button, cancel, url, urlPlaceholder, partId, partIdPlaceholder, partIdDisabled, radioDisabled, partTypeDefalt, dropdownDisabled, buttonDisabled, checkboxDisabled, isPart, spinning, artBoardName, artBoardNamePlaceholder} = this.state;
     const menu = (
       <Menu onClick={this.handleMenuClick}>
         <Menu.Item key="1" size={size}><Icon type="github" />{partTypeDefalt.githubcommits.name}</Menu.Item>
@@ -162,7 +182,10 @@ export default class ScreenShotUI extends PureComponent {
       <Spin spinning={spinning} tip="In the screenshot, it takes some time...">
       <div className={styles.body}>
           <div className={styles.url}>
-              <span className={styles.itemName}>Page Url:</span><Input size={size} className={styles.urlInputCss} value={url} onChange={this.urlChange} placeholder={urlPlaceholder} onBlur={this.urlOnblur}/>
+            <span className={styles.itemName}>ArtBoard Name:</span><Input size={size} className={styles.urlInputCss} value={artBoardName} onChange={this.artBoardNameChange} placeholder={artBoardNamePlaceholder}/>
+          </div>
+          <div className={styles.url}>
+              <span className={styles.itemName}>Page Url:</span><Input size={size} className={styles.urlInputCss} value={url} onChange={this.urlChange} placeholder={urlPlaceholder}/>
           </div>
           <div className={styles.line}></div>
           <div className={styles.part}>

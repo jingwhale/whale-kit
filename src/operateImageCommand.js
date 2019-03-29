@@ -38,7 +38,7 @@ const data = {
 };
 
 if(!buttonRect){//选择一个矩形
-    sketch.UI.message("请选择一个矩形！")
+    sketch.UI.message("Please select a Rectangle！")
 }else{
     const doImageFrame = (type) => {
         var configData = data[type];
