@@ -118,7 +118,7 @@ if(artboardRect && artboardRect.type=="Artboard"){
         minimizable:false,
         maximizable:false,
         closable:true
-    })
+    });
     win.on('closed', () => {
         win = null
     });
