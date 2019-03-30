@@ -22,10 +22,10 @@ export default class ScreenShotUI extends PureComponent {
       isPart:false,
       radioType: "",
       partId:"",
-      partIdPlaceholder: ".commits-listing",
+      partIdPlaceholder: "commits-listing",
       partIdDisabled: true,
       radioDisabled: true,
-      partType: "githubcommits",
+      partType: "githubcommits",//1为自定义；其他为自定义字符串
       dropdownDisabled: true,
       checkboxDisabled: true,
       spinning: false,
@@ -82,8 +82,11 @@ export default class ScreenShotUI extends PureComponent {
   };
 
   partIdChange = (e) => {
-    console.log(e.target.value)
-    this.setState({ partId: e.target.value });
+    this.setState({
+      partId: e.target.value,
+      buttonDisabled: !e.target.value
+    });
+
   };
 
   partChange = (e) =>{
@@ -96,7 +99,8 @@ export default class ScreenShotUI extends PureComponent {
         radioType:radioType,
         radioDisabled: radioDisabled,
         partIdDisabled: true,
-        dropdownDisabled:dropdownDisabled
+        dropdownDisabled:dropdownDisabled,
+        partType:"githubcommits"
     })
   };
 
@@ -105,13 +109,17 @@ export default class ScreenShotUI extends PureComponent {
       if(e.target.value==1){
         this.setState({
           partIdDisabled:true,
-          dropdownDisabled: false
+          dropdownDisabled: false,
+          buttonDisabled: false,
+          partType:"githubcommits"
         })
 
       }else{
         this.setState({
           partIdDisabled:false,
-          dropdownDisabled: true
+          dropdownDisabled: true,
+          buttonDisabled: !this.state.partId,
+          partType:1
         })
       }
 
@@ -132,7 +140,7 @@ export default class ScreenShotUI extends PureComponent {
       url: this.state.url,
       isPart: this.state.isPart,
       partType: this.state.partType,//1，自定义类型；其他为字符串定义的类型：githubcommits
-      partId: this.state.partId
+      partId: "."+this.state.partId
     };
     var that = this;
     axios.post('http://127.0.0.1:7001/service/screenshot',params)
@@ -202,7 +210,7 @@ export default class ScreenShotUI extends PureComponent {
                 </Dropdown.Button></Radio>
                 <Radio className={styles.radioStyle} value={2}>
                   <span className={styles.radioName}>Custom:</span>
-                  <Input size={size} className={styles.urlInputCss} value={partId} onChange={this.partIdChange} placeholder={partIdPlaceholder} disabled={partIdDisabled}/></Radio>
+                  <Input addonBefore="." size={size} className={styles.urlInputCss} value={partId} onChange={this.partIdChange} placeholder={partIdPlaceholder} disabled={partIdDisabled}/></Radio>
                   <div className={partIdDisabled?styles.partIdTips:styles.partIdTipsLight}>the class name of the part</div>
               </RadioGroup>
             </div>

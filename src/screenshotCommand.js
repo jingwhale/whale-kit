@@ -23,7 +23,7 @@ var textLinkDist = 16;
 
 var textDistImage = 32;
 
-var textFixDist = 38;
+var textFixDist = 0;
 
 var textReviseWidth = 112;
 
