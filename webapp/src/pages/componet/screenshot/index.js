@@ -50,9 +50,11 @@ export default class ScreenShotUI extends PureComponent {
     this.setState({
       artBoardName: e.target.value
     });
+  };
 
+  artBoardNameOnBulr = (e) => {
     if(!e.target.value){
-      message.error('Please fill in ArtBoard Name, it defaults to "修订记录"!',2);
+      message.error('ArtBoard Name is needed, it defaults to "修订记录"!',2);
     }
   };
 
@@ -182,7 +184,7 @@ export default class ScreenShotUI extends PureComponent {
       <Spin spinning={spinning} tip="In the screenshot, it takes some time...">
       <div className={styles.body}>
           <div className={styles.url}>
-            <span className={styles.itemName}>ArtBoard Name:</span><Input size={size} className={styles.urlInputCss} value={artBoardName} onChange={this.artBoardNameChange} placeholder={artBoardNamePlaceholder}/>
+            <span className={styles.itemName}>ArtBoard Name:</span><Input size={size} className={styles.urlInputCss} value={artBoardName} onChange={this.artBoardNameChange} placeholder={artBoardNamePlaceholder} onBlur={this.artBoardNameOnBulr}/>
           </div>
           <div className={styles.url}>
               <span className={styles.itemName}>Page Url:</span><Input size={size} className={styles.urlInputCss} value={url} onChange={this.urlChange} placeholder={urlPlaceholder}/>
