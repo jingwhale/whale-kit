@@ -1,0 +1,1 @@
+module.exports.identifier = 'identifier_whale_kit';

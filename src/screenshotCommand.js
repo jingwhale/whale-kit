@@ -1,6 +1,8 @@
-import sketch from 'sketch'
-import Sketch from 'sketch/dom'
+import sketch from 'sketch';
+import Sketch from 'sketch/dom';
 import BrowserWindow from "sketch-module-web-view";
+import {identifier} from "./config";
+import { getWebview } from 'sketch-module-web-view/remote';
 
 var Image = Sketch.Image;
 var Text = Sketch.Text;
@@ -110,14 +112,24 @@ const insertImageToArtbord = (imageSize,imageFrame,textFrame) =>{
 };
 
 if(artboardRect && artboardRect.type=="Artboard"){
+    const existingWebview = getWebview(identifier);
+    if (existingWebview) {
+        if (existingWebview.isVisible()) {
+            // close the devtool if it's open
+            existingWebview.close()
+        }
+    }
+
     let win = new BrowserWindow({
+        identifier,
         width: 408,
         height: 356,
         title:"Web Screen Shot",
         resizable:false,
         minimizable:false,
         maximizable:false,
-        closable:true
+        closable:true,
+        alwaysOnTop: true
     });
     win.on('closed', () => {
         win = null

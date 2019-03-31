@@ -1,6 +1,8 @@
 import sketch from 'sketch'
 import Sketch from 'sketch/dom'
 import BrowserWindow from 'sketch-module-web-view'
+import { getWebview } from 'sketch-module-web-view/remote'
+import { identifier } from './config'
 
 var Group = Sketch.Group;
 var Text = Sketch.Text;
@@ -134,15 +136,25 @@ if(!buttonRect){//选择一个矩形
     sketch.UI.message("Please select a Rectangle or ArtBord!")
 }else{
     if(buttonRect.type == "ShapePath" && buttonRect.shapeType=="Rectangle") {
+        const existingWebview = getWebview(identifier);
+        if (existingWebview) {
+            if (existingWebview.isVisible()) {
+                // close the devtool if it's open
+                existingWebview.close()
+            }
+        }
+
         let win = new BrowserWindow({
+            identifier,
             width: 469,
-            height: 282,
+            height: 300,
             title: "Make Layout",
             resizable: false,
             minimizable: false,
             maximizable: false,
-            closable: true
-        })
+            closable: true,
+            alwaysOnTop: true
+        });
         win.on('closed', () => {
             win = null
         });
@@ -151,7 +163,7 @@ if(!buttonRect){//选择一个矩形
         // const Panel = `http://localhost:8000/pagelayout.html#${Math.random()}`;
         // win.loadURL(Panel);
 
-        win.loadURL('http://whalexplorer.coding.me/whale-kit/pagelayout.html');
+        win.loadURL('http://whalexplorer.coding.me/whale-kit/pagelayout.html?'+Math.random());
 
 
         const dist = (data, type) => {
