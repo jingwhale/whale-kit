@@ -300,6 +300,8 @@ if(!buttonRect){//选择一个矩形
             }
 
             buttonRect.remove();
+
+            sketch.UI.message("Successful layout!");
         };
 
         const closeWin = () => {
@@ -320,6 +322,7 @@ if(!buttonRect){//选择一个矩形
         });
     }else if(buttonRect.type == "Artboard"){
         artBoardLayout();
+        sketch.UI.message("Successful layout!");
     }
 }
 

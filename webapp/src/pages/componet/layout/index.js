@@ -181,12 +181,12 @@ export default class IndexUI extends PureComponent {
           <TabPane tab="Equal layout(m*n)" key="1">
             <div className={styles.tabContent}>
               <div className={styles.item}>
-                <span className={styles.inputItem}><span className={styles.name}><span className={styles.symbolTip}>⟷</span> rows:</span><InputNumber size={size}  min={1} max={10} value={rows} onChange={this.rowsChange}/></span>
-                <span className={styles.inputItem}><span className={styles.name}>margin:</span><InputNumber size={size}  min={0} max={10} value={rowMargin} onChange={this.rowMarginChange} disabled={this.state.rowMarginDisabled}/></span>
+                <span className={styles.inputItem}><span className={styles.name}><span className={styles.symbolTip}>⟷</span> rows:</span><InputNumber size={size}  min={1} max={100} value={rows} onChange={this.rowsChange}/></span>
+                <span className={styles.inputItem}><span className={styles.name}>margin:</span><InputNumber size={size}  min={0} max={1000} value={rowMargin} onChange={this.rowMarginChange} disabled={this.state.rowMarginDisabled}/></span>
               </div>
               <div className={styles.item}>
-                <span className={styles.inputItem}><span className={styles.name}><span className={styles.symbolTip}>↕</span> columns:</span><InputNumber size={size}  min={1} max={10} value={columns} onChange={this.columnsChange}/></span>
-                <span className={styles.inputItem}><span className={styles.name}>gutter:</span><InputNumber size={size}  min={0} max={10} value={columnMargin} onChange={this.columnMarginChange} disabled={this.state.columnMarginDisabled}/></span>
+                <span className={styles.inputItem}><span className={styles.name}><span className={styles.symbolTip}>↕</span> columns:</span><InputNumber size={size}  min={1} max={100} value={columns} onChange={this.columnsChange}/></span>
+                <span className={styles.inputItem}><span className={styles.name}>gutter:</span><InputNumber size={size}  min={0} max={1000} value={columnMargin} onChange={this.columnMarginChange} disabled={this.state.columnMarginDisabled}/></span>
               </div>
             </div>
           </TabPane>
