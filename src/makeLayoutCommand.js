@@ -16,7 +16,9 @@ var selection = document.selectedLayers;
 
 var buttonRect = "";
 
-selection.forEach(layer => (buttonRect=layer))
+selection.forEach(layer => (buttonRect=layer));
+
+var ceilStyle = buttonRect.style;
 
 
 if(!buttonRect){//选择一个矩形
@@ -115,9 +117,7 @@ if(!buttonRect){//选择一个矩形
             parent: groupitem,
             name: "item",
             frame: rect,
-            style: {
-                borders: [{ color: '#000' }]
-            },
+            style: ceilStyle,
         });
 
         if(data.showCoordinate){
@@ -158,16 +158,12 @@ if(!buttonRect){//选择一个矩形
             frame: buttonRect.frame
         });
 
-        buttonRect.parent = layoutgroup;
-
         var frame = {
             x: 0,
             y: 0,
             width:buttonRect.frame.width,
             height:buttonRect.frame.height
         };
-
-        buttonRect.frame = frame;
 
         //Create grid group
         const group = new Group({
@@ -180,6 +176,8 @@ if(!buttonRect){//选择一个矩形
         for (var i=1;i<(data.rows*data.columns+1);i++){
             createGrid(data,i,group);
         }
+
+        buttonRect.remove();
     };
 
     const closeWin = () =>{
