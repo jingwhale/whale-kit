@@ -13,11 +13,10 @@
 }
 
 .inputItem{
-  margin-right: 20px;
 }
 .name{
   color: #fff;
-  margin-right: 5px;
+  margin-right: 11px;
   width: 95px;
   text-align: right;
   display: inline-block;
@@ -45,10 +44,16 @@
   color: #fff;
 }
 
+.symbolTip{
+  color: goldenrod;
+  color: chartreuse;
+}
+
 .radioName{
   display: inline-block;
-  width: 70px;
-  text-align: left;
+  width: 64px;
+  text-align: right;
+  margin-right: 13px;
 }
 
 .radioStyle{
@@ -66,7 +71,7 @@
 
 .tabContent1{
   height: 100px;
-  margin-left: 60px;
+  margin-left: 43px;
 }
 
 .line{
@@ -74,3 +79,31 @@
   width: 22px;
   text-align: center;
 }
+.inputNumberItem{
+}
+
+.inputTip{
+  color: #999;
+  font-size: 12px;
+}
+.inputTip1{
+  color: #999;
+  font-size: 12px;
+  margin-left: 4px;
+}
+.inputTipType{
+  display: inline-block;
+  width: 100px;
+  text-align: left;
+}
+.inputTipPostion1{
+  display: inline-block;
+  width: 100px;
+  text-align: left;
+}
+inputTipPostion2{
+  display: inline-block;
+  width: 100px;
+  text-align: left;
+}
+

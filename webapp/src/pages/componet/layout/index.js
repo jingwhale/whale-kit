@@ -178,23 +178,43 @@ export default class IndexUI extends PureComponent {
     return (
       <div className={styles.body}>
         <Tabs defaultActiveKey="1" onChange={this.callback} className={styles.tab}>
-          <TabPane tab="Equal layout" key="1">
+          <TabPane tab="Equal layout(m*n)" key="1">
             <div className={styles.tabContent}>
               <div className={styles.item}>
-                <span className={styles.inputItem}><span className={styles.name}>rows:</span><InputNumber size={size}  min={1} max={10} value={rows} onChange={this.rowsChange}/></span>
-                <span className={styles.inputItem}><span className={styles.name}>rowMargin:</span><InputNumber size={size}  min={0} max={10} value={rowMargin} onChange={this.rowMarginChange} disabled={this.state.rowMarginDisabled}/></span>
+                <span className={styles.inputItem}><span className={styles.name}><span className={styles.symbolTip}>⟷</span> rows:</span><InputNumber size={size}  min={1} max={10} value={rows} onChange={this.rowsChange}/></span>
+                <span className={styles.inputItem}><span className={styles.name}>margin:</span><InputNumber size={size}  min={0} max={10} value={rowMargin} onChange={this.rowMarginChange} disabled={this.state.rowMarginDisabled}/></span>
               </div>
               <div className={styles.item}>
-                <span className={styles.inputItem}><span className={styles.name}>columns:</span><InputNumber size={size}  min={1} max={10} value={columns} onChange={this.columnsChange}/></span>
-                <span className={styles.inputItem}><span className={styles.name}>columnMargin:</span><InputNumber size={size}  min={0} max={10} value={columnMargin} onChange={this.columnMarginChange} disabled={this.state.columnMarginDisabled}/></span>
+                <span className={styles.inputItem}><span className={styles.name}><span className={styles.symbolTip}>↕</span> columns:</span><InputNumber size={size}  min={1} max={10} value={columns} onChange={this.columnsChange}/></span>
+                <span className={styles.inputItem}><span className={styles.name}>gutter:</span><InputNumber size={size}  min={0} max={10} value={columnMargin} onChange={this.columnMarginChange} disabled={this.state.columnMarginDisabled}/></span>
               </div>
             </div>
           </TabPane>
-          <TabPane tab="Proportional layout" key="2">
+          <TabPane tab="Proportional layout(1⇌2)" key="2">
             <div className={styles.tabContent1}>
               <RadioGroup onChange={this.radioChange} value={this.state.proporData.type}>
-                <Radio value={2} className={styles.radioStyle}><span className={styles.radioName}>column:</span><InputNumber size={size}  min={1} max={100} defaultValue={proporData.column1} disabled={proporData.columnDisabled} onChange={this.column1Change}/><span className={styles.line}>:</span><InputNumber size={size}  min={1} max={100} defaultValue={proporData.column2} disabled={proporData.columnDisabled} onChange={this.column2Change}/></Radio>
-                <Radio value={1} className={styles.radioStyle}><span className={styles.radioName}>row:</span><InputNumber size={size}  min={1} max={100} defaultValue={proporData.row1} disabled={proporData.rowDisabled} onChange={this.row1Change}/><span className={styles.line}>:</span><InputNumber size={size}  min={1} max={100} defaultValue={proporData.row2} disabled={proporData.rowDisabled} onChange={this.row2Change}/></Radio>
+                <Radio value={2} className={styles.radioStyle}>
+                  <span className={styles.radioName}><span className={styles.symbolTip}>↕</span> column:</span>
+                  <InputNumber size={size}  min={1} max={100} defaultValue={proporData.column1} disabled={proporData.columnDisabled} onChange={this.column1Change}/>
+                  <span className={styles.line}>:</span>
+                  <InputNumber size={size}  min={1} max={100} defaultValue={proporData.column2} disabled={proporData.columnDisabled} onChange={this.column2Change}/>
+                  <div className={styles.inputTip}>
+                    <span className={styles.inputTipType}>1*2</span>
+                    <sapn className={styles.inputTipPostion1}>left</sapn>
+                    <span className={styles.inputTipPostion2}>right</span>
+                  </div>
+                </Radio>
+                <Radio value={1} className={styles.radioStyle}>
+                  <span className={styles.radioName}><span className={styles.symbolTip}>⟷</span> row:</span>
+                  <InputNumber size={size}  min={1} max={100} defaultValue={proporData.row1} disabled={proporData.rowDisabled} onChange={this.row1Change}/>
+                  <span className={styles.line}>:</span>
+                  <InputNumber size={size}  min={1} max={100} defaultValue={proporData.row2} disabled={proporData.rowDisabled} onChange={this.row2Change}/>
+                  <div className={styles.inputTip1} >
+                    <span className={styles.inputTipType}>2*1</span>
+                    <sapn className={styles.inputTipPostion1}>up</sapn>
+                    <span className={styles.inputTipPostion2}>down</span>
+                  </div>
+                </Radio>
               </RadioGroup>
             </div>
           </TabPane>
