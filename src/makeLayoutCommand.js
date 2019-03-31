@@ -67,44 +67,45 @@ if(!buttonRect){//选择一个矩形
         }
 
         return dist;
-    }
+    };
 
-    const createGrid = (data,index,group) =>{
-        var coordinate = {
+    const createGrid = (data,index,group) =>{//画grid ceil与位置
+        var coordinate = {//每个ceil的坐标（1，2）
             x: Math.ceil(index/data.columns),
             y:  (index%data.columns == 0) ? data.columns : index%data.columns
         };
 
-        if(data.type==1){
+        //通过坐标coordinate与ceil的尺寸frameData，确定每个ceil的frame
+        if(data.type==1){//等比
             var frame = {
                 x:  (coordinate.y-1)*(data.frameData.width+data.columnMargin),
                 y:  (coordinate.x-1)*(data.frameData.height+data.rowMargin),
                 width: data.frameData.width,
                 height: data.frameData.height
             };
-        }else{
+        }else{//不等比
             const getCount = (index,type) => {
                 var count = 0;
-                for(var i=index;i>0;i--){
+                for(var i=index;i>0;i--){//根据坐标获取此ceil是单个基本ceil的倍数
                     if(type=="x"){
-                        count += data.proporData['row'+coordinate.x];
+                        count += data.proporData['row'+(coordinate.x-1)];//row1,row2的值
                     }else{
-                        count += data.proporData['column'+coordinate.y];
+                        count += data.proporData['column'+(coordinate.y-1)];//column1,column2的值
                     }
                 }
                 return count;
             };
             var frame = {
-                x:  data.frameData.width*(getCount(coordinate.y-1,"x")),
-                y:  data.frameData.height*(getCount(coordinate.x-1,"y")),
+                x:  data.frameData.width*(getCount(coordinate.y-1,"y")),
+                y:  data.frameData.height*(getCount(coordinate.x-1,"x")),
                 width: data.frameData.width*(data.proporData['column'+coordinate.y]),
                 height: data.frameData.height*(data.proporData['row'+coordinate.x])
             };
         }
 
-        //Create Body(Group)
+        //Create 单个ceil的group
         const groupitem = new Group({
-            name: 'item group',
+            name: 'ceil group',
             parent: group
         })
 
@@ -142,15 +143,15 @@ if(!buttonRect){//选择一个矩形
     }
 
     //执行webview的代码
-    const makeLayout = (data) => {
-        var frameData = {
+    const makeLayout = (data) => {//布局代码
+        var frameData = {//获取每一个ceil的size；不等比为最小的那个单位size
             width:dist(data,"width"),
             height:dist(data,"height")
         }
 
         data.frameData = frameData;
 
-        //Create Body(Group)
+        //Create 最外层Group
         const layoutgroup = new Group({
             name: 'layout',
             parent: (buttonRect.parent || page),
@@ -168,17 +169,18 @@ if(!buttonRect){//选择一个矩形
 
         buttonRect.frame = frame;
 
-        //Create Body(Group)
+        //Create grid group
         const group = new Group({
             name: 'grid',
             parent: layoutgroup,
             frame: frame
         });
 
+        //循环创建grid ceil
         for (var i=1;i<(data.rows*data.columns+1);i++){
             createGrid(data,i,group);
         }
-    }
+    };
 
     const closeWin = () =>{
         win.destroy();
@@ -188,7 +190,7 @@ if(!buttonRect){//选择一个矩形
     var contents = win.webContents;
 
     //监听webview的事件：webview->plugin
-    contents.on('fromwebview', function(s) {
+    contents.on('fromwebview', function(s) {//获得webview设置的数据
         makeLayout(s);
         closeWin()
     });
