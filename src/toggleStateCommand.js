@@ -1,5 +1,6 @@
 import sketch from 'sketch'
 import Sketch from 'sketch/dom'
+import {stateColor, STATE_NOAMAL, STATE_ACTIVE, STATE_DISABLED} from "./config";
 
 var Style = require('sketch/dom').Style;
 
@@ -8,18 +9,6 @@ var Document = Sketch.Document;
 var document = Document.getSelectedDocument();
 
 var selection = document.selectedLayers;
-
-//state 颜色组
-var stateColor = {
-    active: "#767272",
-    noamal: "#D8D8D8",
-    disabled: "#857D7D"
-};
-
-//state 常量
-var STATE_NOAMAL = "noamal";
-var STATE_ACTIVE = "active";
-var STATE_DISABLED = "disabled";
 
 //state ，默认常量
 var state = STATE_ACTIVE;
@@ -31,7 +20,6 @@ const doColor = (name,styleName) =>{
             name[i].color = stateColor[state];
             return;
         }
-
     }
 };
 
@@ -45,7 +33,7 @@ const changeColor = (layer) =>{
 
 //判断layer的不同类型，调用不同的处理函数
 const doToggleState = (layer) =>{
-    if(layer.type == "ShapePath"){
+    if(layer.type == "ShapePath" || layer.type == "Shape"){
         changeColor(layer);
     }else if(layer.type == "Text"){
         layer.style.textColor = stateColor[state];
@@ -58,7 +46,7 @@ const doToggleState = (layer) =>{
 
 //判断图层的数量，调用不同的方法处理
 const doSelection = (selection) =>{
-    doSelectionGrop(selection);
+    doSelectionGrop(selection);//全部按照图层组处理
 };
 
 //处理图层组
