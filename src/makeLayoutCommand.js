@@ -35,47 +35,6 @@ const artBoardLayout = () =>{
     //resize artBoard width
     buttonRect.frame.width=originFrame.width*2+originFrame.width*artBoardTextWidthRate;
 
-    //Create prototype group
-    originFrame.x= 0;
-    originFrame.y= 0;
-
-    var prototypeFrame = originFrame;
-
-    const prototypeGroup = new Group({
-        name: 'prototype group',
-        parent: buttonRect,
-        frame: prototypeFrame
-    });
-
-    var textFrame = {
-        x: originFrame.width,
-        y: originFrame.y,
-        width: originFrame.width*artBoardTextWidthRate,
-        height: originFrame.height
-    };
-
-    //Create text group
-    const textGroup = new Group({
-        name: 'text group',
-        parent: buttonRect,
-        frame: textFrame
-    });
-
-    var stateFrame = {
-        x: originFrame.width + textFrame.width,
-        y: originFrame.y,
-        width: originFrame.width,
-        height: originFrame.height
-    };
-
-    //Create state group
-    const stateGroup = new Group({
-        name: 'state group',
-        parent: buttonRect,
-        frame: stateFrame
-    });
-
-
     //Create line1
     var lineFrame1 = {
         x: originFrame.width,
@@ -93,7 +52,7 @@ const artBoardLayout = () =>{
 
     //Create line2
     var lineFrame2 = lineFrame1;
-    lineFrame2.x = stateFrame.x;
+    lineFrame2.x = originFrame.width+originFrame.width*artBoardTextWidthRate;
 
     const line2 = new Shape({
         name: 'line2',
@@ -130,6 +89,8 @@ const artBoardLayout = () =>{
 
     line1.style = lineStyle;
     line2.style = lineStyle;
+
+
 };
 
 if(!buttonRect){//选择一个矩形
