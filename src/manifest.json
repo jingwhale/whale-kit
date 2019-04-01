@@ -30,13 +30,19 @@
       "name": "Flow Page",
       "identifier": "sketch-webview-kit.my-command5",
       "script": "./flowPageCommand.js",
-      "shortcut" : "command option shift p"
+      "shortcut" : "control option shift p"
     },
     {
       "name": "Screen Shot",
       "identifier": "sketch-webview-kit.my-command6",
       "script": "./screenshotCommand.js",
-      "shortcut" : "command option shift j"
+      "shortcut" : "control option shift j"
+    },
+    {
+      "name": "Change Color",
+      "identifier": "sketch-webview-kit.my-command7",
+      "script": "./toggleStateCommand.js",
+      "shortcut" : "control option shift k"
     }
   ],
   "menu": {
@@ -50,7 +56,8 @@
       "-",
       "sketch-webview-kit.my-command2",
       "sketch-webview-kit.my-command3",
-      "sketch-webview-kit.my-command4"
+      "sketch-webview-kit.my-command4",
+      "sketch-webview-kit.my-command7"
     ]
   }
 }
