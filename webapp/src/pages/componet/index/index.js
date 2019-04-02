@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { Button } from 'antd';
 import styles from './index.css'
 
-var demo = "demo"
+var demo = "demo";
 
 export default class IndexUI extends PureComponent {
   constructor(props) {
