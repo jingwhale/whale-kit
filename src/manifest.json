@@ -44,6 +44,13 @@
       "identifier": "sketch-webview-kit.my-command7",
       "script": "./toggleStateCommand.js",
       "shortcut" : "control option shift k"
+    },
+    {
+      "name": "Convert to Grayscale",
+      "handler" : "onRun",
+      "identifier": "sketch-webview-kit.my-command8",
+      "script": "./convertToGrayscaleCommand.js",
+      "shortcut" : "control option shift k"
     }
   ],
   "menu": {
@@ -54,6 +61,8 @@
       "sketch-webview-kit.my-command6",
       "-",
       "sketch-webview-kit.my-command5",
+      "-",
+      "sketch-webview-kit.my-command8",
       "-",
       "sketch-webview-kit.my-command2",
       "sketch-webview-kit.my-command3",

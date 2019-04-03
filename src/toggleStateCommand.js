@@ -3,23 +3,15 @@ import Sketch from 'sketch/dom';
 import UI from 'sketch/ui';
 import {stateColor, STATE_NOAMAL, STATE_ACTIVE, STATE_DISABLED} from "./config";
 
-function changeColor(context) {
-    const document = sketch.fromNative(context.document);
-    var selection = document.selectedLayers;
+var Document = Sketch.Document;
+var Shape = Sketch.Shape;
 
-    if (!selection.isEmpty) {
-        var shapeLayers = [];
-        var imageLayers = [];
-        var textLayers = [];
+var document = Document.getSelectedDocument();
 
-        selection.forEach( function iterate(layer) {
-            layer.type === 'Shape' && shapeLayers.push(layer);
-            layer.type === 'ShapePath' && shapeLayers.push(layer);
-            layer.type === 'Image' && imageLayers.push(layer);
-            layer.type === 'Text'  && textLayers.push(layer);
-            (layer.layers || []).forEach(iterate);
-        });
 
+//灰度设置
+function grayScale(selection) {
+    if(selection) {
         // Grayscale "Shape" layers
         shapeLayers.forEach(layer => {
             // *** ALL THE FILL / GRADIENT COLORS  *** //
@@ -28,11 +20,9 @@ function changeColor(context) {
                     if (fill.fill === "Gradient") {
                         fill.gradient.stops.forEach(stop => {
                             stop.color = convertHexToGrayscaleRGBAString(stop.color);
-                            console.log(stop.color);
                         })
                     } else {
                         fill.color = convertHexToGrayscaleRGBAString(fill.color);
-                        console.log(stop.fill.color);
                     }
                 })
             }
@@ -52,19 +42,47 @@ function changeColor(context) {
 
         });
 
-        // Grayscale "Image" layers
-        imageLayers.forEach(layer => {
-            UI.message('This plugin works only for shape layers.');
+        // Grayscale "Text" layers
+        textLayers.forEach(layer => {
+            var color = convertHexToGrayscaleRGBAString(layer.style.textColor);
+            layer.style.textColor = color;
         });
 
-        // Grayscale "Type" layers
-        textLayers.forEach(layer => {
-            UI.message('This plugin works only for shape layers.');
-        })
+        // Grayscale "Image" layers
+        imageLayers.forEach(layer => {
+            UI.message('This plugin doesnt work for image layers.');
+        });
 
     } else {
         UI.message('Try selecting some shapes');
     }
+}
+
+//获取symbolMaster
+function getSymbolMaster(layer){
+    if(layer.symbolId){
+        var symbolMaster = document.getSymbolMasterWithID(layer.symbolId);
+        if(symbolMaster.type == "SymbolInstance"){
+            getSymbolMaster(symbolMaster);
+        }else if(symbolMaster.type == "SymbolMaster"){
+            return symbolMaster;
+        }
+    }
+}
+
+//分类器
+function classifier(selection) {
+    selection.forEach( function iterate(layer) {
+        layer.type === 'Shape' && shapeLayers.push(layer);
+        layer.type === 'ShapePath' && shapeLayers.push(layer);
+        layer.type === 'Image' && imageLayers.push(layer);
+        layer.type === 'Text'  && textLayers.push(layer);
+        if((graySymbolType != "all") && (layer.type === 'SymbolInstance')){
+            layer = getSymbolMaster(layer);
+        }
+
+        (layer.layers || []).forEach(iterate);
+    });
 }
 
 // HELPERS
@@ -91,10 +109,119 @@ function hexToRGB(hex) {
     } : null;
 }
 
-
 export default function onRun(context) {
-    changeColor(context);
+    // grayPartSymbol();
+
+    grayAllSymbol();
+
+    // changeState
 };
+
+function graySymbol() {
+    if(graySymbolType = "symbols"){
+        var page = document.selectedPage;
+        if(page && (page.name = "Symbols")){
+            graySymbolType = "Symbols";//symbol页面
+            grayAllSymbol(page.layers);
+        }else{
+            UI.message('Try selecting a Symbols page!');
+        }
+    }else if(graySymbolType == "allSymbols"){//文档所有的symbol
+        graySymbolType = "all";
+        var symbols = document.getSymbols();
+        if(symbols.length>0){
+            grayAllSymbol(symbols);
+        }else{
+            UI.message('This document no symbol!');
+        }
+    }else if(graySymbolType == "part"){//选中的所有图层
+        var doc = sketch.getSelectedDocument();
+        var selection = doc.selectedLayers;
+        if(selection){
+            grayPartSymbol(selection);
+        }
+    }else if(graySymbolType == "all"){//所有文档页面的layers
+        var doc = sketch.getSelectedDocument();
+        var selection = doc.selectedLayers;
+        if(selection){
+            grayPartSymbol(selection);
+        }
+    }
+}
+
+function grayAllSymbol() {
+    symbols.forEach(symbol => {
+        classifier(symbol.layers || []);
+    });
+    grayScale(symbols);
+}
+
+function grayPartSymbol(selection) {
+    classifier(selection);
+    grayScale(selection);
+}
+
+//改变状态
+function changeState() {
+    if(selection){
+        doSelection(selection);
+    }else{
+        sketch.UI.message("Please select a layer or layers!");
+    }
+}
+
+//state ，默认常量
+var state = STATE_ACTIVE;
+
+//循环属性数组，change color
+const doColor = (name,styleName) =>{
+    for(var i=0;i<name.length;i++){
+        if(name[i][styleName] == Style.FillType.Color){
+            name[i].color = stateColor[state];
+            return;
+        }
+    }
+};
+
+//获取fills、borders属性数组，调用doColor change color
+const changeColor = (layer) =>{
+    var fills = layer.style.fills;
+    fills && doColor(fills,"fill");
+    var borders = layer.style.borders;
+    borders && doColor(borders,"fillType");
+};
+
+//判断layer的不同类型，调用不同的处理函数
+const doToggleState = (layer) =>{
+    if(layer.type == "ShapePath" || layer.type == "Shape"){
+        changeColor(layer);
+    }else if(layer.type == "Text"){
+        layer.style.textColor = stateColor[state];
+    }else if(layer.type == "Group"){
+        doSelection(layer.layers);
+    }else{
+        sketch.UI.message("Please select with Group 、Text or ShapePath type!");
+    }
+};
+
+//判断图层的数量，调用不同的方法处理
+const doSelection = (selection) =>{
+    doSelectionGrop(selection);//全部按照图层组处理
+};
+
+//处理图层组
+const doSelectionGrop = (selection) =>{
+    selection.forEach(layer => (
+        doSelectionSingle(layer)
+    ))
+};
+
+//处理单个图层
+const doSelectionSingle = (layer) =>{
+    doToggleState(layer)
+};
+
+
 
 
 
