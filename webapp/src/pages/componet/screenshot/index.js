@@ -143,7 +143,7 @@ export default class ScreenShotUI extends PureComponent {
       partId: "."+this.state.partId
     };
     var that = this;
-    axios.post('http://127.0.0.1:7001/service/screenshot',params)
+    axios.post('http://api.jingwhale.com/service/screenshot',params)
       .then(function (response) {
         var backData = response.data.data;
         console.log(backData);
