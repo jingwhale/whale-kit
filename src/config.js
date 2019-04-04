@@ -7,9 +7,10 @@ module.exports.stateColor = {
     noamal: "#D8D8D8",
     disabled: "#857D7D"
 };
+//change color state 颜色组
+module.exports.StateColorAmt = 20;
 
 //change color state 常量
-module.exports.STATE_NOAMAL = "normal";
 module.exports.STATE_ACTIVE = "active";
 module.exports.STATE_DISABLED = "disabled";
 

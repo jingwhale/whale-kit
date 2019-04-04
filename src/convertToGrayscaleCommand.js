@@ -14,7 +14,7 @@ var textLayers = [];
 
 var  graySymbolType = PartType;
 
-export default function onRun(context) {
+export default function onRun() {
     var doc = sketch.getSelectedDocument();
     var page = doc.selectedPage;
     var selection = doc.selectedLayers;
@@ -123,6 +123,7 @@ function grayScale(selection) {
             UI.message('This plugin doesnt work for image layers.');
         });
 
+        UI.message('Converted to Grayscale successfully！');
     } else {
         UI.message('Try selecting some shapes');
     }

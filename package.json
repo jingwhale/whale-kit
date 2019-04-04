@@ -23,6 +23,7 @@
   },
   "author": "whaleExplorer <whaleExplorer@gmail.com>",
   "dependencies": {
-    "sketch-module-web-view": "^2.1.7"
+    "sketch-module-web-view": "^2.1.7",
+    "tinycolor2": "^1.4.1"
   }
 }

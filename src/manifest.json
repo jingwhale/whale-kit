@@ -39,7 +39,7 @@
       "shortcut" : "control option shift j"
     },
     {
-      "name": "Change Color",
+      "name": "Toggle State",
       "handler" : "onRun",
       "identifier": "sketch-webview-kit.my-command7",
       "script": "./toggleStateCommand.js",
@@ -50,7 +50,7 @@
       "handler" : "onRun",
       "identifier": "sketch-webview-kit.my-command8",
       "script": "./convertToGrayscaleCommand.js",
-      "shortcut" : "control option shift k"
+      "shortcut" : "control option shift g"
     }
   ],
   "menu": {
