@@ -1,13 +1,13 @@
 {
-  "name": "sketch-webview-kit",
+  "name": "whale-kit",
   "version": "0.1.0",
   "engines": {
     "sketch": ">=3.0"
   },
   "skpm": {
-    "name": "sketch-webview-kit",
+    "name": "whale-kit",
     "manifest": "src/manifest.json",
-    "main": "sketch-webview-kit.sketchplugin",
+    "main": "whale-kit.sketchplugin",
     "assets": [
       "assets/**/*"
     ]
@@ -21,7 +21,7 @@
   "devDependencies": {
     "@skpm/builder": "^0.5.11"
   },
-  "author": "whaleExplorer <whaleExplorer@gmail.com>",
+  "author": "jingwhale <jingwhale@yeah.net>",
   "dependencies": {
     "sketch-module-web-view": "^2.1.7",
     "tinycolor2": "^1.4.1"

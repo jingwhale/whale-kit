@@ -1351,8 +1351,6 @@ var Style = __webpack_require__(/*! sketch/dom */ "sketch/dom").Style;
 var nowState = _config__WEBPACK_IMPORTED_MODULE_3__["STATE_ACTIVE"];
 var doc = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.getSelectedDocument();
 var selection = doc.selectedLayers;
-var commonColor = "#D8D8D8";
-var textDisabled = "#999999";
 
 function LightenDarkenColor(color, type) {
   var newColor = "";
@@ -1367,15 +1365,15 @@ function LightenDarkenColor(color, type) {
 }
 
 var setSateActive = function setSateActive(style, name) {
+  console.log("setSateActive");
+  console.log(style[name]);
+  console.log(LightenDarkenColor(style[name], "darken"));
   style[name] = LightenDarkenColor(style[name], "darken");
 };
 
 var setSateDisabled = function setSateDisabled(style, name) {
-  if (style[name] === commonColor) {
-    style[name] = textDisabled;
-  } else {
-    style[name] = LightenDarkenColor(style[name], "brighten");
-  }
+  console.log(LightenDarkenColor(style[name], "brighten"));
+  style[name] = LightenDarkenColor(style[name], "brighten");
 };
 
 var setStateColor = function setStateColor(style, name) {

@@ -71,10 +71,10 @@
     ]
   },
   "version": "0.1.0",
-  "name": "sketch-webview-kit",
-  "identifier": "sketch-webview-kit",
+  "name": "whale-kit",
+  "identifier": "whale-kit",
   "disableCocoaScriptPreprocessor": true,
   "appcast": "https://raw.githubusercontent.com//master/.appcast.xml",
-  "author": "whaleExplorer",
-  "authorEmail": "whaleExplorer@gmail.com"
+  "author": "jingwhale",
+  "authorEmail": "jingwhale@yeah.net"
 }
