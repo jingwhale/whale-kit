@@ -1,0 +1,80 @@
+{
+  "compatibleVersion": 3,
+  "bundleVersion": 1,
+  "icon": "icon.png",
+  "commands": [
+    {
+      "name": "Efficient design spec",
+      "identifier": "sketch-webview-kit.my-command",
+      "script": "my-command.js"
+    },
+    {
+      "name": "Make Layout",
+      "identifier": "sketch-webview-kit.my-command2",
+      "script": "makeLayoutCommand.js",
+      "shortcut": "shift control a"
+    },
+    {
+      "name": "Generate Button",
+      "identifier": "sketch-webview-kit.my-command3",
+      "script": "generateButtonCommand.js",
+      "shortcut": "shift control z"
+    },
+    {
+      "name": "Operate Image",
+      "identifier": "sketch-webview-kit.my-command4",
+      "script": "operateImageCommand.js",
+      "shortcut": "shift control q"
+    },
+    {
+      "name": "Flow Page",
+      "identifier": "sketch-webview-kit.my-command5",
+      "script": "flowPageCommand.js",
+      "shortcut": "control option shift p"
+    },
+    {
+      "name": "Screen Shot",
+      "identifier": "sketch-webview-kit.my-command6",
+      "script": "screenshotCommand.js",
+      "shortcut": "control option shift j"
+    },
+    {
+      "name": "Toggle State",
+      "handler": "onRun",
+      "identifier": "sketch-webview-kit.my-command7",
+      "script": "toggleStateCommand.js",
+      "shortcut": "control option shift k"
+    },
+    {
+      "name": "Convert to Grayscale",
+      "handler": "onRun",
+      "identifier": "sketch-webview-kit.my-command8",
+      "script": "convertToGrayscaleCommand.js",
+      "shortcut": "control option shift g"
+    }
+  ],
+  "menu": {
+    "title": "Whale",
+    "items": [
+      "sketch-webview-kit.my-command",
+      "-",
+      "sketch-webview-kit.my-command6",
+      "-",
+      "sketch-webview-kit.my-command5",
+      "-",
+      "sketch-webview-kit.my-command8",
+      "-",
+      "sketch-webview-kit.my-command2",
+      "sketch-webview-kit.my-command3",
+      "sketch-webview-kit.my-command4",
+      "sketch-webview-kit.my-command7"
+    ]
+  },
+  "version": "0.1.0",
+  "name": "sketch-webview-kit",
+  "identifier": "sketch-webview-kit",
+  "disableCocoaScriptPreprocessor": true,
+  "appcast": "https://raw.githubusercontent.com//master/.appcast.xml",
+  "author": "whaleExplorer",
+  "authorEmail": "whaleExplorer@gmail.com"
+}
