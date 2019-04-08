@@ -25,14 +25,19 @@ export default class ScreenShotUI extends PureComponent {
       partIdPlaceholder: "commits-listing",
       partIdDisabled: true,
       radioDisabled: true,
-      partType: "githubcommits",//1为自定义；其他为自定义字符串
+      partType: "tencentcommits",//1为自定义；其他为自定义字符串
       dropdownDisabled: true,
       checkboxDisabled: true,
       spinning: false,
+      commitsName:"tencent commits",
       partTypeDefalt:{
         githubcommits:{
           name: "github commits",
           value:".commits-listing"
+        },
+        tencentcommits:{
+          name: "tencent commits",
+          value:".git-container-eIS"
         }
       }
     };
@@ -99,8 +104,7 @@ export default class ScreenShotUI extends PureComponent {
         radioType:radioType,
         radioDisabled: radioDisabled,
         partIdDisabled: true,
-        dropdownDisabled:dropdownDisabled,
-        partType:"githubcommits"
+        dropdownDisabled:dropdownDisabled
     })
   };
 
@@ -110,8 +114,7 @@ export default class ScreenShotUI extends PureComponent {
         this.setState({
           partIdDisabled:true,
           dropdownDisabled: false,
-          buttonDisabled: false,
-          partType:"githubcommits"
+          buttonDisabled: false
         })
 
       }else{
@@ -130,7 +133,12 @@ export default class ScreenShotUI extends PureComponent {
   };
 
   handleMenuClick = (e)=>{
-      console.log(e)
+      var commitsName = this.state.partTypeDefalt[e.key].name;
+      this.setState({
+        commitsName:commitsName,
+        partType:e.key
+      });
+      this.forceUpdate();
   };
 
   getImageData = () =>{
@@ -182,10 +190,11 @@ export default class ScreenShotUI extends PureComponent {
   };
 
   render() {
-    var  { size, button, cancel, url, urlPlaceholder, partId, partIdPlaceholder, partIdDisabled, radioDisabled, partTypeDefalt, dropdownDisabled, buttonDisabled, checkboxDisabled, isPart, spinning, artBoardName, artBoardNamePlaceholder} = this.state;
+    var  { size, button, cancel, url, urlPlaceholder, partId, partIdPlaceholder, partIdDisabled, radioDisabled, partTypeDefalt, dropdownDisabled, buttonDisabled, checkboxDisabled, isPart, spinning, artBoardName, artBoardNamePlaceholder, commitsName} = this.state;
     const menu = (
       <Menu onClick={this.handleMenuClick}>
-        <Menu.Item key="1" size={size}><Icon type="github" />{partTypeDefalt.githubcommits.name}</Menu.Item>
+        <Menu.Item key="tencentcommits" size={size}><Icon type="qq" />{partTypeDefalt.tencentcommits.name}</Menu.Item>
+        <Menu.Item key="githubcommits" size={size}><Icon type="github" />{partTypeDefalt.githubcommits.name}</Menu.Item>
       </Menu>
     );
     return (
@@ -206,7 +215,7 @@ export default class ScreenShotUI extends PureComponent {
                 <Radio className={styles.radioStyle} value={1} defaultChecked={true}>
                   <span className={styles.radioName}>Default:</span>
                  <Dropdown.Button overlay={menu} size={size} disabled={dropdownDisabled}>
-                   {partTypeDefalt.githubcommits.name}
+                   {commitsName}
                 </Dropdown.Button></Radio>
                 <Radio className={styles.radioStyle} value={2}>
                   <span className={styles.radioName}>Custom:</span>
