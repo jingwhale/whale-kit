@@ -70,7 +70,7 @@
       "sketch-webview-kit.my-command7"
     ]
   },
-  "version": "0.1.0",
+  "version": "0.2.0",
   "name": "whale-kit",
   "identifier": "whale-kit",
   "disableCocoaScriptPreprocessor": true,
