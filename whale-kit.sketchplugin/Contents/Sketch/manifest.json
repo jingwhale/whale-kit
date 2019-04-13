@@ -1,4 +1,9 @@
 {
+  "name": "Whale Kit",
+  "identifier": "whale-sketch-webview-kit",
+  "description": "A Plugin for generate SVG QR Code in Sketch app.",
+  "author": "jingwhale",
+  "authorEmail": "jingwhale@yeah.net",
   "compatibleVersion": 3,
   "bundleVersion": 1,
   "icon": "icon.png",
@@ -40,17 +45,24 @@
     },
     {
       "name": "Toggle State",
-      "handler": "onRun",
       "identifier": "sketch-webview-kit.my-command7",
       "script": "toggleStateCommand.js",
+      "handler": "onRun",
       "shortcut": "control option shift k"
     },
     {
       "name": "Convert to Grayscale",
-      "handler": "onRun",
       "identifier": "sketch-webview-kit.my-command8",
       "script": "convertToGrayscaleCommand.js",
+      "handler": "onRun",
       "shortcut": "control option shift g"
+    },
+    {
+      "name": "Generate QR Code",
+      "shortcut": "ctrl shift option q",
+      "identifier": "sketch-webview-kit.my-command9",
+      "script": "generateQrcode.js",
+      "handler": "onRun"
     }
   ],
   "menu": {
@@ -64,6 +76,8 @@
       "-",
       "sketch-webview-kit.my-command8",
       "-",
+      "sketch-webview-kit.my-command9",
+      "-",
       "sketch-webview-kit.my-command2",
       "sketch-webview-kit.my-command3",
       "sketch-webview-kit.my-command4",
@@ -71,10 +85,6 @@
     ]
   },
   "version": "0.2.0",
-  "name": "whale-kit",
-  "identifier": "whale-kit",
   "disableCocoaScriptPreprocessor": true,
-  "appcast": "https://raw.githubusercontent.com//master/.appcast.xml",
-  "author": "jingwhale",
-  "authorEmail": "jingwhale@yeah.net"
+  "appcast": "https://raw.githubusercontent.com//master/.appcast.xml"
 }
