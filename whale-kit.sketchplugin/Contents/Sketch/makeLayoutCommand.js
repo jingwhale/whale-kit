@@ -2408,10 +2408,10 @@ module.exports.sendToWebview = function sendToWebview(
 
 /***/ }),
 
-/***/ "./src/config.js":
-/*!***********************!*\
-  !*** ./src/config.js ***!
-  \***********************/
+/***/ "./src/lib/config.js":
+/*!***************************!*\
+  !*** ./src/lib/config.js ***!
+  \***************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -2452,8 +2452,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sketch_module_web_view__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sketch_module_web_view__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! sketch-module-web-view/remote */ "./node_modules/sketch-module-web-view/remote.js");
 /* harmony import */ var sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./config */ "./src/config.js");
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_config__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _lib_config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./lib/config */ "./src/lib/config.js");
+/* harmony import */ var _lib_config__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_lib_config__WEBPACK_IMPORTED_MODULE_4__);
 
 
 
@@ -2541,7 +2541,7 @@ if (!buttonRect) {
   sketch__WEBPACK_IMPORTED_MODULE_0___default.a.UI.message("Please select a Rectangle or ArtBord!");
 } else {
   if (buttonRect.type == "ShapePath" && buttonRect.shapeType == "Rectangle") {
-    var existingWebview = Object(sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_3__["getWebview"])(_config__WEBPACK_IMPORTED_MODULE_4__["identifier"]);
+    var existingWebview = Object(sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_3__["getWebview"])(_lib_config__WEBPACK_IMPORTED_MODULE_4__["identifier"]);
 
     if (existingWebview) {
       if (existingWebview.isVisible()) {
@@ -2551,7 +2551,7 @@ if (!buttonRect) {
     }
 
     var win = new sketch_module_web_view__WEBPACK_IMPORTED_MODULE_2___default.a({
-      identifier: _config__WEBPACK_IMPORTED_MODULE_4__["identifier"],
+      identifier: _lib_config__WEBPACK_IMPORTED_MODULE_4__["identifier"],
       width: 469,
       height: 300,
       title: "Make Layout",

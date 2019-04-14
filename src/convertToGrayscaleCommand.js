@@ -1,7 +1,7 @@
 import sketch from 'sketch';
 import Sketch from 'sketch/dom';
 import UI from 'sketch/ui';
-import {AllType, PartType, PageType} from "./config";
+import {AllType, PartType, PageType} from "./lib/config";
 
 var Document = Sketch.Document;
 var Shape = Sketch.Shape;

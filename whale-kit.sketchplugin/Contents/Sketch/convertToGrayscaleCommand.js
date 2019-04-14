@@ -91,33 +91,6 @@ var exports =
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/config.js":
-/*!***********************!*\
-  !*** ./src/config.js ***!
-  \***********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports.identifier = 'identifier_whale_kit'; //change color state 颜色组
-
-module.exports.stateColor = {
-  active: "#767272",
-  noamal: "#D8D8D8",
-  disabled: "#857D7D"
-}; //change color state 颜色组
-
-module.exports.StateColorAmt = 20; //change color state 常量
-
-module.exports.STATE_ACTIVE = "active";
-module.exports.STATE_DISABLED = "disabled"; //convert to grayscaleCommand type 常量
-
-module.exports.AllType = "all";
-module.exports.PartType = "part";
-module.exports.SymbolsType = "symbols";
-module.exports.PageType = "page";
-
-/***/ }),
-
 /***/ "./src/convertToGrayscaleCommand.js":
 /*!******************************************!*\
   !*** ./src/convertToGrayscaleCommand.js ***!
@@ -134,8 +107,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sketch_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var sketch_ui__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sketch/ui */ "sketch/ui");
 /* harmony import */ var sketch_ui__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sketch_ui__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./config */ "./src/config.js");
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_config__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _lib_config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./lib/config */ "./src/lib/config.js");
+/* harmony import */ var _lib_config__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_lib_config__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
@@ -146,7 +119,7 @@ var document = Document.getSelectedDocument();
 var shapeLayers = [];
 var imageLayers = [];
 var textLayers = [];
-var graySymbolType = _config__WEBPACK_IMPORTED_MODULE_3__["PartType"];
+var graySymbolType = _lib_config__WEBPACK_IMPORTED_MODULE_3__["PartType"];
 function onRun() {
   var doc = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.getSelectedDocument();
   var page = doc.selectedPage;
@@ -156,11 +129,11 @@ function onRun() {
     //无选中图层
     if (page.layers.length > 0) {
       //有选中的页面
-      graySymbolType = _config__WEBPACK_IMPORTED_MODULE_3__["PageType"];
+      graySymbolType = _lib_config__WEBPACK_IMPORTED_MODULE_3__["PageType"];
     } else {
       //无选中的页面
       if (doc.pages.length > 0) {
-        graySymbolType = _config__WEBPACK_IMPORTED_MODULE_3__["AllType"];
+        graySymbolType = _lib_config__WEBPACK_IMPORTED_MODULE_3__["AllType"];
       } else {
         sketch_ui__WEBPACK_IMPORTED_MODULE_2___default.a.message('Try openning a document!');
       }
@@ -172,13 +145,13 @@ function onRun() {
 ;
 
 function grayTypeSymbol() {
-  if (graySymbolType == _config__WEBPACK_IMPORTED_MODULE_3__["PageType"]) {
+  if (graySymbolType == _lib_config__WEBPACK_IMPORTED_MODULE_3__["PageType"]) {
     //选中页面的layers
     grayPage();
-  } else if (graySymbolType == _config__WEBPACK_IMPORTED_MODULE_3__["PartType"]) {
+  } else if (graySymbolType == _lib_config__WEBPACK_IMPORTED_MODULE_3__["PartType"]) {
     //选中的所有图层
     grayPart();
-  } else if (graySymbolType == _config__WEBPACK_IMPORTED_MODULE_3__["AllType"]) {
+  } else if (graySymbolType == _lib_config__WEBPACK_IMPORTED_MODULE_3__["AllType"]) {
     //所有文档页面的layers
     grayAll();
   }
@@ -325,6 +298,33 @@ function hexToRGB(hex) {
     b: parseInt(result[3], 16)
   } : null;
 }
+
+/***/ }),
+
+/***/ "./src/lib/config.js":
+/*!***************************!*\
+  !*** ./src/lib/config.js ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports.identifier = 'identifier_whale_kit'; //change color state 颜色组
+
+module.exports.stateColor = {
+  active: "#767272",
+  noamal: "#D8D8D8",
+  disabled: "#857D7D"
+}; //change color state 颜色组
+
+module.exports.StateColorAmt = 20; //change color state 常量
+
+module.exports.STATE_ACTIVE = "active";
+module.exports.STATE_DISABLED = "disabled"; //convert to grayscaleCommand type 常量
+
+module.exports.AllType = "all";
+module.exports.PartType = "part";
+module.exports.SymbolsType = "symbols";
+module.exports.PageType = "page";
 
 /***/ }),
 

@@ -1,4 +1,5 @@
 # Whale-kit
+![verion](https://img.shields.io/badge/release-v0.2.0-brightgreen.svg)
 
 _This plugin was created using `skpm`. For a detailed explanation on how things work, checkout the [Whale-kit Readme](https://www.yuque.com/jingwhale/blog/hdvuwz)._
 

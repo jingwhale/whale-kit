@@ -1,7 +1,7 @@
 import sketch from 'sketch';
 import Sketch from 'sketch/dom';
 import BrowserWindow from "sketch-module-web-view";
-import {identifier} from "./config";
+import {identifier} from "./lib/config";
 import { getWebview } from 'sketch-module-web-view/remote';
 
 var Image = Sketch.Image;

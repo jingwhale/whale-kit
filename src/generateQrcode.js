@@ -1,5 +1,5 @@
 import sketch from 'sketch';
-import QRCode from './lib/qrcode';
+import QRCode from 'whale-qrcode';
 import UI from 'sketch/ui';
 // documentation: https://developer.sketchapp.com/reference/api/
 

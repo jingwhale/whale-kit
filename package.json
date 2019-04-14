@@ -24,6 +24,7 @@
   "author": "jingwhale <jingwhale@yeah.net>",
   "dependencies": {
     "sketch-module-web-view": "^2.1.7",
-    "tinycolor2": "^1.4.1"
+    "tinycolor2": "^1.4.1",
+    "whale-qrcode": "^1.0.0"
   }
 }

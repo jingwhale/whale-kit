@@ -1296,10 +1296,10 @@ else {}
 
 /***/ }),
 
-/***/ "./src/config.js":
-/*!***********************!*\
-  !*** ./src/config.js ***!
-  \***********************/
+/***/ "./src/lib/config.js":
+/*!***************************!*\
+  !*** ./src/lib/config.js ***!
+  \***************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -1339,8 +1339,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tinycolor2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(tinycolor2__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var sketch_ui__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sketch/ui */ "sketch/ui");
 /* harmony import */ var sketch_ui__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sketch_ui__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./config */ "./src/config.js");
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_config__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _lib_config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./lib/config */ "./src/lib/config.js");
+/* harmony import */ var _lib_config__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_lib_config__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
@@ -1348,7 +1348,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var Style = __webpack_require__(/*! sketch/dom */ "sketch/dom").Style;
 
-var nowState = _config__WEBPACK_IMPORTED_MODULE_3__["STATE_ACTIVE"];
+var nowState = _lib_config__WEBPACK_IMPORTED_MODULE_3__["STATE_ACTIVE"];
 var doc = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.getSelectedDocument();
 var selection = doc.selectedLayers;
 
@@ -1356,9 +1356,9 @@ function LightenDarkenColor(color, type) {
   var newColor = "";
 
   if (type === "brighten") {
-    newColor = tinycolor2__WEBPACK_IMPORTED_MODULE_1___default()(color).brighten(_config__WEBPACK_IMPORTED_MODULE_3__["StateColorAmt"]);
+    newColor = tinycolor2__WEBPACK_IMPORTED_MODULE_1___default()(color).brighten(_lib_config__WEBPACK_IMPORTED_MODULE_3__["StateColorAmt"]);
   } else if (type === "darken") {
-    newColor = tinycolor2__WEBPACK_IMPORTED_MODULE_1___default()(color).darken(_config__WEBPACK_IMPORTED_MODULE_3__["StateColorAmt"]);
+    newColor = tinycolor2__WEBPACK_IMPORTED_MODULE_1___default()(color).darken(_lib_config__WEBPACK_IMPORTED_MODULE_3__["StateColorAmt"]);
   }
 
   return newColor.toString();
@@ -1380,11 +1380,11 @@ var setStateColor = function setStateColor(style, name) {
   console.log("setStateColor");
 
   switch (nowState) {
-    case _config__WEBPACK_IMPORTED_MODULE_3__["STATE_ACTIVE"]:
+    case _lib_config__WEBPACK_IMPORTED_MODULE_3__["STATE_ACTIVE"]:
       setSateActive(style, name);
       break;
 
-    case _config__WEBPACK_IMPORTED_MODULE_3__["STATE_DISABLED"]:
+    case _lib_config__WEBPACK_IMPORTED_MODULE_3__["STATE_DISABLED"]:
       setSateDisabled(style, name);
       break;
 
@@ -1467,7 +1467,7 @@ var changeState = function changeState() {
 function onRun() {
   sketch_ui__WEBPACK_IMPORTED_MODULE_2___default.a.getInputFromUser("Please select the status you want to change to:", {
     type: sketch_ui__WEBPACK_IMPORTED_MODULE_2___default.a.INPUT_TYPE.selection,
-    possibleValues: [_config__WEBPACK_IMPORTED_MODULE_3__["STATE_ACTIVE"], _config__WEBPACK_IMPORTED_MODULE_3__["STATE_DISABLED"]]
+    possibleValues: [_lib_config__WEBPACK_IMPORTED_MODULE_3__["STATE_ACTIVE"], _lib_config__WEBPACK_IMPORTED_MODULE_3__["STATE_DISABLED"]]
   }, function (err, value) {
     nowState = value;
     changeState();

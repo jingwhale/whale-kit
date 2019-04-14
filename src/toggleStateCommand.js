@@ -1,7 +1,7 @@
 import sketch from 'sketch';
 import tinycolor from 'tinycolor2';
 import UI from 'sketch/ui';
-import {StateColorAmt, STATE_ACTIVE, STATE_DISABLED} from "./config";
+import {StateColorAmt, STATE_ACTIVE, STATE_DISABLED} from "./lib/config";
 
 var Style = require('sketch/dom').Style;
 var nowState = STATE_ACTIVE;

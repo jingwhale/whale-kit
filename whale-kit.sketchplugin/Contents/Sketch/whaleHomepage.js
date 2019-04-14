@@ -86,7 +86,7 @@ var exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/my-command.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/whaleHomepage.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -2357,10 +2357,10 @@ module.exports = function buildAPI(browserWindow, panel, webview) {
 
 /***/ }),
 
-/***/ "./src/my-command.js":
-/*!***************************!*\
-  !*** ./src/my-command.js ***!
-  \***************************/
+/***/ "./src/whaleHomepage.js":
+/*!******************************!*\
+  !*** ./src/whaleHomepage.js ***!
+  \******************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2408,4 +2408,4 @@ module.exports = require("events");
 }
 that['onRun'] = __skpm_run.bind(this, 'default')
 
-//# sourceMappingURL=my-command.js.map
+//# sourceMappingURL=whaleHomepage.js.map

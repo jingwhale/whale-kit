@@ -2,7 +2,7 @@ import sketch from 'sketch'
 import Sketch from 'sketch/dom'
 import BrowserWindow from 'sketch-module-web-view'
 import { getWebview } from 'sketch-module-web-view/remote'
-import { identifier } from './config'
+import { identifier } from './lib/config'
 
 var Group = Sketch.Group;
 var Text = Sketch.Text;
