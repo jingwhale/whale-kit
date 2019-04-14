@@ -11,7 +11,7 @@
     {
       "name": "Efficient design spec",
       "identifier": "sketch-webview-kit.my-command",
-      "script": "my-command.js"
+      "script": "whaleHomepage.js"
     },
     {
       "name": "Make Layout",
