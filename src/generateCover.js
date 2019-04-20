@@ -9,6 +9,7 @@ const Shape = require('sketch/dom').Shape;
 
 var doc = sketch.getSelectedDocument();
 var selection = doc.selectedLayers;
+var page = doc.selectedPage;
 var artboard = "";
 selection.forEach(layer => (artboard=layer));
 
@@ -40,9 +41,9 @@ function openPannel() {
     let win = new BrowserWindow({
         identifier,
         width: 408,
-        height: 356,
+        height: 291,
         title:"Generate Cover UI",
-        resizable:true,
+        resizable:false,
         minimizable:false,
         maximizable:false,
         closable:true,
@@ -67,9 +68,12 @@ function openPannel() {
     contents.on('fromwebview', function(data) {
         var setting = data || getDefaultSettings();
         setting.time = getDate();
-        artboard.name = coverName;
         generateHeader(setting);
         generateContent(setting);
+
+        artboard.name = coverName;
+        page.name = coverName;
+
         sketch.UI.message("Successfully screenshot and insert into Artboard！");
         closeWin();
     });
@@ -211,7 +215,7 @@ function generateHeader(setting) {
         text: "Version",
         alignment: Text.Alignment.center,
         frame: {
-            x:headRect.width-155-version.frame.width,
+            x:headRect.width-156-version.frame.width,
             y:9+12,
             width:60,
             height:10
@@ -245,13 +249,13 @@ function generateContent(setting) {
 
 
     const projectNameRect = new Rectangle(0,contentRect.height/4,contentRect.width,46);
-    //Create content(Group)-content/projectName
+    //Create content(Group)-content/projectModule
     const projectName = new Text({
-        text: setting.projectName,
+        text: setting.projectModule,
         alignment: Text.Alignment.center,
         frame: projectNameRect,
         parent: groupContent,
-        name: "content/projectName"
+        name: "content/projectModule"
     });
 
     projectName.style.textColor = normalColor;

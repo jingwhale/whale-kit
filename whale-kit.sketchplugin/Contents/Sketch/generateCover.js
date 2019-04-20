@@ -2441,6 +2441,7 @@ var Shape = __webpack_require__(/*! sketch/dom */ "sketch/dom").Shape;
 
 var doc = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.getSelectedDocument();
 var selection = doc.selectedLayers;
+var page = doc.selectedPage;
 var artboard = "";
 selection.forEach(function (layer) {
   return artboard = layer;
@@ -2473,9 +2474,9 @@ function openPannel() {
   var win = new sketch_module_web_view__WEBPACK_IMPORTED_MODULE_3___default.a({
     identifier: _lib_config__WEBPACK_IMPORTED_MODULE_1__["identifier"],
     width: 408,
-    height: 356,
+    height: 291,
     title: "Generate Cover UI",
-    resizable: true,
+    resizable: false,
     minimizable: false,
     maximizable: false,
     closable: true,
@@ -2498,9 +2499,10 @@ function openPannel() {
   contents.on('fromwebview', function (data) {
     var setting = data || getDefaultSettings();
     setting.time = getDate();
-    artboard.name = coverName;
     generateHeader(setting);
     generateContent(setting);
+    artboard.name = coverName;
+    page.name = coverName;
     sketch__WEBPACK_IMPORTED_MODULE_0___default.a.UI.message("Successfully screenshot and insert into Artboard！");
     closeWin();
   });
@@ -2630,7 +2632,7 @@ function generateHeader(setting) {
     text: "Version",
     alignment: Text.Alignment.center,
     frame: {
-      x: headRect.width - 155 - version.frame.width,
+      x: headRect.width - 156 - version.frame.width,
       y: 9 + 12,
       width: 60,
       height: 10
@@ -2658,14 +2660,14 @@ function generateContent(setting) {
     parent: artboard,
     frame: rect
   });
-  var projectNameRect = new Rectangle(0, contentRect.height / 4, contentRect.width, 46); //Create content(Group)-content/projectName
+  var projectNameRect = new Rectangle(0, contentRect.height / 4, contentRect.width, 46); //Create content(Group)-content/projectModule
 
   var projectName = new Text({
-    text: setting.projectName,
+    text: setting.projectModule,
     alignment: Text.Alignment.center,
     frame: projectNameRect,
     parent: groupContent,
-    name: "content/projectName"
+    name: "content/projectModule"
   });
   projectName.style.textColor = normalColor;
   projectName.style.fontWeight = "700";
