@@ -63,6 +63,13 @@
       "identifier": "sketch-webview-kit.my-command9",
       "script": "generateQrcode.js",
       "handler" : "onRun"
+    },
+    {
+      "name": "Generate Cover",
+      "shortcut": "ctrl shift option c",
+      "identifier": "sketch-webview-kit.my-command10",
+      "script": "generateCover.js",
+      "handler" : "onRun"
     }
   ],
   "menu": {
@@ -81,7 +88,9 @@
       "sketch-webview-kit.my-command2",
       "sketch-webview-kit.my-command3",
       "sketch-webview-kit.my-command4",
-      "sketch-webview-kit.my-command7"
+      "sketch-webview-kit.my-command7",
+      "-",
+      "sketch-webview-kit.my-command10"
     ]
   }
 }
