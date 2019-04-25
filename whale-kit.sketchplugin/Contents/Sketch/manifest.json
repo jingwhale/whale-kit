@@ -93,7 +93,7 @@
       "sketch-webview-kit.my-command10"
     ]
   },
-  "version": "0.2.0",
+  "version": "0.3.1",
   "disableCocoaScriptPreprocessor": true,
-  "appcast": "https://raw.githubusercontent.com//master/.appcast.xml"
+  "appcast": "https://raw.githubusercontent.com/jingwhale/whale-kit/master/.appcast.xml"
 }
