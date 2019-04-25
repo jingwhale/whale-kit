@@ -91,15 +91,15 @@ var exports =
 /************************************************************************/
 /******/ ({
 
-/***/ "./node_modules/@skpm/timers/immediate.js":
-/*!************************************************!*\
-  !*** ./node_modules/@skpm/timers/immediate.js ***!
-  \************************************************/
+/***/ "./node_modules/_@skpm_timers@0.1.0@@skpm/timers/immediate.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/_@skpm_timers@0.1.0@@skpm/timers/immediate.js ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* globals coscript, sketch */
-var timeout = __webpack_require__(/*! ./timeout */ "./node_modules/@skpm/timers/timeout.js")
+var timeout = __webpack_require__(/*! ./timeout */ "./node_modules/_@skpm_timers@0.1.0@@skpm/timers/timeout.js")
 
 function setImmediate(func, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) {
   return timeout.setTimeout(func, 0, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10)
@@ -117,10 +117,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/@skpm/timers/test-if-fiber.js":
-/*!****************************************************!*\
-  !*** ./node_modules/@skpm/timers/test-if-fiber.js ***!
-  \****************************************************/
+/***/ "./node_modules/_@skpm_timers@0.1.0@@skpm/timers/test-if-fiber.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/_@skpm_timers@0.1.0@@skpm/timers/test-if-fiber.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -131,15 +131,15 @@ module.exports = function () {
 
 /***/ }),
 
-/***/ "./node_modules/@skpm/timers/timeout.js":
-/*!**********************************************!*\
-  !*** ./node_modules/@skpm/timers/timeout.js ***!
-  \**********************************************/
+/***/ "./node_modules/_@skpm_timers@0.1.0@@skpm/timers/timeout.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/_@skpm_timers@0.1.0@@skpm/timers/timeout.js ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* globals coscript, sketch */
-var fiberAvailable = __webpack_require__(/*! ./test-if-fiber */ "./node_modules/@skpm/timers/test-if-fiber.js")
+var fiberAvailable = __webpack_require__(/*! ./test-if-fiber */ "./node_modules/_@skpm_timers@0.1.0@@skpm/timers/test-if-fiber.js")
 
 var setTimeout
 var clearTimeout
@@ -201,10 +201,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/cocoascript-class/lib/index.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/cocoascript-class/lib/index.js ***!
-  \*****************************************************/
+/***/ "./node_modules/_cocoascript-class@0.1.2@cocoascript-class/lib/index.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/_cocoascript-class@0.1.2@cocoascript-class/lib/index.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -217,7 +217,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.SuperCall = undefined;
 exports.default = ObjCClass;
 
-var _runtime = __webpack_require__(/*! ./runtime.js */ "./node_modules/cocoascript-class/lib/runtime.js");
+var _runtime = __webpack_require__(/*! ./runtime.js */ "./node_modules/_cocoascript-class@0.1.2@cocoascript-class/lib/runtime.js");
 
 exports.SuperCall = _runtime.SuperCall;
 
@@ -274,10 +274,10 @@ function getIvar(obj, name) {
 
 /***/ }),
 
-/***/ "./node_modules/cocoascript-class/lib/runtime.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/cocoascript-class/lib/runtime.js ***!
-  \*******************************************************/
+/***/ "./node_modules/_cocoascript-class@0.1.2@cocoascript-class/lib/runtime.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/_cocoascript-class@0.1.2@cocoascript-class/lib/runtime.js ***!
+  \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -389,10 +389,10 @@ addStructToBridgeSupport('objc_super', { type: objc_super_typeEncoding });
 
 /***/ }),
 
-/***/ "./node_modules/promise-polyfill/lib/index.js":
-/*!****************************************************!*\
-  !*** ./node_modules/promise-polyfill/lib/index.js ***!
-  \****************************************************/
+/***/ "./node_modules/_promise-polyfill@8.1.0@promise-polyfill/lib/index.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/_promise-polyfill@8.1.0@promise-polyfill/lib/index.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -657,14 +657,14 @@ Promise._unhandledRejectionFn = function _unhandledRejectionFn(err) {
 
 module.exports = Promise;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@skpm/timers/timeout.js */ "./node_modules/@skpm/timers/timeout.js")["setTimeout"], __webpack_require__(/*! ./node_modules/@skpm/timers/immediate.js */ "./node_modules/@skpm/timers/immediate.js")["setImmediate"]))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/_@skpm_timers@0.1.0@@skpm/timers/timeout.js */ "./node_modules/_@skpm_timers@0.1.0@@skpm/timers/timeout.js")["setTimeout"], __webpack_require__(/*! ./node_modules/_@skpm_timers@0.1.0@@skpm/timers/immediate.js */ "./node_modules/_@skpm_timers@0.1.0@@skpm/timers/immediate.js")["setImmediate"]))
 
 /***/ }),
 
-/***/ "./node_modules/sketch-module-web-view/lib/browser-api.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/sketch-module-web-view/lib/browser-api.js ***!
-  \****************************************************************/
+/***/ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/browser-api.js":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/browser-api.js ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -1284,10 +1284,10 @@ module.exports = function(browserWindow, panel, webview) {
 
 /***/ }),
 
-/***/ "./node_modules/sketch-module-web-view/lib/constants.js":
-/*!**************************************************************!*\
-  !*** ./node_modules/sketch-module-web-view/lib/constants.js ***!
-  \**************************************************************/
+/***/ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/constants.js":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/constants.js ***!
+  \********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -1298,10 +1298,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/sketch-module-web-view/lib/dispatch-first-click.js":
-/*!*************************************************************************!*\
-  !*** ./node_modules/sketch-module-web-view/lib/dispatch-first-click.js ***!
-  \*************************************************************************/
+/***/ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/dispatch-first-click.js":
+/*!*******************************************************************************************************!*\
+  !*** ./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/dispatch-first-click.js ***!
+  \*******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -1333,10 +1333,10 @@ module.exports = function(webView, event) {
 
 /***/ }),
 
-/***/ "./node_modules/sketch-module-web-view/lib/fitSubview.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/sketch-module-web-view/lib/fitSubview.js ***!
-  \***************************************************************/
+/***/ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/fitSubview.js":
+/*!*********************************************************************************************!*\
+  !*** ./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/fitSubview.js ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -1366,22 +1366,22 @@ module.exports = function fitSubviewToView(subview, view, constants) {
 
 /***/ }),
 
-/***/ "./node_modules/sketch-module-web-view/lib/index.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/sketch-module-web-view/lib/index.js ***!
-  \**********************************************************/
+/***/ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/index.js":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/index.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* let's try to match the API from Electron's Browser window
 (https://github.com/electron/electron/blob/master/docs/api/browser-window.md) */
 var EventEmitter = __webpack_require__(/*! events */ "events")
-var buildBrowserAPI = __webpack_require__(/*! ./browser-api */ "./node_modules/sketch-module-web-view/lib/browser-api.js")
-var buildWebAPI = __webpack_require__(/*! ./webview-api */ "./node_modules/sketch-module-web-view/lib/webview-api.js")
-var fitSubviewToView = __webpack_require__(/*! ./fitSubview */ "./node_modules/sketch-module-web-view/lib/fitSubview.js")
-var dispatchFirstClick = __webpack_require__(/*! ./dispatch-first-click */ "./node_modules/sketch-module-web-view/lib/dispatch-first-click.js")
-var injectClientMessaging = __webpack_require__(/*! ./inject-client-messaging */ "./node_modules/sketch-module-web-view/lib/inject-client-messaging.js")
-var setDelegates = __webpack_require__(/*! ./set-delegates */ "./node_modules/sketch-module-web-view/lib/set-delegates.js")
+var buildBrowserAPI = __webpack_require__(/*! ./browser-api */ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/browser-api.js")
+var buildWebAPI = __webpack_require__(/*! ./webview-api */ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/webview-api.js")
+var fitSubviewToView = __webpack_require__(/*! ./fitSubview */ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/fitSubview.js")
+var dispatchFirstClick = __webpack_require__(/*! ./dispatch-first-click */ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/dispatch-first-click.js")
+var injectClientMessaging = __webpack_require__(/*! ./inject-client-messaging */ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/inject-client-messaging.js")
+var setDelegates = __webpack_require__(/*! ./set-delegates */ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/set-delegates.js")
 
 function BrowserWindow(options) {
   options = options || {}
@@ -1701,14 +1701,14 @@ module.exports = BrowserWindow
 
 /***/ }),
 
-/***/ "./node_modules/sketch-module-web-view/lib/inject-client-messaging.js":
-/*!****************************************************************************!*\
-  !*** ./node_modules/sketch-module-web-view/lib/inject-client-messaging.js ***!
-  \****************************************************************************/
+/***/ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/inject-client-messaging.js":
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/inject-client-messaging.js ***!
+  \**********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var CONSTANTS = __webpack_require__(/*! ./constants */ "./node_modules/sketch-module-web-view/lib/constants.js")
+var CONSTANTS = __webpack_require__(/*! ./constants */ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/constants.js")
 
 module.exports = function(webView) {
   var source =
@@ -1737,10 +1737,10 @@ module.exports = function(webView) {
 
 /***/ }),
 
-/***/ "./node_modules/sketch-module-web-view/lib/parseWebArguments.js":
-/*!**********************************************************************!*\
-  !*** ./node_modules/sketch-module-web-view/lib/parseWebArguments.js ***!
-  \**********************************************************************/
+/***/ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/parseWebArguments.js":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/parseWebArguments.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -1767,16 +1767,16 @@ module.exports = function(webArguments) {
 
 /***/ }),
 
-/***/ "./node_modules/sketch-module-web-view/lib/set-delegates.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/sketch-module-web-view/lib/set-delegates.js ***!
-  \******************************************************************/
+/***/ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/set-delegates.js":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/set-delegates.js ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ObjCClass = __webpack_require__(/*! cocoascript-class */ "./node_modules/cocoascript-class/lib/index.js").default
-var parseWebArguments = __webpack_require__(/*! ./parseWebArguments */ "./node_modules/sketch-module-web-view/lib/parseWebArguments.js")
-var CONSTANTS = __webpack_require__(/*! ./constants */ "./node_modules/sketch-module-web-view/lib/constants.js")
+var ObjCClass = __webpack_require__(/*! cocoascript-class */ "./node_modules/_cocoascript-class@0.1.2@cocoascript-class/lib/index.js").default
+var parseWebArguments = __webpack_require__(/*! ./parseWebArguments */ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/parseWebArguments.js")
+var CONSTANTS = __webpack_require__(/*! ./constants */ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/constants.js")
 
 // We create one ObjC class for ourselves here
 var WindowDelegateClass
@@ -2069,10 +2069,10 @@ module.exports = function(browserWindow, panel, webview, options) {
 
 /***/ }),
 
-/***/ "./node_modules/sketch-module-web-view/lib/webview-api.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/sketch-module-web-view/lib/webview-api.js ***!
-  \****************************************************************/
+/***/ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/webview-api.js":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/webview-api.js ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2353,19 +2353,19 @@ module.exports = function buildAPI(browserWindow, panel, webview) {
   browserWindow.webContents = webContents
 }
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/promise-polyfill/lib/index.js */ "./node_modules/promise-polyfill/lib/index.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/_promise-polyfill@8.1.0@promise-polyfill/lib/index.js */ "./node_modules/_promise-polyfill@8.1.0@promise-polyfill/lib/index.js")))
 
 /***/ }),
 
-/***/ "./node_modules/sketch-module-web-view/remote.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/sketch-module-web-view/remote.js ***!
-  \*******************************************************/
+/***/ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/remote.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/remote.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* globals NSThread */
-var BrowserWindow = __webpack_require__(/*! ./lib */ "./node_modules/sketch-module-web-view/lib/index.js")
+var BrowserWindow = __webpack_require__(/*! ./lib */ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/index.js")
 
 var threadDictionary = NSThread.mainThread().threadDictionary()
 
@@ -2448,11 +2448,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sketch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sketch__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sketch/dom */ "sketch/dom");
 /* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sketch_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var sketch_module_web_view__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sketch-module-web-view */ "./node_modules/sketch-module-web-view/lib/index.js");
+/* harmony import */ var sketch_module_web_view__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sketch-module-web-view */ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/lib/index.js");
 /* harmony import */ var sketch_module_web_view__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sketch_module_web_view__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _lib_config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./lib/config */ "./src/lib/config.js");
 /* harmony import */ var _lib_config__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_lib_config__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! sketch-module-web-view/remote */ "./node_modules/sketch-module-web-view/remote.js");
+/* harmony import */ var sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! sketch-module-web-view/remote */ "./node_modules/_sketch-module-web-view@2.1.7@sketch-module-web-view/remote.js");
 /* harmony import */ var sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_4__);
 
 

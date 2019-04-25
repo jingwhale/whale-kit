@@ -91,10 +91,10 @@ var exports =
 /************************************************************************/
 /******/ ({
 
-/***/ "./node_modules/whale-qrcode/qrcode.js":
-/*!*********************************************!*\
-  !*** ./node_modules/whale-qrcode/qrcode.js ***!
-  \*********************************************/
+/***/ "./node_modules/_whale-qrcode@1.0.0@whale-qrcode/qrcode.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/_whale-qrcode@1.0.0@whale-qrcode/qrcode.js ***!
+  \*****************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -377,7 +377,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return onRun; });
 /* harmony import */ var sketch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sketch */ "sketch");
 /* harmony import */ var sketch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sketch__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var whale_qrcode__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! whale-qrcode */ "./node_modules/whale-qrcode/qrcode.js");
+/* harmony import */ var whale_qrcode__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! whale-qrcode */ "./node_modules/_whale-qrcode@1.0.0@whale-qrcode/qrcode.js");
 /* harmony import */ var sketch_ui__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sketch/ui */ "sketch/ui");
 /* harmony import */ var sketch_ui__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sketch_ui__WEBPACK_IMPORTED_MODULE_2__);
 
