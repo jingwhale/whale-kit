@@ -1,0 +1,94 @@
+.body{
+  padding: 10px 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif,
+  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  display: inline-block;
+  width: 620px;
+}
+.chart{
+  width: 300px;
+  float: left;
+  margin-right: 20px;
+}
+
+.chart img{
+  width: 100%;
+}
+
+.content{
+  width: 300px;
+  float: left;
+}
+.item{
+  margin-top: 20px;
+  overflow:hidden
+}
+
+.radarChartTitle{
+  text-align: left;
+}
+.inputCss{
+  width: 220px;
+}
+
+.radarChartTitle{
+  display: inline-block;
+  width: 50px;
+  text-align: right;
+  margin-right: 6px;
+  font-weight: 500;
+}
+.seriesTitle{
+  display: block;
+  width: 50px;
+  text-align: left;
+  margin-left: 8px;
+  float: left;
+  font-weight: 500;
+}
+.seriesItem{
+  margin-top: 10px;
+}
+
+.seriesItem .close{
+  position: relative;
+  cursor: pointer;
+  padding: 0 6px;
+  color: #999;
+}
+
+.seriesItem .close:hover{
+  color: #096dd9;
+}
+
+.series{
+  width: 240px;
+  float: left;
+}
+.addSeries{
+  text-align: left;
+  margin-top: 10px;
+  font-weight: 500;
+  margin-left: 20px;
+}
+.seriesName{
+  display: inline-block;
+  width: 70px;
+  margin-right: 3px;
+}
+
+.seriesData{
+  display: inline-block;
+  width: 146px;
+}
+
+.buttons{
+  text-align: right;
+  margin-right: 2px;
+  margin-top: 10px;
+}
+
+.seriesDataItems{
+  max-height: 153px;
+  overflow: auto;
+}

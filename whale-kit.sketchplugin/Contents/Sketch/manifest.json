@@ -70,6 +70,13 @@
       "identifier": "sketch-webview-kit.my-command10",
       "script": "generateCover.js",
       "handler": "onRun"
+    },
+    {
+      "name": "Generate Radar Chart",
+      "shortcut": "ctrl shift option s",
+      "identifier": "sketch-webview-kit.my-command11",
+      "script": "generateRadarChart.js",
+      "handler": "onRun"
     }
   ],
   "menu": {
@@ -90,7 +97,9 @@
       "sketch-webview-kit.my-command4",
       "sketch-webview-kit.my-command7",
       "-",
-      "sketch-webview-kit.my-command10"
+      "sketch-webview-kit.my-command10",
+      "-",
+      "sketch-webview-kit.my-command11"
     ]
   },
   "version": "0.3.1",
