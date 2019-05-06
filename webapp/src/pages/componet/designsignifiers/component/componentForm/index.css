@@ -8,21 +8,3 @@
   height: 100px;
   background-color: #096dd9;
 }
-.tabContent{
-  width: 800px;
-  margin: 0 auto;
-}
-
-.testTitle{
-  color: #313336;
-  font-size: 16px;
-}
-
-.testcontent{
-  color: #333;
-  font-size: 14px;
-}
-
-.mytest{
-  text-align: left;
-}
