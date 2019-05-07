@@ -17,10 +17,10 @@ class AboutAndHelpUI extends React.Component {
           <Title level={3}>About</Title>
           <div className={styles.paragraph}>
             <Paragraph>
-              <Text code>Whale 交互标注系统</Text> 是一个基于<a href="https://fusion.design/18642/" target="_blank"> Whale Design </a>高效设计的交互标注体系。它将交互的细节标注化，设计师只需要填写页面设计的具体要求，就可以快速的生成日常的交互说明。
+              Whale 交互标注系统 <Text code>Design Signifiers</Text> 是一个基于<a href="https://fusion.design/18642/" target="_blank"> Whale Design </a>高效设计的交互标注体系。它将交互的细节标注化，设计师只需要填写页面设计的具体要求，就可以快速的生成日常的交互说明。
             </Paragraph>
             <Paragraph>
-              <Text code>Whale 交互标注系统</Text> 目前包括<Text code>页面交互标注</Text> 与 <Text code>组件交互标注</Text>，来帮助业务快速设计出高质量的产品原型。
+              <Text code>Design Signifiers</Text> 目前包括<Text code>页面交互标注</Text> 与 <Text code>组件交互标注</Text>，来帮助业务快速设计出高质量的产品原型。
             </Paragraph>
           </div>
           <Title level={4}>组件交互标注</Title>
@@ -75,6 +75,12 @@ class AboutAndHelpUI extends React.Component {
                 <p>其他标注</p>
               </Panel>
             </Collapse>
+          </div>
+          <Title level={4}>安全性</Title>
+          <div className={styles.paragraph}>
+            <Paragraph>
+              <Text code>Design Signifiers</Text> 使用浏览器内存进行算法与数据处理，不会保存任何用户数据。
+            </Paragraph>
           </div>
         </Typography>
       </div>

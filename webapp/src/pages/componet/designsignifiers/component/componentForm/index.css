@@ -16,7 +16,7 @@
 }
 .button{
   position: fixed;
-  right: 200px;
+  right: 100px;
   bottom: 30px;
   z-index: 999;
 }
