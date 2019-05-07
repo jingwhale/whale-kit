@@ -1,9 +1,12 @@
 import { pageDataTemplate, getDataFormTemplate, changeDataFormTemplate, showDataFormTemplate, functionDataFormTemplate } from "./signifiersTemplate.js";
 
-var lastY = 20;
+
+var defaultLastY = 16;
+var lastY = defaultLastY;
 const lineHeight = 20;
 const svgHead = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="2000">';
 const caption = '<text font-size="15" x="10" y="20" fill="#000">交互说明：</text>';
+const captionPage = '<text font-size="15" x="10" y="20" fill="#000">页面说明：</text>';
 const svgTail = '</svg>';
 const Heading1 = 'Heading1';
 const Heading2 = 'Heading2';
@@ -14,10 +17,10 @@ const designsignifiers = (values,type) =>{
   var templateString = "";
   switch (type) {
     case "page":
-      templateString = pageSignifiers(values);
+      templateString = pageSignifiers(values,type);
       break;
     case "component":
-      templateString = componentSignifiers(values);
+      templateString = componentSignifiers(values,type);
       break;
   }
   return templateString;
@@ -31,10 +34,10 @@ const getBLen = function(str) {//一个汉字2个字符
   return str.replace(/[^\x00-\xff]/g,"01").length;
 };
 
-const pageSignifiers  = (values) =>{
+const pageSignifiers  = (values,type) =>{
   var svgData = pageDataTemplate(values);
 
-  return getSvgXml(svgData);
+  return getSvgXml(svgData,type);
 };
 
 const svgContent = (svgData,HeadType) => {
@@ -47,12 +50,14 @@ const svgContent = (svgData,HeadType) => {
   return svg;
 };
 
-const getSvgXml = (svgData) => {
+const getSvgXml = (svgData,type) => {
   var svg = svgContent(svgData,Heading1);
 
-  var svgXml = svgHead + caption + svg + svgTail;
+  var realCaption = (type=="page") ? captionPage : caption;
 
-  lastY = 0;
+  var svgXml = svgHead + realCaption + svg + svgTail;
+
+  lastY = defaultLastY;
 
   return svgXml;
 };
@@ -132,7 +137,7 @@ const wrapWord = (cnt) => {
 };
 
 
-const componentSignifiers = (values) =>{
+const componentSignifiers = (values,type) =>{
   var svgData = [];
 
   values.forEach((value,index) => {
@@ -159,7 +164,7 @@ const componentSignifiers = (values) =>{
 
   });
 
-  return getSvgXml(svgData);
+  return getSvgXml(svgData,type);
 };
 
 export default designsignifiers;

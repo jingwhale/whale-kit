@@ -3,7 +3,6 @@ import { Form, Input, Tabs, Modal, Radio, Tooltip, Icon, Divider} from 'antd';
 import styles from './index.css'
 import functionDataFormTemp from './dataTemplate.js';
 
-
 const { TextArea } = Input;
 
 const formItemLayout = {

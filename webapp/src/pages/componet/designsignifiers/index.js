@@ -77,7 +77,7 @@ export default class IndexUI extends PureComponent {
               <MainFormUI  id="MainFormUI" handleEmail={this.handleEmail.bind(this)}/>
             </div>
           </TabPane>
-          <TabPane tab="about & help" key="3">
+          <TabPane tab="帮助" key="3">
             <div className={styles.tabContent}>
               <AboutAndHelpUI  id="AboutAndHelpUI" />
             </div>

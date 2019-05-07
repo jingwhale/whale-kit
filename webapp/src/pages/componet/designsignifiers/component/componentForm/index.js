@@ -18,7 +18,7 @@ const radioOptions = [
   { label: '功能', value: '功能'},
 ];
 
-var currentFormTemp = getDataFormTemp;
+var currentFormTemp = JSON.parse(JSON.stringify(getDataFormTemp));
 
 class ComponentFormUI extends React.Component {
   constructor(props) {
@@ -92,6 +92,8 @@ class ComponentFormUI extends React.Component {
       }
     }
 
+    debugger
+
     var formType = this.state.formType;
     var radioValue = this.state.radioValue;
 
@@ -119,7 +121,6 @@ class ComponentFormUI extends React.Component {
     var formType = this.state.formType;
     const activeKey = `${this.newTabIndex++}`;
     panes.push({ title: '标注 '+activeKey, key: activeKey, type:this.state.radioValue});
-
     dataAll.push(currentFormTemp);
 
     formType = this.state.radioValue;
@@ -156,19 +157,19 @@ class ComponentFormUI extends React.Component {
 
     switch (e.target.value) {
       case '获得数据':
-        currentFormTemp = getDataFormTemp;
+        currentFormTemp = JSON.parse(JSON.stringify(getDataFormTemp));
         break;
       case '改变数据项':
-        currentFormTemp = changeDataFormTemp;
+        currentFormTemp = JSON.parse(JSON.stringify(changeDataFormTemp));
         break;
       case '展示数据':
-        currentFormTemp = showDataFormTemp;
+        currentFormTemp = JSON.parse(JSON.stringify(showDataFormTemp));
         break;
       case '功能':
-        currentFormTemp = functionDataFormTemp;
+        currentFormTemp = JSON.parse(JSON.stringify(functionDataFormTemp));
         break;
       default:
-        currentFormTemp = getDataFormTemp;
+        currentFormTemp = JSON.parse(JSON.stringify(getDataFormTemp));
     }
   };
 

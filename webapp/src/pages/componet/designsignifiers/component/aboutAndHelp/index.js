@@ -14,10 +14,10 @@ class AboutAndHelpUI extends React.Component {
     return (
       <div className={styles.body}>
         <Typography>
-          <Title level={3}>About</Title>
+          <Title level={3}>关于</Title>
           <div className={styles.paragraph}>
             <Paragraph>
-              Whale 交互标注系统 <Text code>Design Signifiers</Text> 是一个基于<a href="https://fusion.design/18642/" target="_blank"> Whale Design </a>高效设计的交互标注体系。它将交互的细节标注化，设计师只需要填写页面设计的具体要求，就可以快速的生成日常的交互说明。
+              高效交互标注系统 <Text code>Design Signifiers</Text> 是一个基于<a href="https://fusion.design/18642/" target="_blank"> Whale Design </a>高效设计的交互标注体系。它将交互的细节标注化，设计师只需要填写页面设计的具体要求，就可以快速的生成日常的交互说明。
             </Paragraph>
             <Paragraph>
               <Text code>Design Signifiers</Text> 目前包括<Text code>页面交互标注</Text> 与 <Text code>组件交互标注</Text>，来帮助业务快速设计出高质量的产品原型。
@@ -26,7 +26,7 @@ class AboutAndHelpUI extends React.Component {
           <Title level={4}>组件交互标注</Title>
           <div className={styles.paragraph}>
             <Paragraph>
-              <Text code>页面交互标注</Text> 包括<Text code>获得数据</Text> 、 <Text code>改变数据项</Text> 、 <Text code>展示数据</Text> 、 <Text code>功能</Text>，四种类型，每种类型包含基本标注项如下：
+              <Text code>页面交互标注</Text> 包括 <Text code>获得数据</Text> 、 <Text code>改变数据项</Text> 、 <Text code>展示数据</Text> 、 <Text code>功能</Text>，四种类型，每种类型包含基本标注项如下：
             </Paragraph>
             <Collapse>
               <Panel header="值" key="1">
