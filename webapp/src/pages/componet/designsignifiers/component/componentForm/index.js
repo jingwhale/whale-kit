@@ -1,298 +1,240 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {
-  Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete, Radio
-} from 'antd';
+import { Tabs, Modal, Radio, Button } from 'antd';
+import styles from './index.css';
+import { GetDataFormUI, getDataFormTemp } from './component/getDataForm/index.js';
+import { ChangeDataFormUI, changeDataFormTemp } from './component/changeDataForm/index.js';
+import { ShowDataFormUI, showDataFormTemp } from './component/showDataForm/index.js';
+import { FunctionDataFormUI, functionDataFormTemp } from './component/functionDataForm/index.js';
 
 
-const { TextArea } = Input;
+const TabPane = Tabs.TabPane;
+const confirm = Modal.confirm;
+const RadioGroup = Radio.Group;
 
-const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
+const radioOptions = [
+  { label: '获得数据', value: '获得数据' },
+  { label: '改变数据项', value: '改变数据项' },
+  { label: '展示数据', value: '展示数据' },
+  { label: '功能', value: '功能'},
+];
 
-class RegistrationForm extends React.Component {
-  state = {
-    confirmDirty: false,
-    autoCompleteResult: [],
-    value:"i am test!\n" +
-    "niho"
+var currentFormTemp = getDataFormTemp;
+
+class ComponentFormUI extends React.Component {
+  constructor(props) {
+    super(props);
+    this.newTabIndex = 1;
+    const panes = [
+      { title: '标注 0',  key: '0', type:"获得数据" }
+    ];
+    const  dataAll = [];
+    dataAll.push(currentFormTemp);
+    this.state = {
+      svgHtmlString:"",
+      drawerVisible:false,
+      addTabModalVisible: false,
+      activeKey: panes[0].key,
+      panes,
+      dataAll,
+      radioValue:"获得数据",
+      formType: "获得数据"//1、getDataForm；2、changeDataForm
+    };
+  }
+
+  handleFormChange = (changedFields) => {
+    var dataAll = this.state.dataAll;
+    var activeKey = this.state.activeKey;
+
+    dataAll[activeKey] = { ...dataAll[activeKey], ...changedFields };
+
+    this.setState({dataAll});
   };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    var that = this;
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        var url = values.prefixBefore+values.url+values.prefixAfter;
-        values.url = url;
-        console.log('Received values of form: ', values);
-        that.props.handleEmail(values,"page");
+  onTabChange = (activeKey) => {
+    var formType = this.state.formType;
+    const panes = this.state.panes;
+
+    panes.forEach((pane,index) => {
+      if (pane.key === activeKey) {
+        formType = pane.type
       }
+    });
+
+    this.setState({ activeKey, formType});
+  };
+
+  onTabEdit = (targetKey, action) => {
+    this[action](targetKey);
+  }
+
+  add = () => {
+    this.showAddTabModal();
+  };
+
+  remove = (targetKey) => {
+    this.showConfirm(targetKey);
+  };
+
+  removeTab = (targetKey) => {
+    let activeKey = this.state.activeKey;
+    let lastIndex;
+    this.state.panes.forEach((pane, i) => {
+      if (pane.key === targetKey) {
+        lastIndex = i - 1;
+      }
+    });
+    const panes = this.state.panes.filter(pane => pane.key !== targetKey);
+    if (panes.length && activeKey === targetKey) {
+      if (lastIndex >= 0) {
+        activeKey = panes[lastIndex].key;
+      } else {
+        activeKey = panes[0].key;
+      }
+    }
+
+    var formType = this.state.formType;
+    var radioValue = this.state.radioValue;
+
+    panes.forEach((pane,index) => {
+      if (pane.key === activeKey) {
+        formType = pane.type
+      }
+    });
+
+    radioValue = formType;
+    var dataAll = this.state.dataAll;
+    dataAll[targetKey].flagDel = true;
+    this.setState({ panes, activeKey, formType, radioValue, dataAll});
+  };
+
+  showAddTabModal = () => {
+    this.setState({
+      addTabModalVisible: true,
     });
   };
 
-  handleConfirmBlur = (e) => {
-    const value = e.target.value;
-    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+  handleAddTabOk = () => {
+    const panes = this.state.panes;
+    const dataAll = this.state.dataAll;
+    var formType = this.state.formType;
+    const activeKey = `${this.newTabIndex++}`;
+    panes.push({ title: '标注 '+activeKey, key: activeKey, type:this.state.radioValue});
+
+    dataAll.push(currentFormTemp);
+
+    formType = this.state.radioValue;
+
+    this.setState({ panes, activeKey, formType, dataAll, addTabModalVisible:false });
   }
 
-  handleWebsiteChange = (value) => {
-    let autoCompleteResult;
-    if (!value) {
-      autoCompleteResult = [];
-    } else {
-      autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
+  handleAddTabCancel = () => {
+    console.log('Clicked cancel button');
+    this.setState({
+      addTabModalVisible: false,
+    });
+  };
+
+  showConfirm = (targetKey) => {
+    var that = this;
+    confirm({
+      title: '删除标注 '+targetKey,
+      content: '确定要删除标注 '+targetKey+'吗？',
+      onOk() {
+        that.removeTab(targetKey);
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  };
+
+  onRadioChange = (e) => {
+    console.log('radio2 checked', e.target.value);
+    this.setState({
+      radioValue:e.target.value
+    });
+
+    switch (e.target.value) {
+      case '获得数据':
+        currentFormTemp = getDataFormTemp;
+        break;
+      case '改变数据项':
+        currentFormTemp = changeDataFormTemp;
+        break;
+      case '展示数据':
+        currentFormTemp = showDataFormTemp;
+        break;
+      case '功能':
+        currentFormTemp = functionDataFormTemp;
+        break;
+      default:
+        currentFormTemp = getDataFormTemp;
     }
-    this.setState({ autoCompleteResult });
+  };
+
+  makeSignifiers = (e) => {
+    var svgHtmlString = this.props.handleEmail(this.state.dataAll,"component");
+
   };
 
   render() {
-    const { getFieldDecorator } = this.props.form;
+    const dataAll = this.state.dataAll;
+    const activeKey = this.state.activeKey;
 
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 6 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 },
-      },
-    };
-    const tailFormItemLayout = {
-      wrapperCol: {
-        xs: {
-          span: 24,
-          offset: 0,
-        },
-        sm: {
-          span: 16,
-          offset: 13,
-        },
-      },
-    };
-
-    const prefixBefore = getFieldDecorator('prefixBefore', {
-      initialValue: 'http://',
-    })(
-      <Select style={{ width: 90 }}>
-        <Option value="http://">http://</Option>
-        <Option value="https://">https://</Option>
-      </Select>
-    );
-
-    const prefixAfter = getFieldDecorator('prefixAfter', {
-      initialValue: '.com',
-    })(
-      <Select style={{ width: 75 }}>
-        <Option value=".com">.com</Option>
-        <Option value=".cn">.cn</Option>
-        <Option value=".org">.org</Option>
-      </Select>
-    );
+    let dynamicForm;
+    if(this.state.formType=="获得数据"){
+      dynamicForm = (
+        <div>
+          <GetDataFormUI {...dataAll[activeKey]} onChange={this.handleFormChange} />
+        </div>
+      );
+    }else if(this.state.formType=="改变数据项"){
+      dynamicForm = (
+        <div>
+          <ChangeDataFormUI {...dataAll[activeKey]} onChange={this.handleFormChange} />
+        </div>
+      );
+    }else if(this.state.formType=="展示数据"){
+      dynamicForm = (
+        <div>
+          <ShowDataFormUI {...dataAll[activeKey]} onChange={this.handleFormChange} />
+        </div>
+      );
+    }else if(this.state.formType=="功能"){
+      dynamicForm = (
+        <div>
+          <FunctionDataFormUI {...dataAll[activeKey]} onChange={this.handleFormChange} />
+        </div>
+      );
+    }
 
     return (
-      <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-        <Form.Item
-          label={(
-            <span>
-              页面Url&nbsp;
-              <Tooltip title="页面Url规则：https://theme-action.html">
-                <Icon type="question-circle-o" />
-              </Tooltip>
-            </span>
-          )}
+      <div>
+        <Tabs
+          onChange={this.onTabChange}
+          activeKey={this.state.activeKey}
+          type="editable-card"
+          onEdit={this.onTabEdit}
+          tabPosition={"left"}
         >
-          {getFieldDecorator('url', {
-            rules: [{required: false, message: '请输入页面的Url!'}],
-          })(
-            <Input addonBefore={prefixBefore} addonAfter={prefixAfter} type="string" />
-          )}
-        </Form.Item>
-        <Form.Item
-          label="页面Title"
+          {this.state.panes.map(pane => <TabPane tab={pane.title} key={pane.key} closable={pane.closable}>{dynamicForm}</TabPane>)}
+        </Tabs>
+        <div className={styles.button}>
+          <Button type="primary" onClick={this.makeSignifiers}>生成组件标注</Button>
+        </div>
+        <Modal
+          title="添加标注"
+          visible={this.state.addTabModalVisible}
+          onOk={this.handleAddTabOk}
+          onCancel={this.handleAddTabCancel}
         >
-          {getFieldDecorator('title', {
-            rules: [{
-              required: false, message: '请输入页面的Title!',
-            }],
-          })(
-            <Input type="string" />
-          )}
-        </Form.Item>
-        <Form.Item
-          label="页面Ico"
-        >
-          {getFieldDecorator('ico', {
-            rules: [{
-              required: false, message: '请添加页面Ico!',
-            }],
-          })(
-            <Input onBlur={this.handleConfirmBlur} />
-          )}
-        </Form.Item>
-        <Form.Item
-          label={(
-            <span>
-              页面SEO-Keywords&nbsp;
-              <Tooltip title="What do you want others to call you?">
-                <Icon type="question-circle-o" />
-              </Tooltip>
-            </span>
-          )}
-        >
-          {getFieldDecorator('keywords', {
-            rules: [{ required: false, message: '请添加页面SEO-Keywords!', whitespace: true}],
-          })(
-            <Input />
-          )}
-        </Form.Item>
-        <Form.Item
-          label={(
-            <span>
-              页面SEO-Description&nbsp;
-              <Tooltip title="What do you want others to call you?">
-                <Icon type="question-circle-o" />
-              </Tooltip>
-            </span>
-          )}
-        >
-          {getFieldDecorator('description', {
-            rules: [{ required: false, message: '请填写页面SEO-Description&!', whitespace: true }],
-          })(
-            <Input />
-          )}
-        </Form.Item>
-        <Form.Item
-          label={(
-            <span>
-              页面权限&nbsp;
-              <Tooltip title="What do you want others to call you?">
-                <Icon type="question-circle-o" />
-              </Tooltip>
-            </span>
-          )}
-        >
-          {getFieldDecorator('permission', {
-            rules: [
-              { required: false, message: '请选择页面访问的权限!', type: 'array' },
-            ],
-          })(
-            <Select mode="multiple" placeholder="Please select favourite colors">
-              <Option value="permission1">用户通用权限</Option>
-              <Option value="permission2">开发通用权限</Option>
-              <Option value="permission3">运营通用权限</Option>
-            </Select>
-          )}
-        </Form.Item>
-        <Form.Item
-          label="页面状态"
-        >
-          {getFieldDecorator('state', {
-            rules: [{ required: false, message: '请选择当前页面的状态!' }],
-          })(
-            <Radio.Group>
-              <Radio value="正常访问">正常访问</Radio>
-              <Radio value="网络状态不佳">网络状态不佳</Radio>
-              <Radio value="无权限">无权限</Radio>
-              <Radio value="404">404</Radio>
-            </Radio.Group>
-          )}
-        </Form.Item>
-        <Form.Item
-          label="页面状态描述"
-        >
-          {getFieldDecorator('stateDescription', {
-            rules: [{ required: false, message: '请添加页面状态描述!' }],
-          })(
-            <AutoComplete
-              onChange={this.handleWebsiteChange}
-              placeholder="无权限时跳转到无权限页面，页面找不到时显示404页面，网络不佳时显示网络不佳状态提醒"
-            >
-              <Input />
-            </AutoComplete>
-          )}
-        </Form.Item>
-        <Form.Item
-          label="页面跳转-页面的入口"
-        >
-          {getFieldDecorator('linkin', {
-            rules: [{ required: false, message: '请添加页面的入口!' }],
-          })(
-            <AutoComplete
-              onChange={this.handleWebsiteChange}
-              placeholder="页面跳转-页面的入口"
-            >
-              <Input />
-            </AutoComplete>
-          )}
-        </Form.Item>
-        <Form.Item
-          label="页面跳转-页面的出口"
-        >
-          {getFieldDecorator('linkout', {
-            rules: [{ required: false, message: '请添加页面的出口!' }],
-          })(
-            <AutoComplete
-              onChange={this.handleWebsiteChange}
-              placeholder="页面跳转-页面的出口"
-            >
-              <Input />
-            </AutoComplete>
-          )}
-        </Form.Item>
-        <Form.Item
-          label={(
-            <span>
-              兼容性&nbsp;
-              <Tooltip title="What do you want others to call you?">
-                <Icon type="question-circle-o" />
-              </Tooltip>
-            </span>
-          )}
-        >
-          {getFieldDecorator('compatibility', {
-            rules: [
-              { required: false, message: '请选择页面的兼容性!', type: 'array' },
-            ],
-          })(
-            <Select mode="multiple" placeholder="请选择页面的兼容性">
-              <Option value="IE6+">IE6+</Option>
-              <Option value="IE8+">IE8+</Option>
-              <Option value="IOS12.1">IOS12.1</Option>
-            </Select>
-          )}
-        </Form.Item>
-        <Form.Item
-          label={(
-            <span>
-              其他&nbsp;
-              <Tooltip title="What do you want others to call you?">
-                <Icon type="question-circle-o" />
-              </Tooltip>
-            </span>
-          )}
-        >
-          {getFieldDecorator('other', {
-            rules: [{ required: false, message: '其他说明' }],
-          })(
-            <AutoComplete
-              onChange={this.handleWebsiteChange}
-              placeholder="其他说明"
-            >
-              <TextArea autosize={{ minRows: 8, maxRows: 100 }} />
-            </AutoComplete>
-          )}
-        </Form.Item>
-        <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">生成标注</Button>
-        </Form.Item>
-      </Form>
+          <RadioGroup options={radioOptions} onChange={this.onRadioChange} value={this.state.radioValue} />
+        </Modal>
+      </div>
     );
   }
 }
 
-const WrappedRegistrationForm = Form.create({ name: 'register' })(RegistrationForm);
+export default ComponentFormUI;
 
-export default WrappedRegistrationForm;
 

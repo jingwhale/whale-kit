@@ -3,14 +3,14 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif,
   "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
-.tabLeft{
-  width: 60px;
-  height: 100px;
+.left{
+  width: 100px;
   background-color: #096dd9;
+  height: 800px;
+  float: left;
+  margin-right: 50px;
 }
-.button{
-  position: fixed;
-  right: 200px;
-  bottom: 30px;
-  z-index: 999;
+.right{
+  width: 650px;
+  float: left;
 }

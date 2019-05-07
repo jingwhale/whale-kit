@@ -1,0 +1,258 @@
+const pageDataTemplate = (values) =>{
+  var pageDataObj = [
+    {
+      title:"页面Url",
+      value:values.url
+    },
+    {
+      title:"页面Title",
+      value:values.title
+    },
+    {
+      title:"页面Ico",
+      value:values.ico
+    },
+    {
+      flag:true,
+      title:"页面SEO",
+      value:[
+        {
+          title:"SEO-Keywords",
+          value:values.keywords
+        },
+        {
+          title:"SEO-Description",
+          value:values.description
+        }
+      ]
+    },
+    {
+      flag:true,
+      title:"页面状态",
+      value:[
+        {
+          title:"页面状态",
+          value:values.state
+        },
+        {
+          title:"页面状态描述",
+          value:values.stateDescription
+        },
+      ]
+    },
+    {
+      flag:true,
+      title:"页面跳转",
+      value:[
+        {
+          title:"页面的入口",
+          value:values.linkin
+        },
+        {
+          title:"页面的出口",
+          value:values.linkout
+        },
+      ]
+    },
+    {
+      title:"页面权限",
+      value:values.permission
+    },
+    {
+      title:"兼容性",
+      value:values.compatibility
+    },
+    {
+      title:"其他",
+      value:values.other
+    }
+  ];
+  return pageDataObj;
+};
+
+const getDataFormTemplate = (values) =>{
+  var dataFormObj = {
+  flag:true,
+  title:values.title.value,
+  value:[
+    {
+      title:"字段类型",
+      value:values.paramType.value
+    },
+    {
+      title:"字段是否必填",
+      value:values.paramIsNeed.value
+    },
+    {
+      title:"字段是否为空",
+      value:values.paramIsNull.value
+    },
+    {
+      title:"字段规则",
+      value:values.paramRule.value
+    },
+    {
+      title:"校验规则与错误提示",
+      value:values.paramDoRule.value
+    },
+    {
+      title:"默认状态",
+      value:values.paramDefaultState.value
+    },
+    {
+      title:"当前状态",
+      value:values.paramCurrentState.value
+    },
+    {
+      title:"各种状态描述",
+      value:values.paramStateDes.value
+    },
+    {
+      title:"事件触发与触发效果",
+      value:values.eventDec.value
+    },
+    {
+      title:"其他",
+      value:values.other.value
+    }
+  ]
+};
+
+  return dataFormObj;
+};
+
+const changeDataFormTemplate = (values) =>{
+  var dataFormObj = {
+    flag:true,
+    title:values.title.value,
+    value:[
+      {
+        title:"选项值罗列",
+        value:values.valueList.value
+      },
+      {
+        title:"字段是否必选",
+        value:values.paramIsNeed.value
+      },
+      {
+        title:"校验规则与错误提示",
+        value:values.paramDoRule.value
+      },
+      {
+        title:"默认状态",
+        value:values.paramDefaultState.value
+      },
+      {
+        title:"当前状态",
+        value:values.paramCurrentState.value
+      },
+      {
+        title:"各种状态描述",
+        value:values.paramStateDes.value
+      },
+      {
+        title:"事件触发与触发效果",
+        value:values.eventDec.value
+      },
+      {
+        title:"其他",
+        value:values.other.value
+      }
+    ]
+  };
+
+  return dataFormObj;
+};
+
+const showDataFormTemplate = (values) =>{
+  var dataFormObj = {
+    flag:true,
+    title:values.title.value,
+    value:[
+      {
+        title:"字段类型",
+        value:values.paramType.value
+      },
+      {
+        title:"字段显示规则",
+        value:values.paramRule.value
+      },
+      {
+        title:"字段为空时显示（默认值）",
+        value:values.paramDefault.value
+      },
+      {
+        title:"默认状态",
+        value:values.paramDefaultState.value
+      },
+      {
+        title:"当前状态",
+        value:values.paramCurrentState.value
+      },
+      {
+        title:"各种状态描述",
+        value:values.paramStateDes.value
+      },
+      {
+        title:"事件触发与触发效果",
+        value:values.eventDec.value
+      },
+      {
+        title:"其他",
+        value:values.other.value
+      }
+    ]
+  };
+
+  return dataFormObj;
+};
+
+const functionDataFormTemplate = (values) =>{
+  var dataFormObj = {
+    flag:true,
+    title:values.title.value,
+    value:[
+      {
+        title:"按钮显示值",
+        value:values.valueList.value
+      },
+      {
+        title:"是否校验其他数据",
+        value:values.isDoRule.value
+      },
+      {
+        title:"校验规则与错误提示",
+        value:values.paramDoRule.value
+      },
+      {
+        title:"默认状态",
+        value:values.paramDefaultState.value
+      },
+      {
+        title:"当前状态",
+        value:values.paramCurrentState.value
+      },
+      {
+        title:"各种状态描述",
+        value:values.paramStateDes.value
+      },
+      {
+        title:"事件触发与触发效果",
+        value:values.eventDec.value
+      },
+      {
+        title:"其他",
+        value:values.other.value
+      }
+    ]
+  };
+
+  return dataFormObj;
+};
+export {
+  pageDataTemplate,
+  getDataFormTemplate,
+  changeDataFormTemplate,
+  showDataFormTemplate,
+  functionDataFormTemplate
+}

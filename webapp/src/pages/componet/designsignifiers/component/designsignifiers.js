@@ -1,3 +1,5 @@
+import { pageDataTemplate, getDataFormTemplate, changeDataFormTemplate, showDataFormTemplate, functionDataFormTemplate } from "./signifiersTemplate.js";
+
 var lastY = 20;
 const lineHeight = 20;
 const svgHead = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="2000">';
@@ -15,9 +17,9 @@ const designsignifiers = (values,type) =>{
       templateString = pageSignifiers(values);
       break;
     case "component":
-      componentSignifiers(values);
+      templateString = componentSignifiers(values);
       break;
-  };
+  }
   return templateString;
 };
 
@@ -29,80 +31,8 @@ const getBLen = function(str) {//一个汉字2个字符
   return str.replace(/[^\x00-\xff]/g,"01").length;
 };
 
-const formatData = (values) =>{
-  var titleObj = [
-    {
-      title:"页面Url",
-      value:values.url
-    },
-    {
-      title:"页面Title",
-      value:values.title
-    },
-    {
-      title:"页面Ico",
-      value:values.ico
-    },
-    {
-      flag:true,
-      title:"页面SEO",
-      value:[
-        {
-          title:"SEO-Keywords",
-          value:values.keywords
-        },
-        {
-          title:"SEO-Description",
-          value:values.description
-        }
-      ]
-    },
-    {
-      flag:true,
-      title:"页面状态",
-      value:[
-        {
-          title:"页面状态",
-          value:values.state
-        },
-        {
-          title:"页面状态描述",
-          value:values.stateDescription
-        },
-      ]
-    },
-    {
-      flag:true,
-      title:"页面跳转",
-      value:[
-        {
-          title:"页面的入口",
-          value:values.linkin
-        },
-        {
-          title:"页面的出口",
-          value:values.linkout
-        },
-      ]
-    },
-    {
-      title:"页面权限",
-      value:values.permission
-    },
-    {
-      title:"兼容性",
-      value:values.compatibility
-    },
-    {
-      title:"其他",
-      value:values.other
-    }
-  ];
-  return titleObj;
-};
-
 const pageSignifiers  = (values) =>{
-  var svgData = formatData(values);
+  var svgData = pageDataTemplate(values);
 
   return getSvgXml(svgData);
 };
@@ -112,7 +42,6 @@ const svgContent = (svgData,HeadType) => {
 
   svgData.forEach((value,index) => {
     svg += svgString(value,index,HeadType);
-    console.log(index);
   });
 
   return svg;
@@ -152,11 +81,12 @@ const svgString = (value,index,HeadType) => {
 };
 
 const textHead = (value,index,HeadType) => {
-  var order = (HeadType=="Heading1") ? (index+1+'、'):(index+1+'）、');
+  var order = (HeadType=="Heading1") ? (index+1+'、'):(index+1+')、');
+  var fontSize = (HeadType=="Heading1") ? 14:12;
   var title = order + value.title;
   var distY = (HeadType==Heading1)?(lastY+lineHeight*2):(lastY+lineHeight);
   lastY = distY;
-  var head = '<text font-size="14" x="10" y='+'"'+distY+'"'+' fill="#333">'+title+'</text>';
+  var head = '<text font-size='+'"'+fontSize+'"'+' x="10" y='+'"'+distY+'"'+' fill="#333">'+title+'</text>';
   return head;
 };
 
@@ -177,14 +107,14 @@ const textContent = (value,index) => {
   }else{
     var distY = lastY+lineHeight;
     lastY = distY;
-    content = '<text font-size="14" x="10" y='+'"'+distY+'"'+' fill="#666">'+cnt+'</text>';
+    content = '<text font-size="12" x="10" y='+'"'+distY+'"'+' fill="#666">'+cnt+'</text>';
   }
 
   return content;
 };
 
 const wrapWord = (cnt) => {
-  var textStringHead = '<text font-size="14" x="10" y='+'"'+lastY+'"'+' fill="#666">';
+  var textStringHead = '<text font-size="12" x="10" y='+'"'+lastY+'"'+' fill="#666">';
   var textStringTail = '</text>';
   var wrapTspan = "";
   var total = getBLen(cnt);
@@ -203,7 +133,33 @@ const wrapWord = (cnt) => {
 
 
 const componentSignifiers = (values) =>{
+  var svgData = [];
 
+  values.forEach((value,index) => {
+    var ceilData = {};
+    if(!value.flagDel){
+      switch (value.type) {
+        case '获得数据':
+          ceilData = getDataFormTemplate(value);
+          break;
+        case '改变数据项':
+          ceilData = changeDataFormTemplate(value);
+          break;
+        case '展示数据':
+          ceilData = showDataFormTemplate(value);
+          break;
+        case '功能':
+          ceilData = functionDataFormTemplate(value);
+          break;
+        default:
+          ceilData = getDataFormTemplate(value);
+      }
+      svgData.push(ceilData);
+    }
+
+  });
+
+  return getSvgXml(svgData);
 };
 
 export default designsignifiers;
