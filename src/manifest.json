@@ -77,6 +77,13 @@
       "identifier": "sketch-webview-kit.my-command11",
       "script": "generateRadarChart.js",
       "handler" : "onRun"
+    },
+    {
+      "name": "Generate Tags",
+      "shortcut": "ctrl shift option t",
+      "identifier": "sketch-webview-kit.my-command12",
+      "script": "generateTags.js",
+      "handler" : "onRun"
     }
   ],
   "menu": {
@@ -99,7 +106,9 @@
       "-",
       "sketch-webview-kit.my-command10",
       "-",
-      "sketch-webview-kit.my-command11"
+      "sketch-webview-kit.my-command11",
+      "-",
+      "sketch-webview-kit.my-command12"
     ]
   }
 }

@@ -2463,7 +2463,12 @@ var insertImageToArtbord = function insertImageToArtbord(imageData, imageFrame) 
   var group = new Group({
     name: 'radar chart',
     parent: chartRect.parent,
-    frame: chartRect.frame
+    frame: {
+      x: chartRect.frame.x,
+      y: chartRect.frame.y,
+      width: imageFrame.width,
+      height: imageFrame.height
+    }
   }); //Create screenshot
 
   if (imageData.base64) {
@@ -2475,6 +2480,7 @@ var insertImageToArtbord = function insertImageToArtbord(imageData, imageFrame) 
       frame: imageFrame
     });
     imageLayer.parent = group || page;
+    chartRect.remove();
   } else {
     sketch__WEBPACK_IMPORTED_MODULE_0___default.a.UI.message("No base64 image resource!");
   }
