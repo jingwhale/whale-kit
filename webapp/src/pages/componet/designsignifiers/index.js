@@ -5,6 +5,7 @@ import MainFormUI from './component/mainForm/index.js';
 import ComponentFormUI from './component/componentForm/index.js';
 import AboutAndHelpUI from './component/aboutAndHelp/index.js';
 import Designsignifiers from './component/designsignifiers.js';
+import DesignsignifiersX from './component/designsignifiersx.js';
 
 const TabPane = Tabs.TabPane;
 
@@ -14,7 +15,9 @@ export default class IndexUI extends PureComponent {
 
     this.state = {
       svgHtmlString:"",
-      drawerVisible:false
+      drawerVisible:false,
+      drawerPlacement:"right",
+      svgType:""
     };
   };
 
@@ -30,15 +33,32 @@ export default class IndexUI extends PureComponent {
   };
 
   handleEmail = (value,type) =>{
-    var svgHtmlString = Designsignifiers(value,type);
+    var svgHtmlString = "";
+    if(type == "page"){
+      svgHtmlString = DesignsignifiersX(value,type);
+    }else{
+      svgHtmlString = Designsignifiers(value,type);
+    }
+
+
+    var drawerPlacement = "";
+    if(type=="page"){
+      drawerPlacement = "bottom"
+    }else{
+      drawerPlacement = "right"
+    }
+
+    this.setState({
+      drawerPlacement:drawerPlacement
+    });
 
     this.setState({
       drawerVisible:true,
-      svgHtmlString: svgHtmlString
+      svgHtmlString: svgHtmlString,
+      svgType: type
     });
 
     return svgHtmlString;
-    console.log(svgHtmlString);
   };
 
   onDrawerClose = (e) => {
@@ -57,7 +77,12 @@ export default class IndexUI extends PureComponent {
     var link = e.target;
 
     link.target = "_blank";
-    link.download = "DesignSignifiers.svg";
+    if(this.state.svgType == "page"){
+      link.download = "页面说明.svg";
+    }else{
+      link.download = "交互说明.svg";
+    }
+
     link.href = url;
   };
 
@@ -86,7 +111,7 @@ export default class IndexUI extends PureComponent {
         </Tabs>
         <Drawer
           width={640}
-          placement="right"
+          placement={this.state.drawerPlacement}
           closable={true}
           onClose={this.onDrawerClose}
           visible={this.state.drawerVisible}

@@ -43,6 +43,10 @@ const GetDataFormUI = Form.create({
         ...props.paramDefault,
         value: props.paramDefault.value,
       }),
+      paramPlaceholder: Form.createFormField({
+        ...props.paramPlaceholder,
+        value: props.paramPlaceholder.value,
+      }),
       paramDoRule: Form.createFormField({
         ...props.paramDoRule,
         value: props.paramDoRule.value,
@@ -143,6 +147,15 @@ const GetDataFormUI = Form.create({
           rules: [{ required: false, message: '请添加默认的值!', whitespace: true}],
         })(
           <Input placeholder="请输入默认的值" />
+        )}
+      </Form.Item>
+      <Form.Item
+        label="placeholder"
+      >
+        {getFieldDecorator('paramPlaceholder', {
+          rules: [{ required: false, message: '请添加placeholder!', whitespace: true}],
+        })(
+          <Input placeholder="请输入placeholder" />
         )}
       </Form.Item>
       <Divider dashed>校验</Divider>

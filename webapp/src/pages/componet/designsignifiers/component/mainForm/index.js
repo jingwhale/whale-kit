@@ -2,7 +2,6 @@ import React from 'react';
 import { Form, Input, Tooltip, Icon, Select, Button, AutoComplete, Radio, Divider} from 'antd';
 import styles from './index.css';
 
-
 const { TextArea } = Input;
 const { Option } = Select;
 
@@ -111,7 +110,7 @@ class RegistrationForm extends React.Component {
             >
               {getFieldDecorator('title', {
                 rules: [{
-                  required: false, message: '请输入页面的Title!',
+                  required: true, message: '请输入页面的Title!',
                 }],
               })(
                 <Input type="string" />
@@ -128,11 +127,33 @@ class RegistrationForm extends React.Component {
                 <Input onBlur={this.handleConfirmBlur} />
               )}
             </Form.Item>
+            <Form.Item
+              label={(
+                <span>
+              兼容性&nbsp;
+                  <Tooltip title="请选择页面的兼容性。">
+                <Icon type="question-circle-o" />
+              </Tooltip>
+            </span>
+              )}
+            >
+              {getFieldDecorator('compatibility', {
+                rules: [
+                  { required: true, message: '请选择页面的兼容性!', type: 'array' },
+                ],
+              })(
+                <Select mode="multiple" placeholder="请选择页面的兼容性">
+                  <Option value="IE6+">IE6+</Option>
+                  <Option value="IE8+">IE8+</Option>
+                  <Option value="IOS12.1">IOS12.1</Option>
+                </Select>
+              )}
+            </Form.Item>
             <Divider dashed>页面SEO</Divider>
             <Form.Item
               label={(
                 <span>
-              页面SEO-Keywords&nbsp;
+              Keywords&nbsp;
                   <Tooltip title="示例：鲸鱼,jingwhale,whalexplorer">
                 <Icon type="question-circle-o" />
               </Tooltip>
@@ -148,7 +169,7 @@ class RegistrationForm extends React.Component {
             <Form.Item
               label={(
                 <span>
-              页面SEO-Description&nbsp;
+              Description&nbsp;
                   <Tooltip title="请填写页面描述，200字以内。">
                 <Icon type="question-circle-o" />
               </Tooltip>
@@ -174,13 +195,13 @@ class RegistrationForm extends React.Component {
             >
               {getFieldDecorator('permission', {
                 rules: [
-                  { required: true, message: '请选择页面访问的权限!', type: 'array' },
+                  { required: false, message: '请选择页面访问的权限!', type: 'array' },
                 ],
               })(
                 <Select mode="multiple" placeholder="请选择页面访问的权限">
-                  <Option value="permission1">用户通用权限</Option>
-                  <Option value="permission2">开发通用权限</Option>
-                  <Option value="permission3">运营通用权限</Option>
+                  <Option value="用户通用权限">用户通用权限</Option>
+                  <Option value="开发通用权限">开发通用权限</Option>
+                  <Option value="运营通用权限">运营通用权限</Option>
                 </Select>
               )}
             </Form.Item>
@@ -215,7 +236,7 @@ class RegistrationForm extends React.Component {
             </Form.Item>
             <Divider dashed>页面跳转</Divider>
             <Form.Item
-              label="页面跳转-页面的入口"
+              label="页面的入口"
             >
               {getFieldDecorator('linkin', {
                 rules: [{ required: false, message: '请添加页面的入口!' }]
@@ -229,7 +250,7 @@ class RegistrationForm extends React.Component {
               )}
             </Form.Item>
             <Form.Item
-              label="页面跳转-页面的出口"
+              label="页面的出口"
             >
               {getFieldDecorator('linkout', {
                 rules: [{ required: false, message: '请添加页面的出口!' }],
@@ -240,29 +261,6 @@ class RegistrationForm extends React.Component {
                 >
                   <Input />
                 </AutoComplete>
-              )}
-            </Form.Item>
-            <Divider dashed>兼容性</Divider>
-            <Form.Item
-              label={(
-                <span>
-              兼容性&nbsp;
-                  <Tooltip title="请选择页面的兼容性。">
-                <Icon type="question-circle-o" />
-              </Tooltip>
-            </span>
-              )}
-            >
-              {getFieldDecorator('compatibility', {
-                rules: [
-                  { required: false, message: '请选择页面的兼容性!', type: 'array' },
-                ],
-              })(
-                <Select mode="multiple" placeholder="请选择页面的兼容性">
-                  <Option value="IE6+">IE6+</Option>
-                  <Option value="IE8+">IE8+</Option>
-                  <Option value="IOS12.1">IOS12.1</Option>
-                </Select>
               )}
             </Form.Item>
             <Divider dashed>其他</Divider>

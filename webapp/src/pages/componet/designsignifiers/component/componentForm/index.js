@@ -177,8 +177,6 @@ class ComponentFormUI extends React.Component {
   makeSignifiers = (e) => {
     e.preventDefault();
     var that = this;
-    debugger
-    // this.myRef.current
     this.myRef.current.validateFieldsAndScroll((err, values) => {
       if (!err) {
         var svgHtmlString = that.props.handleEmail(this.state.dataAll,"component");

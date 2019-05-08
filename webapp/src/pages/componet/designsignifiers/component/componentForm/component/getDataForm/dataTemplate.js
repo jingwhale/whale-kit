@@ -15,14 +15,17 @@ const GetDataFormDataTemp = {
   paramDefault: {
     value: '',
   },
+  paramPlaceholder:{
+    value: ''
+  },
   paramDoRule: {
     value: '',
   },
   paramDefaultState: {
-    value: 'normal',
+    value: '',
   },
   paramCurrentState: {
-    value: 'normal',
+    value: '',
   },
   paramStateDes: {
     value: '',

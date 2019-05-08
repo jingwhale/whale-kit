@@ -1,16 +1,26 @@
 const pageDataTemplate = (values) =>{
   var pageDataObj = [
     {
-      title:"页面Url",
-      value:values.url
-    },
-    {
-      title:"页面Title",
-      value:values.title
-    },
-    {
-      title:"页面Ico",
-      value:values.ico
+      flag:true,
+      title:"基本信息",
+      value:[
+        {
+          title:"页面Url",
+          value:values.url
+        },
+        {
+          title:"页面Title",
+          value:values.title
+        },
+        {
+          title:"页面Ico",
+          value:values.ico
+        },
+        {
+          title:"兼容性",
+          value:values.compatibility
+        }
+      ]
     },
     {
       flag:true,
@@ -25,6 +35,10 @@ const pageDataTemplate = (values) =>{
           value:values.description
         }
       ]
+    },
+    {
+      title:"页面权限",
+      value:values.permission
     },
     {
       flag:true,
@@ -55,14 +69,6 @@ const pageDataTemplate = (values) =>{
       ]
     },
     {
-      title:"页面权限",
-      value:values.permission
-    },
-    {
-      title:"兼容性",
-      value:values.compatibility
-    },
-    {
       title:"其他",
       value:values.other
     }
@@ -86,14 +92,6 @@ const getDataFormTemplate = (values) =>{
     )
   }
 
-  if(values.paramIsNeed.value!==""){
-    dataFormObj.value.push(
-      {
-        title:"字段是否必填",
-        value:values.paramIsNeed.value
-      }
-    )
-  }
   if(values.paramRule.value!==""){
     dataFormObj.value.push(
       {
@@ -102,6 +100,34 @@ const getDataFormTemplate = (values) =>{
       }
     )
   }
+
+  if(values.paramIsNeed.value!==""){
+    dataFormObj.value.push(
+      {
+        title:"字段是否必填",
+        value:values.paramIsNeed.value
+      }
+    )
+  }
+
+  if(values.paramDefault.value!==""){
+    dataFormObj.value.push(
+      {
+        title:"默认值",
+        value:values.paramDefault.value
+      }
+    )
+  }
+
+  if(values.paramPlaceholder.value!==""){
+    dataFormObj.value.push(
+      {
+        title:"placeholder",
+        value:values.paramPlaceholder.value
+      }
+    )
+  }
+
   if(values.paramDoRule.value!==""){
     dataFormObj.value.push(
       {
