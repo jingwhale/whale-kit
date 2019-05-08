@@ -174,7 +174,7 @@ class RegistrationForm extends React.Component {
             >
               {getFieldDecorator('permission', {
                 rules: [
-                  { required: false, message: '请选择页面访问的权限!', type: 'array' },
+                  { required: true, message: '请选择页面访问的权限!', type: 'array' },
                 ],
               })(
                 <Select mode="multiple" placeholder="请选择页面访问的权限">

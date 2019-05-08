@@ -111,6 +111,7 @@ const FunctionDataFormUI = Form.create({
           <Radio.Group>
             <Radio value={true}>是</Radio>
             <Radio value={false}>否</Radio>
+            <Radio value="">不设置此项</Radio>
           </Radio.Group>
         )}
       </Form.Item>
@@ -125,7 +126,7 @@ const FunctionDataFormUI = Form.create({
         )}
       >
         {getFieldDecorator('paramDoRule', {
-          rules: [{ required: true, message: '请填写校验规则与错误提示!' }],
+          rules: [{ required: false, message: '请填写校验规则与错误提示!' }],
         })(<TextArea placeholder="按钮点击,校验提交的数据，校验失败提示'校验失败！请重新填写数据。'" autosize={{ minRows: 3, maxRows: 100 }} />)}
       </Form.Item>
       <Divider dashed>状态</Divider>
@@ -158,7 +159,7 @@ const FunctionDataFormUI = Form.create({
         )}
       >
         {getFieldDecorator('paramStateDes', {
-          rules: [{ required: true, message: '请填写标注组件的各种状态描述!' }],
+          rules: [{ required: false, message: '请填写标注组件的各种状态描述!' }],
         })(<TextArea placeholder="normal：正常态；activity: 激活态; disabled:不可操作" autosize={{ minRows: 4, maxRows: 100 }} />)}
       </Form.Item>
       <Divider dashed>事件触发与触发效果</Divider>
@@ -173,7 +174,7 @@ const FunctionDataFormUI = Form.create({
         )}
       >
         {getFieldDecorator('eventDec', {
-          rules: [{ required: true, message: '请填写标注组件的事件触发与触发效果!' }],
+          rules: [{ required: false, message: '请填写标注组件的事件触发与触发效果!' }],
         })(<TextArea placeholder="点击按钮，展示下拉框" autosize={{ minRows: 4, maxRows: 100 }} />)}
       </Form.Item>
       <Divider dashed>其他</Divider>
@@ -188,7 +189,7 @@ const FunctionDataFormUI = Form.create({
         )}
       >
         {getFieldDecorator('other', {
-          rules: [{ required: true, message: '请添加其他自定义标注!' }],
+          rules: [{ required: false, message: '请添加其他自定义标注!' }],
         })(<TextArea placeholder="请添加其他自定义标注。" autosize={{ minRows: 4, maxRows: 100 }} />)}
       </Form.Item>
     </Form>

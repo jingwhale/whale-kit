@@ -97,6 +97,7 @@ const ShowDataFormUI = Form.create({
             <Radio value="telephone">telephone</Radio>
             <Radio value="url">url</Radio>
             <Radio value="date">date</Radio>
+            <Radio value="">不设置此项</Radio>
           </Radio.Group>
         )}
       </Form.Item>
@@ -143,6 +144,7 @@ const ShowDataFormUI = Form.create({
             <Radio value="disabled">disabled</Radio>
             <Radio value="focus">focus</Radio>
             <Radio value="blur">blur</Radio>
+            <Radio value="">不设置此项</Radio>
           </Radio.Group>
         )}
       </Form.Item>
@@ -158,6 +160,7 @@ const ShowDataFormUI = Form.create({
             <Radio value="disabled">disabled</Radio>
             <Radio value="focus">focus</Radio>
             <Radio value="blur">blur</Radio>
+            <Radio value="">不设置此项</Radio>
           </Radio.Group>
         )}
       </Form.Item>

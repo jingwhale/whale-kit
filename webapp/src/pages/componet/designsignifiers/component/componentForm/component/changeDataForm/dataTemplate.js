@@ -7,7 +7,7 @@ const ChangeDataFormDataTemp = {
     value: '',
   },
   paramIsNeed: {
-    value: false,
+    value: true,
   },
   paramDoRule: {
     value: '',

@@ -12,9 +12,6 @@ const GetDataFormDataTemp = {
   paramIsNeed: {
     value: false,
   },
-  paramIsNull: {
-    value: true,
-  },
   paramDefault: {
     value: '',
   },

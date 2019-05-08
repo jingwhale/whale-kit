@@ -72,51 +72,85 @@ const pageDataTemplate = (values) =>{
 
 const getDataFormTemplate = (values) =>{
   var dataFormObj = {
-  flag:true,
-  title:values.title.value,
-  value:[
-    {
-      title:"字段类型",
-      value:values.paramType.value
-    },
-    {
-      title:"字段是否必填",
-      value:values.paramIsNeed.value
-    },
-    {
-      title:"字段是否为空",
-      value:values.paramIsNull.value
-    },
-    {
-      title:"字段规则",
-      value:values.paramRule.value
-    },
-    {
-      title:"校验规则与错误提示",
-      value:values.paramDoRule.value
-    },
-    {
-      title:"默认状态",
-      value:values.paramDefaultState.value
-    },
-    {
-      title:"当前状态",
-      value:values.paramCurrentState.value
-    },
-    {
-      title:"各种状态描述",
-      value:values.paramStateDes.value
-    },
-    {
-      title:"事件触发与触发效果",
-      value:values.eventDec.value
-    },
-    {
-      title:"其他",
-      value:values.other.value
-    }
-  ]
-};
+    flag:true,
+    title:values.title.value,
+    value:[]
+  };
+
+  if(values.paramType.value!==""){
+    dataFormObj.value.push(
+      {
+        title:"字段类型",
+        value:values.paramType.value
+      }
+    )
+  }
+
+  if(values.paramIsNeed.value!==""){
+    dataFormObj.value.push(
+      {
+        title:"字段是否必填",
+        value:values.paramIsNeed.value
+      }
+    )
+  }
+  if(values.paramRule.value!==""){
+    dataFormObj.value.push(
+      {
+        title:"字段规则",
+        value:values.paramRule.value
+      }
+    )
+  }
+  if(values.paramDoRule.value!==""){
+    dataFormObj.value.push(
+      {
+        title:"校验规则与错误提示",
+        value:values.paramDoRule.value
+      }
+    )
+  }
+  if(values.paramDefaultState.value!==""){
+    dataFormObj.value.push(
+      {
+        title:"默认状态",
+        value:values.paramDefaultState.value
+      }
+    )
+  }
+  if(values.paramCurrentState.value!==""){
+    dataFormObj.value.push(
+      {
+        title:"当前状态",
+        value:values.paramCurrentState.value
+      }
+    )
+  }
+  if(values.paramStateDes.value!==""){
+    dataFormObj.value.push(
+      {
+        title:"各种状态描述",
+        value:values.paramStateDes.value
+      }
+    )
+  }
+  if(values.eventDec.value!==""){
+    dataFormObj.value.push(
+      {
+        title:"事件触发与触发效果",
+        value:values.eventDec.value
+      }
+    )
+  }
+
+  if(values.other.value!==""){
+    dataFormObj.value.push(
+      {
+        title:"其他",
+        value:values.other.value
+      }
+    )
+  }
 
   return dataFormObj;
 };
@@ -125,41 +159,74 @@ const changeDataFormTemplate = (values) =>{
   var dataFormObj = {
     flag:true,
     title:values.title.value,
-    value:[
+    value:[]
+  };
+
+  if(values.valueList.value!==""){
+    dataFormObj.value.push(
       {
         title:"选项值罗列",
         value:values.valueList.value
-      },
+      }
+    )
+  }
+  if(values.paramIsNeed.value!==""){
+    dataFormObj.value.push(
       {
         title:"字段是否必选",
         value:values.paramIsNeed.value
-      },
+      }
+    )
+  }
+  if(values.paramDoRule.value!==""){
+    dataFormObj.value.push(
       {
         title:"校验规则与错误提示",
         value:values.paramDoRule.value
-      },
+      }
+    )
+  }
+  if(values.paramDefaultState.value!==""){
+    dataFormObj.value.push(
       {
         title:"默认状态",
         value:values.paramDefaultState.value
-      },
+      }
+    )
+  }
+  if(values.paramCurrentState.value!==""){
+    dataFormObj.value.push(
       {
         title:"当前状态",
         value:values.paramCurrentState.value
-      },
+      }
+    )
+  }
+  if(values.paramStateDes.value!==""){
+    dataFormObj.value.push(
       {
         title:"各种状态描述",
         value:values.paramStateDes.value
-      },
+      }
+    )
+  }
+  if(values.eventDec.value!==""){
+    dataFormObj.value.push(
       {
         title:"事件触发与触发效果",
         value:values.eventDec.value
-      },
+      }
+    )
+  }
+
+  if(values.other.value!==""){
+    dataFormObj.value.push(
       {
         title:"其他",
         value:values.other.value
       }
-    ]
-  };
+    )
+  }
 
   return dataFormObj;
 };
@@ -168,41 +235,75 @@ const showDataFormTemplate = (values) =>{
   var dataFormObj = {
     flag:true,
     title:values.title.value,
-    value:[
+    value:[]
+  };
+
+  if(values.paramType.value!==""){
+    dataFormObj.value.push(
       {
         title:"字段类型",
         value:values.paramType.value
-      },
+      }
+    )
+  }
+
+  if(values.paramRule.value!==""){
+    dataFormObj.value.push(
       {
         title:"字段显示规则",
         value:values.paramRule.value
-      },
+      }
+    )
+  }
+  if(values.paramDefault.value!==""){
+    dataFormObj.value.push(
       {
         title:"字段为空时显示（默认值）",
         value:values.paramDefault.value
-      },
+      }
+    )
+  }
+  if(values.paramDefaultState.value!==""){
+    dataFormObj.value.push(
       {
         title:"默认状态",
         value:values.paramDefaultState.value
-      },
+      }
+    )
+  }
+  if(values.paramCurrentState.value!==""){
+    dataFormObj.value.push(
       {
         title:"当前状态",
         value:values.paramCurrentState.value
-      },
+      }
+    )
+  }
+  if(values.paramStateDes.value!==""){
+    dataFormObj.value.push(
       {
         title:"各种状态描述",
         value:values.paramStateDes.value
-      },
+      }
+    )
+  }
+  if(values.eventDec.value!==""){
+    dataFormObj.value.push(
       {
         title:"事件触发与触发效果",
         value:values.eventDec.value
-      },
+      }
+    )
+  }
+
+  if(values.other.value!==""){
+    dataFormObj.value.push(
       {
         title:"其他",
         value:values.other.value
       }
-    ]
-  };
+    )
+  }
 
   return dataFormObj;
 };
@@ -211,44 +312,79 @@ const functionDataFormTemplate = (values) =>{
   var dataFormObj = {
     flag:true,
     title:values.title.value,
-    value:[
+    value:[]
+  };
+
+  if(values.valueList.value!==""){
+    dataFormObj.value.push(
       {
         title:"按钮显示值",
         value:values.valueList.value
-      },
+      }
+    )
+  }
+
+  if(values.isDoRule.value!==""){
+    dataFormObj.value.push(
       {
         title:"是否校验其他数据",
         value:values.isDoRule.value
-      },
+      }
+    )
+  }
+  if(values.paramDoRule.value!==""){
+    dataFormObj.value.push(
       {
         title:"校验规则与错误提示",
         value:values.paramDoRule.value
-      },
+      }
+    )
+  }
+  if(values.paramDefaultState.value!==""){
+    dataFormObj.value.push(
       {
         title:"默认状态",
         value:values.paramDefaultState.value
-      },
+      }
+    )
+  }
+  if(values.paramCurrentState.value!==""){
+    dataFormObj.value.push(
       {
         title:"当前状态",
         value:values.paramCurrentState.value
-      },
+      }
+    )
+  }
+  if(values.paramStateDes.value!==""){
+    dataFormObj.value.push(
       {
         title:"各种状态描述",
         value:values.paramStateDes.value
-      },
+      }
+    )
+  }
+  if(values.eventDec.value!==""){
+    dataFormObj.value.push(
       {
         title:"事件触发与触发效果",
         value:values.eventDec.value
-      },
+      }
+    )
+  }
+
+  if(values.other.value!==""){
+    dataFormObj.value.push(
       {
         title:"其他",
         value:values.other.value
       }
-    ]
-  };
+    )
+  }
 
   return dataFormObj;
 };
+
 export {
   pageDataTemplate,
   getDataFormTemplate,

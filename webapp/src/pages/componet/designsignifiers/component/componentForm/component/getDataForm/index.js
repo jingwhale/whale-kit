@@ -39,10 +39,6 @@ const GetDataFormUI = Form.create({
         ...props.paramIsNeed,
         value: props.paramIsNeed.value,
       }),
-      paramIsNull: Form.createFormField({
-        ...props.paramIsNull,
-        value: props.paramIsNull.value,
-      }),
       paramDefault: Form.createFormField({
         ...props.paramDefault,
         value: props.paramDefault.value,
@@ -109,6 +105,7 @@ const GetDataFormUI = Form.create({
             <Radio value="telephone">telephone</Radio>
             <Radio value="url">url</Radio>
             <Radio value="date">date</Radio>
+            <Radio value="">不设置此项</Radio>
           </Radio.Group>
         )}
       </Form.Item>
@@ -123,7 +120,7 @@ const GetDataFormUI = Form.create({
         )}
       >
         {getFieldDecorator('paramRule', {
-          rules: [{ required: true, message: '请填写标注组件的字段规则!' }],
+          rules: [{ required: false, message: '请填写标注组件的字段规则!' }],
         })(<TextArea placeholder="长度不超过100字；min:1,max:100" autosize={{ minRows: 3, maxRows: 100 }} />)}
       </Form.Item>
       <Form.Item
@@ -135,18 +132,7 @@ const GetDataFormUI = Form.create({
           <Radio.Group>
             <Radio value={true}>是</Radio>
             <Radio value={false}>否</Radio>
-          </Radio.Group>
-        )}
-      </Form.Item>
-      <Form.Item
-        label="字段是否为空"
-      >
-        {getFieldDecorator('paramIsNull', {
-          rules: [{ required: false, message: '请选择字段是否为空!' }],
-        })(
-          <Radio.Group>
-            <Radio value={true}>是</Radio>
-            <Radio value={false}>否</Radio>
+            <Radio value="">不设置此项</Radio>
           </Radio.Group>
         )}
       </Form.Item>
@@ -187,6 +173,7 @@ const GetDataFormUI = Form.create({
             <Radio value="disabled">disabled</Radio>
             <Radio value="focus">focus</Radio>
             <Radio value="blur">blur</Radio>
+            <Radio value="">不设置此项</Radio>
           </Radio.Group>
         )}
       </Form.Item>
@@ -202,6 +189,7 @@ const GetDataFormUI = Form.create({
             <Radio value="disabled">disabled</Radio>
             <Radio value="focus">focus</Radio>
             <Radio value="blur">blur</Radio>
+            <Radio value="">不设置此项</Radio>
           </Radio.Group>
         )}
       </Form.Item>

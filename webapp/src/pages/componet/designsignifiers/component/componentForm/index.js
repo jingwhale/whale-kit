@@ -23,6 +23,9 @@ var currentFormTemp = JSON.parse(JSON.stringify(getDataFormTemp));
 class ComponentFormUI extends React.Component {
   constructor(props) {
     super(props);
+
+    this.myRef=React.createRef();
+
     this.newTabIndex = 1;
     const panes = [
       { title: '标注 0',  key: '0', type:"获得数据" }
@@ -91,8 +94,6 @@ class ComponentFormUI extends React.Component {
         activeKey = panes[0].key;
       }
     }
-
-    debugger
 
     var formType = this.state.formType;
     var radioValue = this.state.radioValue;
@@ -174,8 +175,15 @@ class ComponentFormUI extends React.Component {
   };
 
   makeSignifiers = (e) => {
-    var svgHtmlString = this.props.handleEmail(this.state.dataAll,"component");
-
+    e.preventDefault();
+    var that = this;
+    debugger
+    // this.myRef.current
+    this.myRef.current.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        var svgHtmlString = that.props.handleEmail(this.state.dataAll,"component");
+      }
+    });
   };
 
   render() {
@@ -186,25 +194,25 @@ class ComponentFormUI extends React.Component {
     if(this.state.formType=="获得数据"){
       dynamicForm = (
         <div>
-          <GetDataFormUI {...dataAll[activeKey]} onChange={this.handleFormChange} />
+          <GetDataFormUI {...dataAll[activeKey]} ref={this.myRef} onChange={this.handleFormChange} />
         </div>
       );
     }else if(this.state.formType=="改变数据项"){
       dynamicForm = (
         <div>
-          <ChangeDataFormUI {...dataAll[activeKey]} onChange={this.handleFormChange} />
+          <ChangeDataFormUI {...dataAll[activeKey]} ref={this.myRef} onChange={this.handleFormChange} />
         </div>
       );
     }else if(this.state.formType=="展示数据"){
       dynamicForm = (
         <div>
-          <ShowDataFormUI {...dataAll[activeKey]} onChange={this.handleFormChange} />
+          <ShowDataFormUI {...dataAll[activeKey]} ref={this.myRef} onChange={this.handleFormChange} />
         </div>
       );
     }else if(this.state.formType=="功能"){
       dynamicForm = (
         <div>
-          <FunctionDataFormUI {...dataAll[activeKey]} onChange={this.handleFormChange} />
+          <FunctionDataFormUI {...dataAll[activeKey]} ref={this.myRef} onChange={this.handleFormChange} />
         </div>
       );
     }

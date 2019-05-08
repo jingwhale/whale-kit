@@ -11,6 +11,7 @@ const TabPane = Tabs.TabPane;
 export default class IndexUI extends PureComponent {
   constructor(props) {
     super(props);
+
     this.state = {
       svgHtmlString:"",
       drawerVisible:false
