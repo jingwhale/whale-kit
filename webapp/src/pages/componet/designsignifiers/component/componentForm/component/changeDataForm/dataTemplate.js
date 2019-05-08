@@ -4,29 +4,28 @@ const ChangeDataFormDataTemp = {
     value: '改变数据项',
   },
   valueList: {
-    value: 'jingwhale1,jingwhale2,jingwhale3',
+    value: '',
   },
   paramIsNeed: {
     value: false,
   },
   paramDoRule: {
-    value: '长度不超过100字\n' +
-    'min:1,max:100',
+    value: '',
   },
   paramDefaultState: {
-    value: 'normal',
+    value: '',
   },
   paramCurrentState: {
-    value: 'normal',
+    value: '',
   },
   paramStateDes: {
-    value: 'normal：正常态；',
+    value: '',
   },
   eventDec: {
-    value: '点击搜索，展示下拉框',
+    value: '',
   },
   other: {
-    value: '其他标注',
+    value: '',
   },
 };
 

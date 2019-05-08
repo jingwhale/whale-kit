@@ -72,14 +72,14 @@ const ChangeDataFormUI = Form.create({
         label={(
           <span>
               标注的标题&nbsp;
-            <Tooltip title="示例：鲸鱼,jingwhale,whalexplorer">
+            <Tooltip title="标注的标题。不宜过长。">
                 <Icon type="question-circle-o" />
               </Tooltip>
             </span>
         )}
       >
         {getFieldDecorator('title', {
-          rules: [{ required: false, message: '请添加页面SEO-Keywords!', whitespace: true}],
+          rules: [{ required: true, message: '请添加标注的标题!', whitespace: true}],
         })(
           <Input />
         )}
@@ -89,23 +89,23 @@ const ChangeDataFormUI = Form.create({
         label={(
           <span>
               选项值罗列&nbsp;
-            <Tooltip title="示例：鲸鱼,jingwhale,whalexplorer">
+            <Tooltip title="选项值的罗列，如：normal,activity,disabled">
                 <Icon type="question-circle-o" />
               </Tooltip>
             </span>
         )}
       >
         {getFieldDecorator('valueList', {
-          rules: [{ required: false, message: '请添加页面SEO-Keywords!', whitespace: true}],
+          rules: [{ required: false, message: '请添加选项值罗列!', whitespace: true}],
         })(
-          <Input />
+          <Input placeholder="选项值的罗列，如：normal,activity,disabled" />
         )}
       </Form.Item>
       <Form.Item
         label="字段是否必选"
       >
         {getFieldDecorator('paramIsNeed', {
-          rules: [{ required: false, message: '请选择标注组件的字段类型!' }],
+          rules: [{ required: false, message: '请选择标字段是否必选!' }],
         })(
           <Radio.Group>
             <Radio value={true}>是</Radio>
@@ -118,78 +118,78 @@ const ChangeDataFormUI = Form.create({
         label={(
           <span>
               校验规则与错误提示&nbsp;
-            <Tooltip title="选择本页面的权限。">
+            <Tooltip title="请填写标注组件的校验规则与错误提示。">
                 <Icon type="question-circle-o" />
               </Tooltip>
             </span>
         )}
       >
         {getFieldDecorator('paramDoRule', {
-          rules: [{ required: true, message: '请填写标注组件的字段规则!' }],
-        })(<TextArea autosize={{ minRows: 3, maxRows: 100 }} />)}
+          rules: [{ required: false, message: '请填写标注组件的校验规则与错误提示!' }],
+        })(<TextArea placeholder="长度不超过100字,超过字数提示'长度不超过100字'" autosize={{ minRows: 3, maxRows: 100 }} />)}
       </Form.Item>
       <Divider dashed>状态</Divider>
       <Form.Item
         label="默认状态"
       >
         {getFieldDecorator('paramDefaultState', {
-          rules: [{ required: false, message: '请选择标注组件的字段类型!' }],
+          rules: [{ required: false, message: '请填写标注组件的默认状态!' }],
         })(
-          <TextArea autosize={{ minRows: 1, maxRows: 100 }} />
+          <TextArea placeholder="默认为选中normal状态项" autosize={{ minRows: 1, maxRows: 100 }} />
         )}
       </Form.Item>
       <Form.Item
         label="当前状态"
       >
         {getFieldDecorator('paramCurrentState', {
-          rules: [{ required: false, message: '请选择标注组件的字段类型!' }],
+          rules: [{ required: false, message: '请填写标注组件的当前状态!' }],
         })(
-          <TextArea autosize={{ minRows: 1, maxRows: 100 }} />
+          <TextArea placeholder="当前为normal状态项" autosize={{ minRows: 1, maxRows: 100 }} />
         )}
       </Form.Item>
       <Form.Item
         label={(
           <span>
               各种状态描述&nbsp;
-            <Tooltip title="选择本页面的权限。">
+            <Tooltip title="请填写标注组件的各种状态描述。">
                 <Icon type="question-circle-o" />
               </Tooltip>
             </span>
         )}
       >
         {getFieldDecorator('paramStateDes', {
-          rules: [{ required: true, message: '请填写标注组件的字段规则!' }],
-        })(<TextArea autosize={{ minRows: 4, maxRows: 100 }} />)}
+          rules: [{ required: false, message: '请填写标注组件的各种状态描述!' }],
+        })(<TextArea placeholder="normal：正常态；activity: 激活态; disabled:不可操作" autosize={{ minRows: 4, maxRows: 100 }} />)}
       </Form.Item>
       <Divider dashed>事件触发与触发效果</Divider>
       <Form.Item
         label={(
           <span>
               事件触发与触发效果&nbsp;
-            <Tooltip title="选择本页面的权限。">
+            <Tooltip title="请填写标注组件的事件触发与触发效果!">
                 <Icon type="question-circle-o" />
               </Tooltip>
             </span>
         )}
       >
         {getFieldDecorator('eventDec', {
-          rules: [{ required: true, message: '请填写标注组件的字段规则!' }],
-        })(<TextArea autosize={{ minRows: 4, maxRows: 100 }} />)}
+          rules: [{ required: false, message: '请填写标注组件的事件触发与触发效果!' }],
+        })(<TextArea placeholder="点击搜索，展示下拉框" autosize={{ minRows: 4, maxRows: 100 }} />)}
       </Form.Item>
       <Divider dashed>其他</Divider>
       <Form.Item
         label={(
           <span>
               其他&nbsp;
-            <Tooltip title="选择本页面的权限。">
+            <Tooltip title="添加其他自定义标注。">
                 <Icon type="question-circle-o" />
               </Tooltip>
             </span>
         )}
       >
         {getFieldDecorator('other', {
-          rules: [{ required: true, message: '请填写标注组件的字段规则!' }],
-        })(<TextArea autosize={{ minRows: 4, maxRows: 100 }} />)}
+          rules: [{ required: false, message: '请添加其他自定义标注!' }],
+        })(<TextArea placeholder="添加其他自定义标注。" autosize={{ minRows: 4, maxRows: 100 }} />)}
       </Form.Item>
     </Form>
   );

@@ -4,8 +4,7 @@ const GetDataFormDataTemp = {
     value: '获得数据',
   },
   paramRule: {
-    value: '长度不超过100字\n' +
-    'min:1,max:100',
+    value: '',
   },
   paramType: {
     value: 'string',
@@ -17,11 +16,10 @@ const GetDataFormDataTemp = {
     value: true,
   },
   paramDefault: {
-    value: 'jingwhale',
+    value: '',
   },
   paramDoRule: {
-    value: '长度不超过100字\n' +
-    'min:1,max:100',
+    value: '',
   },
   paramDefaultState: {
     value: 'normal',
@@ -30,13 +28,13 @@ const GetDataFormDataTemp = {
     value: 'normal',
   },
   paramStateDes: {
-    value: 'normal：正常态；',
+    value: '',
   },
   eventDec: {
-    value: '点击搜索，展示下拉框',
+    value: '',
   },
   other: {
-    value: '其他标注',
+    value: '',
   },
 };
 

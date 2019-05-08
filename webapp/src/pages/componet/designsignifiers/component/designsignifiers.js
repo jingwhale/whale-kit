@@ -1,12 +1,8 @@
 import { pageDataTemplate, getDataFormTemplate, changeDataFormTemplate, showDataFormTemplate, functionDataFormTemplate } from "./signifiersTemplate.js";
 
-
 var defaultLastY = 16;
 var lastY = defaultLastY;
 const lineHeight = 20;
-const svgHead = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="2000">';
-const caption = '<text font-size="15" x="10" y="20" fill="#000">交互说明：</text>';
-const captionPage = '<text font-size="15" x="10" y="20" fill="#000">页面说明：</text>';
 const svgTail = '</svg>';
 const Heading1 = 'Heading1';
 const Heading2 = 'Heading2';
@@ -24,6 +20,17 @@ const designsignifiers = (values,type) =>{
       break;
   }
   return templateString;
+};
+
+const svgHead = () =>{
+  var svgHeadString = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height=' + '"'+lastY + '"'+'>';
+  return svgHeadString;
+};
+
+const caption = (type) =>{
+  var captionTitle = (type=="page") ? "页面说明" : "交互说明";
+  var captionString = '<text font-size="15" x="10" y="20" fill="#000">'+captionTitle+'</text>';
+  return captionString;
 };
 
 const getBLen = function(str) {//一个汉字2个字符
@@ -53,9 +60,7 @@ const svgContent = (svgData,HeadType) => {
 const getSvgXml = (svgData,type) => {
   var svg = svgContent(svgData,Heading1);
 
-  var realCaption = (type=="page") ? captionPage : caption;
-
-  var svgXml = svgHead + realCaption + svg + svgTail;
+  var svgXml = svgHead() + caption(type) + svg + svgTail;
 
   lastY = defaultLastY;
 
