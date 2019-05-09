@@ -20,7 +20,10 @@ class AboutAndHelpUI extends React.Component {
               高效交互标注系统 <Text code>Design Signifiers</Text> 是一个基于<a href="https://fusion.design/18642/" target="_blank"> Whale Design </a>高效设计的交互标注体系。它将交互的细节标注化，设计师只需要填写页面设计的具体要求，就可以快速的生成日常的交互说明。
             </Paragraph>
             <Paragraph>
-              <Text code>Design Signifiers</Text> 目前包括<Text code>页面交互标注</Text> 与 <Text code>组件交互标注</Text>，来帮助业务快速设计出高质量的产品原型。
+              <Text code>Design Signifiers</Text> 目前包括<Text code>页面交互标注</Text> 与 <Text code>组件交互标注</Text>，来帮助业务快速设计出高质量的产品原型。你可以在Web浏览器中使用<Text code>Design Signifiers</Text>服务，也可以在sketch插件中使用。
+            </Paragraph>
+            <Paragraph>
+              <Text code>Design Signifiers</Text> 目前已经嵌入在sketch插件<a href="https://github.com/jingwhale/whale-kit" target="_blank"> Whale Kit </a>（已发布在sketch官网的插件库中）的<Text code>Generate Signifiers</Text>功能。
             </Paragraph>
           </div>
           <Title level={4}>组件交互标注</Title>
@@ -80,6 +83,12 @@ class AboutAndHelpUI extends React.Component {
           <div className={styles.paragraph}>
             <Paragraph>
               <Text code>Design Signifiers</Text> 使用浏览器内存进行算法与数据处理，不会保存任何用户数据。
+            </Paragraph>
+          </div>
+          <Title level={4}>更新</Title>
+          <div className={styles.paragraph}>
+            <Paragraph>
+              <Text code>Design Signifiers</Text> 持续更新中。
             </Paragraph>
           </div>
         </Typography>
