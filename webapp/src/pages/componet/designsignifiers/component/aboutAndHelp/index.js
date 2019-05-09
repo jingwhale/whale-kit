@@ -29,7 +29,7 @@ class AboutAndHelpUI extends React.Component {
           <Title level={4}>组件交互标注</Title>
           <div className={styles.paragraph}>
             <Paragraph>
-              <Text code>页面交互标注</Text> 包括 <Text code>获得数据</Text> 、 <Text code>改变数据项</Text> 、 <Text code>展示数据</Text> 、 <Text code>功能</Text>，四种类型，每种类型包含基本标注项如下：
+              <Text code>页面交互标注</Text> 包括 <Text code>获得数据</Text>（Input、TextArea等） 、 <Text code>改变数据项</Text>（Select、Radio、RadioGroup、CheckBox、CheckBoxGroup等） 、 <Text code>展示数据</Text> （Table、A标签、Img标签等）、 <Text code>功能</Text>（Button等），四种类型，每种类型包含基本标注项如下：
             </Paragraph>
             <Collapse>
               <Panel header="值" key="1">
