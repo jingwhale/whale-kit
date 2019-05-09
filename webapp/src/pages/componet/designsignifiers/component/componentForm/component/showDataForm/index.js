@@ -112,7 +112,7 @@ const ShowDataFormUI = Form.create({
         )}
       >
         {getFieldDecorator('paramRule', {
-          rules: [{ required: true, message: '请填写标注组件的字段显示规则!' }],
+          rules: [{ required: false, message: '请填写标注组件的字段显示规则!' }],
         })(<TextArea placeholder="长度不超过100字；min:1,max:100" autosize={{ minRows: 3, maxRows: 100 }} />)}
       </Form.Item>
       <Form.Item

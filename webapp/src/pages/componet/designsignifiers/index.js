@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Tabs, Icon, Drawer, Button} from 'antd';
+import Clipboard from 'clipboard';
 import styles from './index.css';
 import MainFormUI from './component/mainForm/index.js';
 import ComponentFormUI from './component/componentForm/index.js';
@@ -64,6 +65,8 @@ export default class IndexUI extends PureComponent {
       svgObj: svgObj,
       svgType: type
     });
+
+    var clipboardBtn = new Clipboard(".svgXml-btn");
 
     return svgObj;
   };
@@ -136,9 +139,11 @@ export default class IndexUI extends PureComponent {
           onClose={this.onDrawerClose}
           visible={this.state.drawerVisible}
         >
-          <div dangerouslySetInnerHTML={{ __html: this.state.svgObj.svgXml}}></div>
+          <div id="svgXml-target" dangerouslySetInnerHTML={{ __html: this.state.svgObj.svgXml}}></div>
           <div className={styles.button}>
             <a herf="#" type="primary" onClick={this.doSVG}>{this.state.buttonValue}</a>
+            <span className={styles.copyBtn}></span>
+            <a class="svgXml-btn" data-clipboard-target="#svgXml-target">复制内容</a>
           </div>
         </Drawer>
         <div className={styles.footer}>Designed and Coded by © Jingwhale</div>
