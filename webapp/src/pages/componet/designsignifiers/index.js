@@ -14,32 +14,39 @@ export default class IndexUI extends PureComponent {
     super(props);
 
     this.state = {
-      svgHtmlString:"",
+      svgObj:"",
       drawerVisible:false,
       drawerPlacement:"right",
-      svgType:""
+      svgType:"",
+      sketchFalg: false,
+      buttonValue:"下载SVG"
     };
   };
 
   componentDidMount(){
+    var that = this;
     window.onbeforeunload = function(){
       return "message"
-    }
+    };
+
+    //监听plugin,sketchFalg
+    window.someGlobalFunctionDefinedInTheWebview = function(data) {
+      console.log(data.flag)
+      var buttonValue = (that.state.svgType == "page") ? "插入页面说明" : "插入交互说明";
+      that.setState({
+        sketchFalg: data.flag,
+        buttonValue: buttonValue
+      });
+    };
   }
 
-  onMakeLayout = value => {
-    window.postMessage('fromwebview', this.state);
-    console.log(this.state)
-  };
-
   handleEmail = (value,type) =>{
-    var svgHtmlString = "";
+    var svgObj = {};
     if(type == "page"){
-      svgHtmlString = DesignsignifiersX(value,type);
+      svgObj = DesignsignifiersX(value,type);
     }else{
-      svgHtmlString = Designsignifiers(value,type);
+      svgObj = Designsignifiers(value,type);
     }
-
 
     var drawerPlacement = "";
     if(type=="page"){
@@ -54,11 +61,11 @@ export default class IndexUI extends PureComponent {
 
     this.setState({
       drawerVisible:true,
-      svgHtmlString: svgHtmlString,
+      svgObj: svgObj,
       svgType: type
     });
 
-    return svgHtmlString;
+    return svgObj;
   };
 
   onDrawerClose = (e) => {
@@ -69,7 +76,7 @@ export default class IndexUI extends PureComponent {
 
   downloadSVG = (e) => {
     console.log("running downloadSVG()");
-    const svgContent = this.state.svgHtmlString,
+    const svgContent = this.state.svgObj.svgXml,
     blob = new Blob([svgContent], {
       type: "image/svg+xml"
     });
@@ -86,6 +93,19 @@ export default class IndexUI extends PureComponent {
     link.href = url;
   };
 
+  makeSignifiers = () => {
+    window.postMessage('fromwebview', this.state.svgObj);
+    console.log(this.state.svgObj)
+  };
+
+  doSVG = (e) =>{
+    if(this.state.sketchFalg){
+      this.makeSignifiers();
+    }else{
+      this.downloadSVG(e);
+    }
+  };
+
   render() {
     return (
       <div className={styles.body}>
@@ -93,14 +113,14 @@ export default class IndexUI extends PureComponent {
           <a href="https://www.jingwhale.cc/" target="_blank"><Icon type="home" /></a>
         </div>
         <Tabs defaultActiveKey="1" onChange={this.callback} className={styles.tab}>
-          <TabPane tab="组件标注" key="1">
-            <div className={styles.tabContent}>
-              <ComponentFormUI  id="ComponentFormUI" handleEmail={this.handleEmail.bind(this)}/>
-            </div>
-          </TabPane>
-          <TabPane tab="页面标注" key="2">
+          <TabPane tab="页面标注" key="1">
             <div className={styles.tabContent}>
               <MainFormUI  id="MainFormUI" handleEmail={this.handleEmail.bind(this)}/>
+            </div>
+          </TabPane>
+          <TabPane tab="组件标注" key="2">
+            <div className={styles.tabContent}>
+              <ComponentFormUI  id="ComponentFormUI" handleEmail={this.handleEmail.bind(this)}/>
             </div>
           </TabPane>
           <TabPane tab="帮助" key="3">
@@ -110,15 +130,15 @@ export default class IndexUI extends PureComponent {
           </TabPane>
         </Tabs>
         <Drawer
-          width={640}
+          width={666}
           placement={this.state.drawerPlacement}
           closable={true}
           onClose={this.onDrawerClose}
           visible={this.state.drawerVisible}
         >
-          <div dangerouslySetInnerHTML={{ __html: this.state.svgHtmlString}}></div>
+          <div dangerouslySetInnerHTML={{ __html: this.state.svgObj.svgXml}}></div>
           <div className={styles.button}>
-            <a herf="#" type="primary" onClick={this.downloadSVG}>下载SVG</a>
+            <a herf="#" type="primary" onClick={this.doSVG}>{this.state.buttonValue}</a>
           </div>
         </Drawer>
         <div className={styles.footer}>Designed and Coded by © Jingwhale</div>

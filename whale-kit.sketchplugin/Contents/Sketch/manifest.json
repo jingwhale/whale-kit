@@ -73,7 +73,7 @@
     },
     {
       "name": "Generate Radar Chart",
-      "shortcut": "ctrl shift option s",
+      "shortcut": "ctrl shift option f",
       "identifier": "sketch-webview-kit.my-command11",
       "script": "generateRadarChart.js",
       "handler": "onRun"
@@ -83,6 +83,13 @@
       "shortcut": "ctrl shift option t",
       "identifier": "sketch-webview-kit.my-command12",
       "script": "generateTags.js",
+      "handler": "onRun"
+    },
+    {
+      "name": "Generate Signifiers",
+      "shortcut": "ctrl shift option s",
+      "identifier": "sketch-webview-kit.my-command13",
+      "script": "generateSignifiers.js",
       "handler": "onRun"
     }
   ],
@@ -108,7 +115,8 @@
       "-",
       "sketch-webview-kit.my-command11",
       "-",
-      "sketch-webview-kit.my-command12"
+      "sketch-webview-kit.my-command12",
+      "sketch-webview-kit.my-command13"
     ]
   },
   "version": "0.3.1",

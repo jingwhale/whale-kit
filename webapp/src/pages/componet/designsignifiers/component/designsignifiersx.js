@@ -44,7 +44,7 @@ const isURL = (strUrl) => {// 验证url
 
 const svgHead = () =>{
   var svgHeight = 200;
-  var svgHeadString = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height=' + '"'+svgHeight+ '"'+'>';
+  var svgHeadString = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1266" height=' + '"'+svgHeight+ '"'+'>';
   return svgHeadString;
 };
 
@@ -92,7 +92,18 @@ const getSvgXml = (svgData,type) => {
   lastY = defaultLastY;
   lastX = defaultLastX;
 
-  return svgXml;
+  var size = {
+    width:1266,
+    height: 200
+  };
+
+  var svg  = {
+    svgXml: svgXml,
+    size: size,
+    type: type
+  };
+
+  return svg;
 };
 
 
