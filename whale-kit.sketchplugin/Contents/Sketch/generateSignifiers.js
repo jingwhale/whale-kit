@@ -2545,9 +2545,10 @@ function openPannel() {
   });
   win.on('closed', function () {
     win = null;
-  });
-  var Panel = "http://localhost:8000/designsignifiers.html#".concat(Math.random());
-  win.loadURL(Panel); // win.loadURL('http://whalexplorer.coding.me/whale-kit/screenshot.html?'+Math.random());
+  }); // const Panel = `http://localhost:8000/designsignifiers.html#${Math.random()}`;
+  // win.loadURL(Panel);
+
+  win.loadURL('http://whalexplorer.coding.me/whale-kit/designsignifiers.html?' + Math.random());
 
   var closeWin = function closeWin() {
     win.destroy();
