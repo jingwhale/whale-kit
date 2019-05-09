@@ -23,7 +23,7 @@ class AboutAndHelpUI extends React.Component {
               <Text code>Design Signifiers</Text> 目前包括<Text code>页面交互标注</Text> 与 <Text code>组件交互标注</Text>，来帮助业务快速设计出高质量的产品原型。你可以在Web浏览器中使用<Text code>Design Signifiers</Text>服务，也可以在sketch插件中使用。
             </Paragraph>
             <Paragraph>
-              <Text code>Design Signifiers</Text> 目前已经嵌入在sketch插件<a href="https://github.com/jingwhale/whale-kit" target="_blank"> Whale Kit </a>（已发布在sketch官网的插件库中）的<Text code>Generate Signifiers</Text>功能。
+              <Text code>Design Signifiers</Text> 目前已经嵌入sketch插件<a href="https://github.com/jingwhale/whale-kit" target="_blank"> Whale Kit </a>（已发布在sketch官网的插件库中）的<Text code>Generate Signifiers</Text>功能中。
             </Paragraph>
           </div>
           <Title level={4}>组件交互标注</Title>
