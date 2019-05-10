@@ -119,7 +119,7 @@ var UI = __webpack_require__(/*! sketch/ui */ "sketch/ui");
 
 var tagIndex = "";
 
-var createOval = function createOval(currentLayer, indexTag) {
+var createOval = function createOval(currentLayer, index) {
   var group = new Group({
     name: 'Tags',
     parent: currentLayer
