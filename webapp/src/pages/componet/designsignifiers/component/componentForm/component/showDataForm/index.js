@@ -104,7 +104,7 @@ const ShowDataFormUI = Form.create({
       <Form.Item
         label={(
           <span>
-              字段显示规则&nbsp;
+              显示规则&nbsp;
             <Tooltip title="请填写标注组件的字段显示规则。">
                 <Icon type="question-circle-o" />
               </Tooltip>
@@ -118,7 +118,7 @@ const ShowDataFormUI = Form.create({
       <Form.Item
         label={(
           <span>
-              字段为空时显示（默认值）&nbsp;
+              为空时显示（默认值）&nbsp;
             <Tooltip title="请添加字段为空时显示的值">
                 <Icon type="question-circle-o" />
               </Tooltip>

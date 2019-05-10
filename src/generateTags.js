@@ -1,10 +1,15 @@
-var Document = require('sketch/dom').Document
-var Group = require('sketch/dom').Group
-var Text = require('sketch/dom').Text
-var Style = require('sketch/dom').Style
-var ShapePath = require('sketch/dom').ShapePath
+import {TAG_INDEX} from "./lib/config";
 
-const createOval = (currentLayer,indexTag) =>{
+var Document = require('sketch/dom').Document;
+var Group = require('sketch/dom').Group;
+var Text = require('sketch/dom').Text;
+var Style = require('sketch/dom').Style;
+var ShapePath = require('sketch/dom').ShapePath;
+var UI  = require('sketch/ui');
+
+var tagIndex = "";
+
+const createOval = (currentLayer,index) =>{
     var group = new Group({
         name: 'Tags',
         parent:currentLayer
@@ -24,8 +29,9 @@ const createOval = (currentLayer,indexTag) =>{
         }
     ];
 
+    var textTag = tagIndex ? tagIndex : (++index);
     var text = new Text({
-        text: ""+(++indexTag),
+        text: ""+textTag,
         alignment: Text.Alignment.center,
         frame: Oval.frame,
         parent: group,
@@ -43,8 +49,28 @@ export default function onRun(context) {
     var document = Document.getSelectedDocument();
     var selection = document.selectedLayers;
 
-    selection.forEach((value,index) => {
-        createOval(value,index);
-    });
+    if(selection.length>0){
+        if(selection.length == 1){
+            UI.getInputFromUser("Please select the index of the tag:", {
+                type: UI.INPUT_TYPE.selection,
+                possibleValues: TAG_INDEX
+            }, (err, value) => {
+                tagIndex = value;
+                selection.forEach((value,index) => {
+                    createOval(value,index);
+                });
+                if (err) {
+                    // most likely the user canceled the input
+                    return
+                }
+            });
+        }else{
+            selection.forEach((value,index) => {
+                createOval(value,index);
+            });
+        }
+    }else{
+        UI.message("Please select a layer or layers!");
+    }
 }
 

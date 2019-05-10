@@ -120,11 +120,16 @@ class RegistrationForm extends React.Component {
               label="页面Ico"
             >
               {getFieldDecorator('ico', {
-                rules: [{
-                  required: false, message: '请添加页面Ico!',
-                }],
+                rules: [
+                  { required: false, message: '请选择页面的Ico!'},
+                ],
               })(
-                <Input onBlur={this.handleConfirmBlur} />
+                <Select placeholder="请选择页面的Ico" type="string">
+                  <Option value="主站通用Ico">主站通用Ico</Option>
+                  <Option value="机构后台通用Ico">机构后台通用Ico</Option>
+                  <Option value="运营后台通用Ico">运营后台通用Ico</Option>
+                  <Option value="员工后台通用Ico">员工后台通用Ico</Option>
+                </Select>
               )}
             </Form.Item>
             <Form.Item
@@ -139,7 +144,7 @@ class RegistrationForm extends React.Component {
             >
               {getFieldDecorator('compatibility', {
                 rules: [
-                  { required: true, message: '请选择页面的兼容性!', type: 'array' },
+                  { required: false, message: '请选择页面的兼容性!', type: 'array' },
                 ],
               })(
                 <Select mode="multiple" placeholder="请选择页面的兼容性">

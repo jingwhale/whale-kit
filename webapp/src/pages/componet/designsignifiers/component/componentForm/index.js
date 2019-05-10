@@ -176,12 +176,17 @@ class ComponentFormUI extends React.Component {
 
   makeSignifiers = (e) => {
     e.preventDefault();
+
     var that = this;
-    this.myRef.current.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        var svgHtmlString = that.props.handleEmail(this.state.dataAll,"component");
-      }
-    });
+    if(this.myRef.current){
+      this.myRef.current.validateFieldsAndScroll((err, values) => {
+        if (!err) {
+          var svgHtmlString = that.props.handleEmail(this.state.dataAll,"component");
+        }
+      });
+    }else {
+      var svgHtmlString = that.props.handleEmail(this.state.dataAll,"component");
+    }
   };
 
   render() {

@@ -101,6 +101,10 @@ var exports =
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return onRun; });
+/* harmony import */ var _lib_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/config */ "./src/lib/config.js");
+/* harmony import */ var _lib_config__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_lib_config__WEBPACK_IMPORTED_MODULE_0__);
+
+
 var Document = __webpack_require__(/*! sketch/dom */ "sketch/dom").Document;
 
 var Group = __webpack_require__(/*! sketch/dom */ "sketch/dom").Group;
@@ -110,6 +114,10 @@ var Text = __webpack_require__(/*! sketch/dom */ "sketch/dom").Text;
 var Style = __webpack_require__(/*! sketch/dom */ "sketch/dom").Style;
 
 var ShapePath = __webpack_require__(/*! sketch/dom */ "sketch/dom").ShapePath;
+
+var UI = __webpack_require__(/*! sketch/ui */ "sketch/ui");
+
+var tagIndex = "";
 
 var createOval = function createOval(currentLayer, indexTag) {
   var group = new Group({
@@ -131,8 +139,9 @@ var createOval = function createOval(currentLayer, indexTag) {
     fill: Style.FillType.Color,
     color: '#d8d8d8ff'
   }];
+  var textTag = tagIndex ? tagIndex : ++index;
   var text = new Text({
-    text: "" + ++indexTag,
+    text: "" + textTag,
     alignment: Text.Alignment.center,
     frame: Oval.frame,
     parent: group,
@@ -148,10 +157,61 @@ var createOval = function createOval(currentLayer, indexTag) {
 function onRun(context) {
   var document = Document.getSelectedDocument();
   var selection = document.selectedLayers;
-  selection.forEach(function (value, index) {
-    createOval(value, index);
-  });
+
+  if (selection.length > 0) {
+    if (selection.length == 1) {
+      UI.getInputFromUser("Please select the index of the tag:", {
+        type: UI.INPUT_TYPE.selection,
+        possibleValues: _lib_config__WEBPACK_IMPORTED_MODULE_0__["TAG_INDEX"]
+      }, function (err, value) {
+        tagIndex = value;
+        selection.forEach(function (value, index) {
+          createOval(value, index);
+        });
+
+        if (err) {
+          // most likely the user canceled the input
+          return;
+        }
+      });
+    } else {
+      selection.forEach(function (value, index) {
+        createOval(value, index);
+      });
+    }
+  } else {
+    UI.message("Please select a layer or layers!");
+  }
 }
+
+/***/ }),
+
+/***/ "./src/lib/config.js":
+/*!***************************!*\
+  !*** ./src/lib/config.js ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports.identifier = 'identifier_whale_kit'; //change color state 颜色组
+
+module.exports.stateColor = {
+  active: "#767272",
+  noamal: "#D8D8D8",
+  disabled: "#857D7D"
+}; //change color state 颜色组
+
+module.exports.StateColorAmt = 20; //change color state 常量
+
+module.exports.STATE_ACTIVE = "active";
+module.exports.STATE_DISABLED = "disabled"; //convert to grayscaleCommand type 常量
+
+module.exports.AllType = "all";
+module.exports.PartType = "part";
+module.exports.SymbolsType = "symbols";
+module.exports.PageType = "page"; //generate tags 常量
+
+module.exports.TAG_INDEX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
 
 /***/ }),
 
@@ -163,6 +223,17 @@ function onRun(context) {
 /***/ (function(module, exports) {
 
 module.exports = require("sketch/dom");
+
+/***/ }),
+
+/***/ "sketch/ui":
+/*!****************************!*\
+  !*** external "sketch/ui" ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("sketch/ui");
 
 /***/ })
 

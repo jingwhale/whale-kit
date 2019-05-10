@@ -7,7 +7,7 @@ const ChangeDataFormDataTemp = {
     value: '',
   },
   isDoRule: {
-    value: false,
+    value: '',
   },
   paramDoRule: {
     value: '',
@@ -16,7 +16,7 @@ const ChangeDataFormDataTemp = {
     value: 'normal',
   },
   paramCurrentState: {
-    value: 'normal',
+    value: '',
   },
   paramStateDes: {
     value: '',

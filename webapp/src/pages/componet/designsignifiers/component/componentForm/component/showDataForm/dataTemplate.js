@@ -7,16 +7,16 @@ const showDataFormDataTemp = {
     value: '',
   },
   paramType: {
-    value: 'string',
-  },
-  paramDefault: {
     value: '',
   },
+  paramDefault: {
+    value: '显示---',
+  },
   paramDefaultState: {
-    value: 'normal',
+    value: '',
   },
   paramCurrentState: {
-    value: 'normal',
+    value: '',
   },
   paramStateDes: {
     value: '',
@@ -25,7 +25,7 @@ const showDataFormDataTemp = {
     value: '',
   },
   other: {
-    value: '',
+    value: '取不到值时，显示---',
   },
 };
 
