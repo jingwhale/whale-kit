@@ -4,9 +4,10 @@
   "description": "A quick prototype tool library for sketch. ",
   "author": "jingwhale",
   "authorEmail": "jingwhale@yeah.net",
-  "compatibleVersion": 4,
-  "bundleVersion": 3,
+  "compatibleVersion": 3,
+  "bundleVersion": 1,
   "icon": "icon.png",
+  "version": "0.4.2",
   "commands": [
     {
       "name": "Efficient design spec",
