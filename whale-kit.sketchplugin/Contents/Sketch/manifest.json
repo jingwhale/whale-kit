@@ -17,80 +17,80 @@
       "name": "Make Layout",
       "identifier": "sketch-webview-kit.my-command2",
       "script": "makeLayoutCommand.js",
-      "shortcut" : "shift control a"
+      "shortcut": "shift control a"
     },
     {
       "name": "Generate Button",
       "identifier": "sketch-webview-kit.my-command3",
       "script": "generateButtonCommand.js",
-      "shortcut" : "shift control z"
+      "shortcut": "shift control z"
     },
     {
       "name": "Operate Image",
       "identifier": "sketch-webview-kit.my-command4",
       "script": "operateImageCommand.js",
-      "shortcut" : "shift control q"
+      "shortcut": "shift control q"
     },
     {
       "name": "Flow Page",
       "identifier": "sketch-webview-kit.my-command5",
       "script": "flowPageCommand.js",
-      "shortcut" : "control option shift p"
+      "shortcut": "control option shift p"
     },
     {
       "name": "Screen Shot",
       "identifier": "sketch-webview-kit.my-command6",
       "script": "screenshotCommand.js",
-      "shortcut" : "control option shift j"
+      "shortcut": "control option shift j"
     },
     {
       "name": "Toggle State",
       "identifier": "sketch-webview-kit.my-command7",
       "script": "toggleStateCommand.js",
-      "handler" : "onRun",
-      "shortcut" : "control option shift k"
+      "handler": "onRun",
+      "shortcut": "control option shift k"
     },
     {
       "name": "Convert to Grayscale",
       "identifier": "sketch-webview-kit.my-command8",
       "script": "convertToGrayscaleCommand.js",
-      "handler" : "onRun",
-      "shortcut" : "control option shift g"
+      "handler": "onRun",
+      "shortcut": "control option shift g"
     },
     {
       "name": "Generate QR Code",
       "shortcut": "ctrl shift option q",
       "identifier": "sketch-webview-kit.my-command9",
       "script": "generateQrcode.js",
-      "handler" : "onRun"
+      "handler": "onRun"
     },
     {
       "name": "Generate Cover",
       "shortcut": "ctrl shift option c",
       "identifier": "sketch-webview-kit.my-command10",
       "script": "generateCover.js",
-      "handler" : "onRun"
+      "handler": "onRun"
     },
     {
       "name": "Generate Radar Chart",
       "shortcut": "ctrl shift option f",
       "identifier": "sketch-webview-kit.my-command11",
       "script": "generateRadarChart.js",
-      "handler" : "onRun"
+      "handler": "onRun"
     },
     {
       "name": "Generate Tags",
       "shortcut": "ctrl shift option t",
       "identifier": "sketch-webview-kit.my-command12",
       "script": "generateTags.js",
-      "handler" : "onRun"
+      "handler": "onRun"
     },
     {
       "name": "Generate Signifiers",
       "shortcut": "ctrl shift option s",
       "identifier": "sketch-webview-kit.my-command13",
       "script": "generateSignifiers.js",
-      "handler" : "onRun"
+      "handler": "onRun"
     }
   ],
   "menu": {
@@ -113,5 +113,8 @@
       "sketch-webview-kit.my-command5",
       "sketch-webview-kit.my-command10"
     ]
-  }
+  },
+  "version": "0.4.2",
+  "disableCocoaScriptPreprocessor": true,
+  "appcast": "https://raw.githubusercontent.com/jingwhale/whale-kit/master/.appcast.xml"
 }
