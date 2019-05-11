@@ -7,7 +7,7 @@
   "compatibleVersion": 3,
   "bundleVersion": 1,
   "icon": "icon.png",
-  "version": "0.5.3",
+  "version": "0.5.0",
   "commands": [
     {
       "name": "Efficient design spec",
