@@ -118,8 +118,9 @@ const svgString = (value,index,HeadType) => {
     textHeadString = textHead2(value,index,HeadType);
   }
 
-
-  if(value.value!='undefined'){
+  if(typeof(value.value) == "undefined" || (value.value=='')){
+    textContentString = textContent("undefined",index);
+  }else{
     if(value.flag){
       textContentString = svgContent(value.value,Heading2);
     }else{
@@ -131,8 +132,6 @@ const svgString = (value,index,HeadType) => {
         textContentString = textContent(value.value,index);
       }
     }
-  }else{
-    textContentString = "---";
   }
 
   svgString = textHeadString + textContentString;

@@ -80,7 +80,6 @@ const getSvgXml = (svgData,type) => {
   return svg;
 };
 
-
 const svgString = (value,index,HeadType) => {
   var svgString = "";
   var textHeadString = "";
@@ -88,12 +87,13 @@ const svgString = (value,index,HeadType) => {
 
   textHeadString = textHead(value,index,HeadType);
 
-  if(value.value!='undefined'){
+  if(typeof(value.value) == "undefined" || (value.value=='')){
+    textContentString = textContent("undefined",index);
+  }else{
     if(value.flag){
       textContentString = svgContent(value.value,Heading2);
     }else{
       if(value.arrDataColumnType){
-        debugger
         value.value.forEach((arrValue,i) => {
           textContentString += textContent(arrValue,index);
         });
@@ -101,8 +101,6 @@ const svgString = (value,index,HeadType) => {
         textContentString = textContent(value.value,index);
       }
     }
-  }else{
-    textContentString = "---";
   }
 
   svgString = textHeadString + textContentString;
