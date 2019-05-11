@@ -49,7 +49,7 @@ const doComponentArtboardFrame = (svgObj) =>{
         x: JSON.parse(JSON.stringify(currentLayer.frame.width))+10,
         y: 0+10,
         width: svgObj.size.width,
-        height: svgObj.size.height
+        height: svgObj.size.height+10
     };
 
     //resize artBoard width

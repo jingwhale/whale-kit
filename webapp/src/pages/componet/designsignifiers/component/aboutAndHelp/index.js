@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Collapse} from 'antd';
+import { Typography, Collapse, Timeline } from 'antd';
 import styles from './index.css';
 
 const { Title, Paragraph, Text } = Typography;
@@ -86,12 +86,13 @@ class AboutAndHelpUI extends React.Component {
             </Paragraph>
           </div>
           <Title level={4}>更新</Title>
-          <div className={styles.paragraph}>
-            <Paragraph>
-              <Text code>Design Signifiers</Text> 持续更新中。
-            </Paragraph>
-          </div>
         </Typography>
+        <Timeline pending="Recording..." mode="alternate">
+          <Timeline.Item>Design Signifiers 发布Web应用 2015-05-07</Timeline.Item>
+          <Timeline.Item>发布 Whale Kit 4.0，嵌入<Text code>Generate Signifiers</Text>2015-05-08</Timeline.Item>
+          <Timeline.Item>发布 Whale Kit 4.1，<Text code>Signifiers</Text>添加复制标注 2015-05-09</Timeline.Item>
+          <Timeline.Item>发布 Whale Kit 4.2，<Text code>Signifiers</Text>添加自定义标注 2015-05-11</Timeline.Item>
+        </Timeline>
       </div>
     );
   }

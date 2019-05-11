@@ -143,7 +143,7 @@ export default class IndexUI extends PureComponent {
           <div className={styles.button}>
             <a herf="#" type="primary" onClick={this.doSVG}>{this.state.buttonValue}</a>
             <span className={styles.copyBtn}></span>
-            <a class="svgXml-btn" data-clipboard-target="#svgXml-target">复制内容</a>
+            <a data-clipboard-target="#svgXml-target">复制内容</a>
           </div>
         </Drawer>
         <div className={styles.footer}>Designed and Coded by © Jingwhale</div>

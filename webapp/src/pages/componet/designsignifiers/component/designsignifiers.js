@@ -1,4 +1,5 @@
 import { pageDataTemplate, getDataFormTemplate, changeDataFormTemplate, showDataFormTemplate, functionDataFormTemplate } from "./signifiersTemplate.js";
+import {customDataTemplate} from "./signifiersTemplate";
 
 const defaultLastY = 16;
 var lastY = JSON.parse(JSON.stringify(defaultLastY));
@@ -91,7 +92,14 @@ const svgString = (value,index,HeadType) => {
     if(value.flag){
       textContentString = svgContent(value.value,Heading2);
     }else{
-      textContentString = textContent(value,index);
+      if(value.arrDataColumnType){
+        debugger
+        value.value.forEach((arrValue,i) => {
+          textContentString += textContent(arrValue,index);
+        });
+      }else{
+        textContentString = textContent(value.value,index);
+      }
     }
   }else{
     textContentString = "---";
@@ -115,13 +123,13 @@ const textHead = (value,index,HeadType) => {
 const textContent = (value,index) => {
   var cnt = '- ';
   var content = '';
-  if(Object.prototype.toString.call(value.value) == '[object Object]'){
-    value.value.forEach((value,index) => {
-      cnt += value;
+  if(Object.prototype.toString.call(value) == '[object Object]'){
+    value.forEach((invalue,index) => {
+      cnt += invalue;
       cnt += ';';
     });
   }else{
-    cnt += value.value;
+    cnt += value;
   }
 
   if(getBLen(cnt)>lineWidth){
@@ -172,6 +180,9 @@ const componentSignifiers = (values,type) =>{
           break;
         case '功能':
           ceilData = functionDataFormTemplate(value);
+          break;
+        case '自定义':
+          ceilData = customDataTemplate(value);
           break;
         default:
           ceilData = getDataFormTemplate(value);

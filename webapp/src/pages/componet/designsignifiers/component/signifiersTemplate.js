@@ -38,7 +38,8 @@ const pageDataTemplate = (values) =>{
     },
     {
       title:"页面权限",
-      value:values.permission
+      value:values.permission,
+      arrDataColumnType:true
     },
     {
       flag:true,
@@ -187,7 +188,22 @@ const changeDataFormTemplate = (values) =>{
     title:values.title.value,
     value:[]
   };
-
+  if(values.paramType.value!==""){
+    dataFormObj.value.push(
+      {
+        title:"值类型",
+        value:values.paramType.value
+      }
+    )
+  }
+  if(values.paramRule.value!==""){
+    dataFormObj.value.push(
+      {
+        title:"显示规则",
+        value:values.paramRule.value
+      }
+    )
+  }
   if(values.valueList.value!==""){
     dataFormObj.value.push(
       {
@@ -411,10 +427,29 @@ const functionDataFormTemplate = (values) =>{
   return dataFormObj;
 };
 
+const customDataTemplate = (values) =>{
+  var contentsData = [];
+  if(values.contents){
+    if(values.keys){
+      values.keys.value.forEach((value,index)=>{
+        var initContents = JSON.parse(JSON.stringify(values.contents));
+        contentsData.push(initContents.splice(value,1)[0]);
+      });
+    }
+  }
+  var pageDataObj = {
+    arrDataColumnType:true,
+    title: values.title.value,
+    value: contentsData
+  };
+  return pageDataObj;
+};
+
 export {
   pageDataTemplate,
   getDataFormTemplate,
   changeDataFormTemplate,
   showDataFormTemplate,
-  functionDataFormTemplate
+  functionDataFormTemplate,
+  customDataTemplate
 }

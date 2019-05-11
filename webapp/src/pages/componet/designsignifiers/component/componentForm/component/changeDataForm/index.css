@@ -14,3 +14,9 @@
   width: 650px;
   float: left;
 }
+
+.card{
+  position: fixed;
+  right: 50px;
+  top:76px;
+}

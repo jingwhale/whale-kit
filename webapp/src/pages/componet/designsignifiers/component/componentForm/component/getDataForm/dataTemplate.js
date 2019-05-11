@@ -16,7 +16,7 @@ const GetDataFormDataTemp = {
     value: '',
   },
   paramPlaceholder:{
-    value: ''
+    value: '请填写'
   },
   paramDoRule: {
     value: '',

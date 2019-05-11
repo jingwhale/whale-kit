@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Tabs, Modal, Radio, Tooltip, Icon, Divider} from 'antd';
+import { Form, Input, Tabs, Modal, Radio, Tooltip, Icon, Divider, Tag } from 'antd';
 import styles from './index.css'
 import changeDataFormTemp from './dataTemplate.js';
 
@@ -26,6 +26,14 @@ const ChangeDataFormUI = Form.create({
       title: Form.createFormField({
         ...props.title,
         value: props.title.value,
+      }),
+      paramType: Form.createFormField({
+        ...props.paramType,
+        value: props.paramType.value,
+      }),
+      paramRule: Form.createFormField({
+        ...props.paramRule,
+        value: props.paramRule.value,
       }),
       valueList: Form.createFormField({
         ...props.valueList,
@@ -68,6 +76,9 @@ const ChangeDataFormUI = Form.create({
   const { getFieldDecorator } = props.form;
   return (
     <Form {...formItemLayout}>
+      <div className={styles.card}>
+        <Tag>改变数据项(Select、Radio、CheckBox等)</Tag>
+      </div>
       <Form.Item
         label={(
           <span>
@@ -85,6 +96,36 @@ const ChangeDataFormUI = Form.create({
         )}
       </Form.Item>
       <Divider dashed>值</Divider>
+      <Form.Item
+        label="字段类型"
+      >
+        {getFieldDecorator('paramType', {
+          rules: [{ required: false, message: '请选择标注组件的字段类型!' }],
+        })(
+          <Radio.Group>
+            <Radio value="string">string</Radio>
+            <Radio value="number">number</Radio>
+            <Radio value="telephone">telephone</Radio>
+            <Radio value="url">url</Radio>
+            <Radio value="date">date</Radio>
+            <Radio value="">不设置此项</Radio>
+          </Radio.Group>
+        )}
+      </Form.Item>
+      <Form.Item
+        label={(
+          <span>
+              字段规则&nbsp;
+            <Tooltip title="适用于获取数据的组件，如：Input，TextArea等。">
+                <Icon type="question-circle-o" />
+              </Tooltip>
+            </span>
+        )}
+      >
+        {getFieldDecorator('paramRule', {
+          rules: [{ required: false, message: '请填写标注组件的字段规则!' }],
+        })(<TextArea placeholder="长度不超过100字；min:1,max:100" autosize={{ minRows: 3, maxRows: 100 }} />)}
+      </Form.Item>
       <Form.Item
         label={(
           <span>

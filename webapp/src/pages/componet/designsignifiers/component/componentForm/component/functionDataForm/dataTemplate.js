@@ -1,4 +1,4 @@
-const ChangeDataFormDataTemp = {
+const FunctionFormDataTemp = {
   type:"功能",
   title: {
     value: '功能-button',
@@ -29,6 +29,6 @@ const ChangeDataFormDataTemp = {
   },
 };
 
-export default ChangeDataFormDataTemp;
+export default FunctionFormDataTemp;
 
 

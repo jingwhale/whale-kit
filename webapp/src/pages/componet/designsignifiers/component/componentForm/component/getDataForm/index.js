@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Tabs, Modal, Radio, Tooltip, Icon, Divider} from 'antd';
+import { Form, Input, Tabs, Modal, Radio, Tooltip, Icon, Divider, Tag } from 'antd';
 import styles from './index.css'
 import getDataFormTemp from './dataTemplate.js';
 
@@ -19,6 +19,7 @@ const formItemLayout = {
 const GetDataFormUI = Form.create({
   name: 'global_state',
   onFieldsChange(props, changedFields) {
+    debugger
     props.onChange(changedFields);
   },
   mapPropsToFields(props) {
@@ -80,6 +81,10 @@ const GetDataFormUI = Form.create({
   const { getFieldDecorator } = props.form;
   return (
     <Form {...formItemLayout}>
+      <div className={styles.card}>
+        <Tag>获得数据(Input、TextArea等)</Tag>
+      </div>
+
       <Form.Item
         label={(
           <span>

@@ -5,6 +5,7 @@ import { GetDataFormUI, getDataFormTemp } from './component/getDataForm/index.js
 import { ChangeDataFormUI, changeDataFormTemp } from './component/changeDataForm/index.js';
 import { ShowDataFormUI, showDataFormTemp } from './component/showDataForm/index.js';
 import { FunctionDataFormUI, functionDataFormTemp } from './component/functionDataForm/index.js';
+import { CustomFormUI, customFormTemp } from './component/customForm/index.js';
 
 
 const TabPane = Tabs.TabPane;
@@ -16,6 +17,7 @@ const radioOptions = [
   { label: '改变数据项', value: '改变数据项' },
   { label: '展示数据', value: '展示数据' },
   { label: '功能', value: '功能'},
+  { label: '自定义', value: '自定义'}
 ];
 
 var currentFormTemp = JSON.parse(JSON.stringify(getDataFormTemp));
@@ -51,6 +53,8 @@ class ComponentFormUI extends React.Component {
     dataAll[activeKey] = { ...dataAll[activeKey], ...changedFields };
 
     this.setState({dataAll});
+
+    this.forceUpdate();
   };
 
   onTabChange = (activeKey) => {
@@ -169,6 +173,9 @@ class ComponentFormUI extends React.Component {
       case '功能':
         currentFormTemp = JSON.parse(JSON.stringify(functionDataFormTemp));
         break;
+      case '自定义':
+        currentFormTemp = JSON.parse(JSON.stringify(customFormTemp));
+        break;
       default:
         currentFormTemp = JSON.parse(JSON.stringify(getDataFormTemp));
     }
@@ -176,7 +183,7 @@ class ComponentFormUI extends React.Component {
 
   makeSignifiers = (e) => {
     e.preventDefault();
-
+    debugger
     var that = this;
     if(this.myRef.current){
       this.myRef.current.validateFieldsAndScroll((err, values) => {
@@ -216,6 +223,12 @@ class ComponentFormUI extends React.Component {
       dynamicForm = (
         <div>
           <FunctionDataFormUI {...dataAll[activeKey]} ref={this.myRef} onChange={this.handleFormChange} />
+        </div>
+      );
+    }else if(this.state.formType=="自定义"){
+      dynamicForm = (
+        <div>
+          <CustomFormUI {...dataAll[activeKey]} ref={this.myRef} onChange={this.handleFormChange} />
         </div>
       );
     }

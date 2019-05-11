@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Tabs, Modal, Radio, Tooltip, Icon, Divider} from 'antd';
+import { Form, Input, Tabs, Modal, Radio, Tooltip, Icon, Divider, Tag } from 'antd';
 import styles from './index.css'
 import showDataFormTemp from './dataTemplate.js';
 
@@ -68,6 +68,9 @@ const ShowDataFormUI = Form.create({
   const { getFieldDecorator } = props.form;
   return (
     <Form {...formItemLayout}>
+      <div className={styles.card}>
+        <Tag>展示数据(Input、TextArea等)</Tag>
+      </div>
       <Form.Item
         label={(
           <span>

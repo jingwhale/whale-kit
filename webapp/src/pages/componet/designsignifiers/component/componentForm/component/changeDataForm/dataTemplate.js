@@ -3,8 +3,14 @@ const ChangeDataFormDataTemp = {
   title: {
     value: '改变数据项',
   },
+  paramType:{
+    value: ''
+  },
+  paramRule: {
+    value: ''
+  },
   valueList: {
-    value: '',
+    value: ''
   },
   paramIsNeed: {
     value: '',
