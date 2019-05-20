@@ -39,12 +39,6 @@
       "shortcut": "control option shift p"
     },
     {
-      "name": "Screen Shot",
-      "identifier": "sketch-webview-kit.my-command6",
-      "script": "screenshotCommand.js",
-      "shortcut": "control option shift j"
-    },
-    {
       "name": "Toggle State",
       "identifier": "sketch-webview-kit.my-command7",
       "script": "toggleStateCommand.js",
@@ -114,7 +108,6 @@
       "sketch-webview-kit.my-command12",
       "sketch-webview-kit.my-command13",
       "-",
-      "sketch-webview-kit.my-command6",
       "sketch-webview-kit.my-command8",
       "sketch-webview-kit.my-command9",
       "-",
