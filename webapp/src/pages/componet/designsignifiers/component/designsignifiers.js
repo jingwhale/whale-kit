@@ -64,8 +64,6 @@ const getSvgXml = (svgData,type) => {
 
   var svgXml = svgHead() + caption(type) + svg + svgTail;
 
-  lastY = defaultLastY;
-
   var size = {
     width:585,
     height: lastY
@@ -76,6 +74,8 @@ const getSvgXml = (svgData,type) => {
     size: size,
     type: type
   };
+
+  lastY = defaultLastY;
 
   return svg;
 };

@@ -92,6 +92,13 @@
       "identifier": "sketch-webview-kit.my-command13",
       "script": "generateSignifiers.js",
       "handler": "onRun"
+    },
+    {
+      "name": "Generate Writing Format",
+      "shortcut": "ctrl shift option w",
+      "identifier": "sketch-webview-kit.my-command14",
+      "script": "generateWritingFormat.js",
+      "handler": "onRun"
     }
   ],
   "menu": {
@@ -112,7 +119,8 @@
       "sketch-webview-kit.my-command9",
       "-",
       "sketch-webview-kit.my-command5",
-      "sketch-webview-kit.my-command10"
+      "sketch-webview-kit.my-command10",
+      "sketch-webview-kit.my-command14"
     ]
   },
   "disableCocoaScriptPreprocessor": true,

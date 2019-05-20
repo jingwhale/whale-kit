@@ -123,7 +123,6 @@ class DynamicFieldSet extends React.Component {
 const formOption = {
   name: 'dynamic_form_item',
   onFieldsChange(props, changedFields) {
-
     if(changedFields.contents){
       var { getFieldValue } = props.form;
       var contentsData = getFieldValue('contents');

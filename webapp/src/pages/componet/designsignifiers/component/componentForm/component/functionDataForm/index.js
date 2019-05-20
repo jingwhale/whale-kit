@@ -69,7 +69,7 @@ const FunctionDataFormUI = Form.create({
   return (
     <Form {...formItemLayout}>
       <div className={styles.card}>
-        <Tag>功能(Button等)</Tag>
+        <Tag>功能(Button、A标签等)</Tag>
       </div>
 
       <Form.Item

@@ -69,7 +69,7 @@ const ShowDataFormUI = Form.create({
   return (
     <Form {...formItemLayout}>
       <div className={styles.card}>
-        <Tag>展示数据(Input、TextArea等)</Tag>
+        <Tag>展示数据(Table、Img标签等)</Tag>
       </div>
       <Form.Item
         label={(

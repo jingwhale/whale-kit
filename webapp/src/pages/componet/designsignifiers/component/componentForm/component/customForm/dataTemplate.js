@@ -5,7 +5,8 @@ const CustomFormDataTemp = {
   },
   keys:{
     value: []
-  }
+  },
+  contents:[""]
 };
 
 export default CustomFormDataTemp;
