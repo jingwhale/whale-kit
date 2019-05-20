@@ -2572,10 +2572,9 @@ if (artboardRect && artboardRect.type == "Artboard") {
   });
   win.on('closed', function () {
     win = null;
-  }); // const Panel = `http://localhost:8000/screenshot.html#${Math.random()}`;
-  // win.loadURL(Panel);
-
-  win.loadURL('http://whalexplorer.coding.me/whale-kit/screenshot.html?' + Math.random());
+  });
+  var Panel = "http://localhost:8000/screenshot.html#".concat(Math.random());
+  win.loadURL(Panel); // win.loadURL('http://whalexplorer.coding.me/whale-kit/screenshot.html?'+Math.random());
 
   var closeWin = function closeWin() {
     win.destroy();

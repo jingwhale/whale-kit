@@ -122,6 +122,7 @@ selection.forEach(function (layer) {
 var artboardFrame = artboard.frame;
 var titleFontSize = 26;
 var proverbColor = "#999999";
+var textColor = "#333333";
 function onRun(context) {
   if (artboard && artboard.type == "Artboard") {
     choseElement();
@@ -241,6 +242,7 @@ var generateElementPromise = function generateElementPromise(value, frame) {
     name: "urllink"
   });
   linkText.style.fontSize = 20;
+  linkText.style.textColor = textColor;
   var jhText = new Text({
     text: "交互约定",
     frame: {
@@ -254,7 +256,7 @@ var generateElementPromise = function generateElementPromise(value, frame) {
   });
   jhText.style.fontSize = titleFontSize;
   var jhTextCnt = new Text({
-    text: "• 组件交互均与现有组件交互一致。未说明交互，均为组件默认。 \n" + "\n" + "• 页面交互异常在未说明情况下，均按照以下： \n" + "404：跳转到公用404页面。 \n" + "无网络：提示无网络或网速慢。 \n" + "无权限：跳转到公用无权限页面。 \n" + "\n" + "• 其他交互未尽事宜，请及时与设计师沟通。 ",
+    text: "• 组件交互均与现有组件交互一致。未说明交互，均为组件默认。 \n" + "\n" + "• 页面交互异常在未说明情况下，均按照以下： \n" + "- 404：跳转到公用404页面。 \n" + "- 无网络：提示无网络或网速慢。 \n" + "- 无权限：跳转到公用无权限页面。 \n" + "\n" + "• 其他交互未尽事宜，请及时与设计师沟通。 ",
     frame: {
       x: globalText.frame.x,
       y: globalText.frame.y + 130 + 50,
@@ -265,7 +267,8 @@ var generateElementPromise = function generateElementPromise(value, frame) {
     name: "jhTextCnt"
   });
   jhTextCnt.style.fontSize = 20;
-  jhTextCnt.style.lineHeight = 32; // jhTextCnt.style.alignment = "left";
+  jhTextCnt.style.lineHeight = 32;
+  jhTextCnt.style.textColor = textColor; // jhTextCnt.style.alignment = "left";
 
   var nameDefinitionText = new Text({
     text: "名词定义",
@@ -292,7 +295,8 @@ var generateElementPromise = function generateElementPromise(value, frame) {
     name: "nameDefinitionCnt"
   });
   nameDefinitionTextCnt.style.fontSize = 20;
-  nameDefinitionTextCnt.style.lineHeight = 32; // nameDefinitionTextCnt.style.alignment = "left";
+  nameDefinitionTextCnt.style.lineHeight = 32;
+  nameDefinitionTextCnt.style.textColor = textColor; // nameDefinitionTextCnt.style.alignment = "left";
 }; //设计要素
 
 
@@ -327,6 +331,7 @@ var generateElementPoint = function generateElementPoint(value) {
     name: "urllink"
   });
   linkText.style.fontSize = 18;
+  linkText.style.textColor = textColor;
 }; //致谢
 
 
@@ -392,7 +397,7 @@ var generateElementThanks = function generateElementThanks(value) {
     }
   });
   var global2Text = new Text({
-    text: "凝聚产生力量；团结诞生希望。——席勒",
+    text: '"凝聚产生力量；团结诞生希望。"——席勒',
     alignment: Text.Alignment.center,
     frame: {
       x: 0,

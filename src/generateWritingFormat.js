@@ -13,6 +13,7 @@ var artboardFrame = artboard.frame;
 
 var titleFontSize = 26;
 var proverbColor = "#999999";
+var textColor = "#333333";
 
 export default function onRun(context) {
     if(artboard && artboard.type=="Artboard"){
@@ -133,6 +134,7 @@ const generateElementPromise = function (value,frame) {
     });
 
     linkText.style.fontSize = 20;
+    linkText.style.textColor = textColor;
 
     const jhText = new Text({
         text: "交互约定",
@@ -152,9 +154,9 @@ const generateElementPromise = function (value,frame) {
         text: "• 组件交互均与现有组件交互一致。未说明交互，均为组件默认。 \n" +
         "\n" +
         "• 页面交互异常在未说明情况下，均按照以下： \n" +
-        "404：跳转到公用404页面。 \n" +
-        "无网络：提示无网络或网速慢。 \n" +
-        "无权限：跳转到公用无权限页面。 \n" +
+        "- 404：跳转到公用404页面。 \n" +
+        "- 无网络：提示无网络或网速慢。 \n" +
+        "- 无权限：跳转到公用无权限页面。 \n" +
         "\n" +
         "• 其他交互未尽事宜，请及时与设计师沟通。 ",
         frame: {
@@ -169,6 +171,7 @@ const generateElementPromise = function (value,frame) {
 
     jhTextCnt.style.fontSize = 20;
     jhTextCnt.style.lineHeight = 32;
+    jhTextCnt.style.textColor = textColor;
     // jhTextCnt.style.alignment = "left";
 
     const nameDefinitionText = new Text({
@@ -204,6 +207,7 @@ const generateElementPromise = function (value,frame) {
 
     nameDefinitionTextCnt.style.fontSize = 20;
     nameDefinitionTextCnt.style.lineHeight = 32;
+    nameDefinitionTextCnt.style.textColor = textColor;
     // nameDefinitionTextCnt.style.alignment = "left";
 
 };
@@ -243,6 +247,7 @@ const generateElementPoint = function (value) {
         name: "urllink"
     });
     linkText.style.fontSize = 18;
+    linkText.style.textColor = textColor;
 };
 
 
@@ -316,7 +321,7 @@ const generateElementThanks = function (value) {
     });
 
     const global2Text = new Text({
-        text: "凝聚产生力量；团结诞生希望。——席勒",
+        text: '"凝聚产生力量；团结诞生希望。"——席勒',
         alignment: Text.Alignment.center,
         frame: {
             x: 0,

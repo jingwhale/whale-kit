@@ -134,10 +134,10 @@ if(artboardRect && artboardRect.type=="Artboard"){
     win.on('closed', () => {
         win = null
     });
-    // const Panel = `http://localhost:8000/screenshot.html#${Math.random()}`;
-    // win.loadURL(Panel);
+    const Panel = `http://localhost:8000/screenshot.html#${Math.random()}`;
+    win.loadURL(Panel);
 
-    win.loadURL('http://whalexplorer.coding.me/whale-kit/screenshot.html?'+Math.random());
+    // win.loadURL('http://whalexplorer.coding.me/whale-kit/screenshot.html?'+Math.random());
 
     const closeWin = () =>{
         win.destroy();
