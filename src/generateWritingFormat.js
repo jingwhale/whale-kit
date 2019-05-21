@@ -14,6 +14,7 @@ var artboardFrame = artboard.frame;
 var titleFontSize = 26;
 var proverbColor = "#999999";
 var textColor = "#333333";
+var titleBold = 600;
 
 export default function onRun(context) {
     if(artboard && artboard.type=="Artboard"){
@@ -94,6 +95,7 @@ const generateElementTtile = function (value,frame) {
     });
 
     titleText.style.fontSize = titleFontSize;
+    titleText.style.fontWeight = titleBold;
 };
 
 //交互约定
@@ -120,6 +122,7 @@ const generateElementPromise = function (value,frame) {
     });
 
     globalText.style.fontSize = titleFontSize;
+    globalText.style.fontWeight = titleBold;
 
     const linkText = new Text({
         text: "https://whale-design.gitbook.io/whale-global-explanation/",
@@ -149,6 +152,7 @@ const generateElementPromise = function (value,frame) {
     });
 
     jhText.style.fontSize = titleFontSize;
+    jhText.style.fontWeight = titleBold;
 
     const jhTextCnt = new Text({
         text: "• 组件交互均与现有组件交互一致。未说明交互，均为组件默认。 \n" +
@@ -187,6 +191,7 @@ const generateElementPromise = function (value,frame) {
     });
 
     nameDefinitionText.style.fontSize = titleFontSize;
+    nameDefinitionText.style.fontWeight = titleBold;
     // nameDefinitionText.style.alignment = "left";
 
     const nameDefinitionTextCnt = new Text({
@@ -234,6 +239,7 @@ const generateElementPoint = function (value) {
     });
 
     globalText.style.fontSize = titleFontSize;
+    globalText.style.fontWeight = titleBold;
 
     const linkText = new Text({
         text: "https://github.com/jingwhale/whale-design-book",
