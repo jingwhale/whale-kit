@@ -1,0 +1,59 @@
+.body{
+  padding: 70px 0 33px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif,
+  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+.emoji{
+  width: 100px;
+  margin: 0 auto;
+}
+.demo{
+  width: 600px;
+  margin: 0 auto;
+  margin-bottom: 200px;
+}
+.title{
+  width: 600px;
+  margin: 0 auto;
+  position: fixed;
+  right:0px;
+  left:0px;
+  top:0;
+}
+
+.pic{
+  /*position: relative;*/
+  /*margin-top: 20px;*/
+  width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+.pic img{
+  width: 100%;
+}
+
+.biaozhu{
+  /*position: absolute;*/
+  width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 80px;
+  height: 500px;
+}
+
+.biaozhu img{
+  width: 100%;
+}
+
+.whale{
+  width: 600px;
+  position: fixed;
+  left:-130px;
+  bottom: 20px;
+}
+
+.design{
+  color: #999;
+  margin-bottom: 6px;
+}
+
