@@ -9,6 +9,7 @@ import Designsignifiers from './component/designsignifiers.js';
 import DesignsignifiersX from './component/designsignifiersx.js';
 
 const TabPane = Tabs.TabPane;
+const category = "designsignifiers";
 
 export default class IndexUI extends PureComponent {
   constructor(props) {
@@ -66,9 +67,21 @@ export default class IndexUI extends PureComponent {
       svgType: type
     });
 
+    this.handleEmailGa(type);
+
     var clipboardBtn = new Clipboard("#svgXml-btn");
 
     return svgObj;
+  };
+
+  handleEmailGa= (type) =>{
+    var action = "generate_"+type;
+    var label = "生成标注";
+
+    window.gtag('event', action, {
+      'event_category': category+"_generate",
+      'event_label': label
+    })
   };
 
   onDrawerClose = (e) => {
@@ -106,7 +119,40 @@ export default class IndexUI extends PureComponent {
       this.makeSignifiers();
     }else{
       this.downloadSVG(e);
+
+      this.DownloadSVGGa();
     }
+  };
+
+  DownloadSVGGa= () =>{
+    var action = "download_SVG_"+this.state.svgType;
+    var label = "downloadSVG";
+
+    window.gtag('event', action, {
+      'event_category': category+"_downloadSVG",
+      'event_label': label
+    })
+  };
+
+  onClickTabGa = (target) =>{
+    var tabPaneList = ["页面标注","组件标注","帮助"];
+    var action = "click_TabPane"+target;
+    var label = tabPaneList[target-1];
+
+    window.gtag('event', action, {
+      'event_category': category+"_tabPane",
+      'event_label': label
+    });
+  };
+
+  onCopyBtnGa = () =>{
+    var action = "click_copy_"+this.state.svgType;
+    var label = "复制内容";
+
+    window.gtag('event', action, {
+      'event_category': category+"_copy",
+      'event_label': label
+    });
   };
 
   render() {
@@ -115,7 +161,7 @@ export default class IndexUI extends PureComponent {
         <div className={styles.icon}>
           <a href="https://www.jingwhale.cc/" target="_blank"><Icon type="home" /></a>
         </div>
-        <Tabs defaultActiveKey="1" onChange={this.callback} className={styles.tab}>
+        <Tabs defaultActiveKey="1" onChange={this.onClickTabGa} className={styles.tab}>
           <TabPane tab="页面标注" key="1">
             <div className={styles.tabContent}>
               <MainFormUI  id="MainFormUI" handleEmail={this.handleEmail.bind(this)}/>
@@ -143,7 +189,7 @@ export default class IndexUI extends PureComponent {
           <div className={styles.button}>
             <a herf="#" type="primary" onClick={this.doSVG}>{this.state.buttonValue}</a>
             <span className={styles.copyBtn}></span>
-            <a id="svgXml-btn" data-clipboard-target="#svgXml-target">复制内容</a>
+            <a id="svgXml-btn" data-clipboard-target="#svgXml-target" onClick={this.onCopyBtnGa}>复制内容</a>
           </div>
         </Drawer>
         <div className={styles.footer}>Designed and Coded by © Jingwhale</div>

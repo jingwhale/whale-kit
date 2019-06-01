@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, Modal, Radio, Button } from 'antd';
+import { Tabs, Modal, Radio, Button, message } from 'antd';
 import styles from './index.css';
 import { GetDataFormUI, getDataFormTemp } from './component/getDataForm/index.js';
 import { ChangeDataFormUI, changeDataFormTemp } from './component/changeDataForm/index.js';
@@ -11,6 +11,8 @@ import { CustomFormUI, customFormTemp } from './component/customForm/index.js';
 const TabPane = Tabs.TabPane;
 const confirm = Modal.confirm;
 const RadioGroup = Radio.Group;
+const category = "designsignifiers_component_formType";
+
 
 const radioOptions = [
   { label: '获得数据', value: '获得数据' },
@@ -79,7 +81,11 @@ class ComponentFormUI extends React.Component {
   };
 
   remove = (targetKey) => {
-    this.showConfirm(targetKey);
+    if(this.state.panes && this.state.panes.length>1){
+      this.showConfirm(targetKey);
+    }else{
+      message.error('必须保留一个标注信息！',2);
+    }
   };
 
   removeTab = (targetKey) => {
@@ -129,9 +135,20 @@ class ComponentFormUI extends React.Component {
     dataAll.push(currentFormTemp);
 
     formType = this.state.radioValue;
-
     this.setState({ panes, activeKey, formType, dataAll, addTabModalVisible:false });
-  }
+
+    this.ga(formType);
+  };
+
+  ga = (target) => {
+    var action = "add_"+target;
+    var label = target;
+
+    window.gtag('event', action, {
+      'event_category': category,
+      'event_label': label
+    });
+  };
 
   handleAddTabCancel = () => {
     console.log('Clicked cancel button');
@@ -179,6 +196,7 @@ class ComponentFormUI extends React.Component {
       default:
         currentFormTemp = JSON.parse(JSON.stringify(getDataFormTemp));
     }
+
   };
 
   makeSignifiers = (e) => {
