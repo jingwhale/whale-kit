@@ -123,10 +123,7 @@ var artboardFrame = artboard.frame;
 var titleFontSize = 26;
 var proverbColor = "#999999";
 var textColor = "#333333";
-<<<<<<< HEAD
 var titleBold = 600;
-=======
->>>>>>> feature/screenShot
 function onRun(context) {
   if (artboard && artboard.type == "Artboard") {
     choseElement();
