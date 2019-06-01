@@ -5,7 +5,9 @@ import styles from './index.css'
 const TabPane = Tabs.TabPane;
 const RadioGroup = Radio.Group;
 
-export default class IndexUI extends PureComponent {
+const category = "pagelayout";
+
+export default class PageLayoutUI extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,7 +19,7 @@ export default class IndexUI extends PureComponent {
       rowMargin:2,
       columns:3,
       columnMargin: 3,
-      showCoordinate: true,
+      showCoordinate: false,
       rowMarginDisabled: true,
       columnMarginDisabled: false,
       proporData: {
@@ -35,6 +37,32 @@ export default class IndexUI extends PureComponent {
   onMakeLayout = value => {
     window.postMessage('fromwebview', this.state);
     console.log(this.state)
+
+    this.onMakeLayoutGa()
+    this.showCoordinateChangeGa();
+  };
+
+  onMakeLayoutGa = (e) =>{
+    var target = (this.state.type==1) ? "Equal" : "Proportional";
+    var action = "generate_" + target;
+    var label = action;
+
+    window.gtag('event', action, {
+      'event_category': category+"_generate",
+      'event_label': label
+    });
+  };
+
+
+  showCoordinateChangeGa = (e) =>{
+    var target = (this.state.type==1) ? "Equal" : "Proportional";
+    var action = this.state.showCoordinate + "_Coordinate";
+    var label = target + "_" + action;
+
+    window.gtag('event', action, {
+      'event_category': category+"_showCoordinate",
+      'event_label': label
+    });
   };
 
   onCancel = value => {
@@ -112,12 +140,25 @@ export default class IndexUI extends PureComponent {
     this.rowsChange(data.rows);
     this.columnsChange(data.columns);
     console.log(this.state);
+    this.clickTabPaneGa(key);
+  };
+
+  clickTabPaneGa  = (key) => {
+    var target = (key==1) ? "Equal" : "Proportional";
+    var action = "click_"+target;
+    var label = target;
+
+    window.gtag('event', action, {
+      'event_category': category+"_TabPane",
+      'event_label': label
+    });
   };
 
   radioChange = (e) => {
     console.log(this.state.proporData);
     var proporData = this.state.proporData;
     proporData.type=e.target.value;
+    this.radioChangeGa(e.target.value);
     if(e.target.value==1){
       proporData.columnDisabled=true;
       proporData.rowDisabled=false;
@@ -132,7 +173,18 @@ export default class IndexUI extends PureComponent {
 
     this.callback("2");
 
-    console.log(this.state.proporData)
+    console.log(this.state.proporData);
+  };
+
+  radioChangeGa  = (key) => {
+    var target = (key==1) ? "row" : "column";
+    var action = "click_"+target;
+    var label = target;
+
+    window.gtag('event', action, {
+      'event_category': category+"_Proportional_radio",
+      'event_label': label
+    });
   };
 
   row1Change = (value) =>{
@@ -173,7 +225,7 @@ export default class IndexUI extends PureComponent {
 
 
   render() {
-    var  { size, button, cancel, rows, rowMargin, columns, columnMargin, proporData} = this.state;
+    var  { size, button, cancel, rows, rowMargin, columns, columnMargin, proporData, showCoordinate} = this.state;
 
     return (
       <div className={styles.body}>
@@ -220,7 +272,7 @@ export default class IndexUI extends PureComponent {
           </TabPane>
         </Tabs>
         <div className={styles.coordinate} >
-          <Checkbox defaultChecked={true} className={styles.coordinateAnt} onChange={this.showCoordinateChange}>Show Coordinate</Checkbox>
+          <Checkbox defaultChecked={showCoordinate} className={styles.coordinateAnt} onChange={this.showCoordinateChange}>Show Coordinate</Checkbox>
         </div>
         <div className={styles.buttons}>
           <Button size={size} onClick={this.onCancel} className={styles.button}>{cancel}</Button>
