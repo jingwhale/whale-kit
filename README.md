@@ -4,7 +4,7 @@
 _This plugin was created using `skpm`. For a detailed explanation on how things work, checkout the [Whale-kit Readme](https://www.yuque.com/jingwhale/blog/hdvuwz)._
 
 
-## preview
+## Preview
 ![Whale-kit](https://cdn.nlark.com/yuque/0/2019/png/120638/1559370168235-e22331fd-6de9-47b8-b8b0-4c7c0b9750a5.png)
 
 ## Usage
