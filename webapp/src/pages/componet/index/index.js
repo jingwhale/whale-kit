@@ -2,47 +2,41 @@ import React, { PureComponent } from 'react';
 import { Timeline, Icon, Tag } from 'antd';
 import styles from './index.css'
 
-var demo = "demo";
-
+const category = "index";
 export default class IndexUI extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      date: demo,
+      title: "Whale Kit",
     };
   }
 
-  onClick = value => {
-    // alert("click")
-    console.log(demo);
-    window.postMessage('fromwebview', {name:"from webview!"});
+  clickGithubGa = () => {
+    this.ga("github","https://github.com/jingwhale/whale-kit");
+  };
+
+  clickYuqueGa = () => {
+    this.ga("yuque","https://www.yuque.com/jingwhale/blog/hdvuwz");
+  };
+
+  ga  = (target,label) => {
+    var action = "click_"+target;
+
+    window.gtag('event', action, {
+      'event_category': category,
+      'event_label': label
+    });
   };
 
   render() {
-    var that = this;
-    var  { date } = this.state;
-
-    //监听plugin,更新UI
-    window.someGlobalFunctionDefinedInTheWebview = function(arg) {
-      console.log(arg)
-      that.setState({
-        date: arg.type
-      });
-    };
-
-    //主动向plugin获取数据
-    if (!date) {
-      window.postMessage('getData');
-    }
-
     return (
       <div>
-          <div className={styles.title}>Whale Kit</div>
+          <div className={styles.title}>{this.state.title}</div>
           <div className={styles.github}>
-            <a href="https://github.com/jingwhale/whale-kit" target="_blank"><Icon type="github" style={{ fontSize: '16px'}} /></a>
+            <a href="https://github.com/jingwhale/whale-kit" target="_blank" onClick={this.clickGithubGa}><Icon type="github" style={{ fontSize: '16px'}} /></a>
           </div>
           <div className={styles.yuque}>
-            <a href="https://www.yuque.com/jingwhale/blog/hdvuwz" target="_blank"><Icon type="yuque" style={{ fontSize: '16px'}} /></a>
+            <a href="https://www.yuque.com/jingwhale/blog/hdvuwz" target="_blank" onClick={this.clickYuqueGa}><Icon type="yuque" style={{ fontSize: '16px'}} /></a>
           </div>
           <div className={styles.sign}>Designed and Coded by © <a href="https://www.jingwhale.cc/" target="_blank">Jingwhale</a></div>
           <Timeline mode="alternate">
