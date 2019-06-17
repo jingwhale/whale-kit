@@ -41,6 +41,12 @@ export default class IndexUI extends PureComponent {
           <div className={styles.sign}>Designed and Coded by © <a href="https://www.jingwhale.cc/" target="_blank">Jingwhale</a></div>
           <Timeline mode="alternate">
             <Timeline.Item>
+              <Tag color="cyan"><a href="http://whalexplorer.coding.me/Perlin-Noise-gh-pages/" target="_blank">Perlin-Noise-gh-pages</a></Tag> 2019-06-17
+            </Timeline.Item>
+            <Timeline.Item>
+              2019-06-17 <Tag color="green"><a href="http://whalexplorer.coding.me/DecorativeLetterAnimations/" target="_blank">DecorativeLetterAnimations</a></Tag>
+            </Timeline.Item>
+            <Timeline.Item>
               <Tag color="gold"><a href="/lottieWebAe.html" target="_blank">LottieWeb AE</a></Tag> 2019-05-31
             </Timeline.Item>
             <Timeline.Item>
