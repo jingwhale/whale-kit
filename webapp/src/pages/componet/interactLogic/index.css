@@ -1,0 +1,88 @@
+.body{
+  padding: 10px 0 33px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif,
+  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.root{
+  background-color: #ffffff;
+  box-sizing: border-box;
+  /* min-height: 100vh; */
+
+  /* flexbox */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x:auto ;
+}
+
+.column{
+  margin: 0 16px;
+}
+
+.verticalScrollContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  /* background: rgba(0, 0, 0, 0.1); */
+  /* padding: 16px; */
+  max-height: 800px;
+  overflow: auto;
+}
+
+.treeBook{
+  width: 20%;
+  padding: 16px 0 16px;
+  float: left;
+}
+
+.list{
+  width: 80%;
+  float: left;
+  padding-top: 16px;
+}
+
+.treeBookWrap{
+  /* margin-top: 16px; */
+  max-height: 1000px;
+  overflow-y:auto ;
+}
+
+h3{
+  color: #4A4A4A;
+  margin-bottom: 16px;
+}
+
+.marginLeft{
+  margin-left: 20px;
+}
+
+.doButton{
+  position: fixed;
+  bottom:13px;
+  right: 60px;
+}
+
+.bottom{
+  width: 100%;
+  position: fixed;
+  bottom:0px;
+  left: 0;
+  height: 60px;
+  background: #f4f5f9;
+}
+
+.input{
+  width: 300px;
+  position: fixed;
+  bottom:13px;
+  right: 200px;
+}
+
+.logo{
+  font-size: 20px;
+  position: fixed;
+  bottom:13px;
+  left: 60px;
+}
