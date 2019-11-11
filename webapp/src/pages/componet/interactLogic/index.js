@@ -154,13 +154,15 @@ export default class IndexUI extends PureComponent {
         //拖到column外删除card
         var sourceItems = this.getItem(result.source.droppableId).list;
         sourceItems.splice(result.source.index, 1);
-        
+
       }else if(result.type==="page"){
         var listData = [];
-
-        listData.push(this.state.treeBook.list[result.source.index]);
+        var treeBook = JSON.parse(JSON.stringify(this.state.treeBook));
+        var itemData = treeBook.list[result.source.index];
+        itemData.id = 'item'+ (new Date()).getTime();
+        listData.push(itemData);
         var columnData = {
-          id:(new Date()).getTime(),
+          id:'column'+(new Date()).getTime(),
           list: listData
         }
         this.state.items.push(columnData)
