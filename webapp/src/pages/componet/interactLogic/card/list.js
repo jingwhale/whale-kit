@@ -9,6 +9,7 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
     background: isDraggingOver ? '#60c5ba' : (droppableId==="treeBook" ? '#a5dff9' : '#60c5ba'),
     padding: grid,
     width: 250,
+    borderRadius: 4
   });
 
   const getItemStyle = (isDragging, draggableStyle,droppableId,index) => ({

@@ -7,6 +7,7 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
     background: isDraggingOver ? '#a5dff9' : '#a5dff9',
     padding: grid,
     width: 250,
+    borderRadius: 4
   });
 
   const getItemStyle = (isDragging, draggableStyle,droppableId,index) => ({
@@ -16,7 +17,7 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
     margin: `0 0 ${grid}px 0`,
   
     // change background colour if dragging
-    background: isDragging ? '#feee7d' : '#FFF',
+    background: isDragging ? '#FFF' : '#FFF',
   
     // styles we need to apply on draggables
     ...draggableStyle,
@@ -42,7 +43,7 @@ export default class ListUI extends PureComponent {
             style={getListStyle(droppableSnapshot.isDraggingOver,droppableId)}
           >
             {items.list.map((item, index) => (
-              <Draggable key={item.id} draggableId={item.id} index={index} direction="horizontal">
+              <Draggable key={item.id} draggableId={item.id} index={index}>
                 {(draggableProvided, draggableSnapshot) => (
                   <div
                     ref={draggableProvided.innerRef}

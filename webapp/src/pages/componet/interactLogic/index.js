@@ -136,21 +136,68 @@ export default class IndexUI extends PureComponent {
     console.log(e);
   };
 
+  getItem = (droppableId) => {
+    var getItem = {};
+    var that = this;
+    for(var i=0;i<that.state.items.length;i++){
+      if(that.state.items[i].id === droppableId){
+        getItem = that.state.items[i];
+        return getItem;
+      }
+    }
+  };
+
   onDragEnd = (result) => {
     if (!result.destination) {
+      
+      if(result.type==="card"){
+        //拖到column外删除card
+        var sourceItems = this.getItem(result.source.droppableId).list;
+        sourceItems.splice(result.source.index, 1);
+        
+      }else if(result.type==="page"){
+        var listData = [];
+
+        listData.push(this.state.treeBook.list[result.source.index]);
+        var columnData = {
+          id:(new Date()).getTime(),
+          list: listData
+        }
+        this.state.items.push(columnData)
+        // this.setState({})
+        this.forceUpdate();
+      }
+      
       return;
     }
 
-    // const source = result.source;
-    // const destination = result.destination;
+    if (result.type==="page") {//拖拽page
+      return;
+    }
 
-    // this.setState(
-    //   reorderQuoteMap({
-    //     quoteMap: this.state.quoteMap,
-    //     source,
-    //     destination,
-    //   }),
-    // );
+    if(result.type==="column"){//拖拽column
+      const items = this.state.items;
+
+      items.splice(result.source.index, 1, ...items.splice(result.destination.index, 1, items[result.source.index]))
+
+      this.setState({ items: items });
+
+      return;
+    }
+
+    if(result.type==="card"){//拖拽card
+      var items = [];
+      if(result.destination.droppableId===result.source.droppableId){//同column
+          items = this.getItem(result.source.droppableId).list;
+          items.splice(result.source.index, 1, ...items.splice(result.destination.index, 1, items[result.source.index]))
+      }else{//不同column
+        var sourceItems = this.getItem(result.source.droppableId).list;
+        var destinationItems = this.getItem(result.destination.droppableId).list;
+        var insertData = sourceItems[result.source.index];
+        destinationItems.splice(result.destination.index, 0, insertData);
+        sourceItems.splice(result.source.index, 1);
+      }
+    }
   };
 
   // TODO
@@ -179,7 +226,7 @@ export default class IndexUI extends PureComponent {
                   droppableId="treeBook"
                   title="treeBook"
                   listId="treeBook"
-                  listType="card"
+                  listType="page"
                   items={treeBook}
                 />
               </div>
@@ -189,7 +236,7 @@ export default class IndexUI extends PureComponent {
           <h3>Flow（{items.length}）</h3>
           <Droppable 
           droppableId="column"
-          type="PERSON"
+          type="column"
           direction="horizontal"
           >
             {(droppableProvided, droppableSnapshot) => (
