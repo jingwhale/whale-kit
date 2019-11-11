@@ -23,7 +23,7 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
     ...draggableStyle,
   });
 
-export default class ListUI extends PureComponent {
+export default class ListTreeUI extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {...props};

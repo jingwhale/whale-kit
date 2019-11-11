@@ -39,95 +39,11 @@ const treeBook = {
   ]
 };
 
-const itemsData = {
-  id:"alpha",
-  list:[
-    {
-      id:1,
-      content: "test1"
-    },
-    {
-      id:2,
-      content: "test2"
-    },
-    {
-      id:3,
-      content: "test3"
-    },
-    {
-      id:4,
-      content: "test4"
-    },
-    {
-      id:5,
-      content: "test5"
-    },
-    {
-      id:6,
-      content: "test6"
-    },
-    {
-      id:7,
-      content: "test7"
-    }
-  ]
-};
-const itemsData1 = {
-  id: "beta",
-  list: [
-    {
-      id:8,
-      content: "test8"
-    },
-    {
-      id:9,
-      content: "test9"
-    },
-    {
-      id:10,
-      content: "test10"
-    },
-    {
-      id:11,
-      content: "test11"
-    },
-    {
-      id:12,
-      content: "test12"
-    },
-    {
-      id:13,
-      content: "test13"
-    },
-    {
-      id:14,
-      content: "test14"
-    }
-  ]
-};
-
-const itemsData2 = {
-  id:"zeta",
-  list:[
-    {
-      id:15,
-      content: "test15"
-    },
-    {
-      id:16,
-      content: "test16"
-    },
-    {
-      id:17,
-      content: "test17"
-    }
-  ]
-};
 export default class IndexUI extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      items:[itemsData,itemsData1,itemsData2],
+      items:[],
       treeBook:treeBook
     };
   }
@@ -147,15 +63,19 @@ export default class IndexUI extends PureComponent {
     }
   };
 
+  deleteColumn = (droppableId) => {
+    for(var i=0;i<this.state.items.length;i++){
+      if(this.state.items[i].id === droppableId){
+        this.state.items.splice(i, 1);
+        this.forceUpdate();
+        return;
+      }
+    }
+  };
+
   onDragEnd = (result) => {
     if (!result.destination) {
-      
-      if(result.type==="card"){
-        //拖到column外删除card
-        var sourceItems = this.getItem(result.source.droppableId).list;
-        sourceItems.splice(result.source.index, 1);
-
-      }else if(result.type==="page"){
+      if(result.source.droppableId==="treeBook"){
         var listData = [];
         var treeBook = JSON.parse(JSON.stringify(this.state.treeBook));
         var itemData = treeBook.list[result.source.index];
@@ -168,14 +88,19 @@ export default class IndexUI extends PureComponent {
         this.state.items.push(columnData)
         // this.setState({})
         this.forceUpdate();
+      }else{
+        //拖到column外删除card
+        var sourceItems = this.getItem(result.source.droppableId).list;
+        sourceItems.splice(result.source.index, 1);
+        if(sourceItems.length<1){
+          this.deleteColumn(result.source.droppableId)
+        }
       }
       
       return;
     }
 
-    if (result.type==="page") {//拖拽page
-      return;
-    }
+    
 
     if(result.type==="column"){//拖拽column
       const items = this.state.items;
@@ -186,18 +111,35 @@ export default class IndexUI extends PureComponent {
 
       return;
     }
-
+    
     if(result.type==="card"){//拖拽card
       var items = [];
       if(result.destination.droppableId===result.source.droppableId){//同column
-          items = this.getItem(result.source.droppableId).list;
-          items.splice(result.source.index, 1, ...items.splice(result.destination.index, 1, items[result.source.index]))
+        if (result.source.droppableId=="treeBook"){
+          return;
+        }
+        items = this.getItem(result.source.droppableId).list;
+        items.splice(result.source.index, 1, ...items.splice(result.destination.index, 1, items[result.source.index]))
       }else{//不同column
-        var sourceItems = this.getItem(result.source.droppableId).list;
+        if(result.source.droppableId === "treeBook"){
+          var treeBook = JSON.parse(JSON.stringify(this.state.treeBook));
+          var sourceItems = treeBook.list;
+        }else{
+          var sourceItems = this.getItem(result.source.droppableId).list;
+        }
+        
         var destinationItems = this.getItem(result.destination.droppableId).list;
         var insertData = sourceItems[result.source.index];
+        insertData.id = 'item'+ (new Date()).getTime();
         destinationItems.splice(result.destination.index, 0, insertData);
-        sourceItems.splice(result.source.index, 1);
+
+        if(result.source.droppableId !== "treeBook"){
+          sourceItems.splice(result.source.index, 1);
+        }
+
+        if(sourceItems.length<1){
+          this.deleteColumn(result.source.droppableId)
+        }
       }
     }
   };
@@ -228,7 +170,7 @@ export default class IndexUI extends PureComponent {
                   droppableId="treeBook"
                   title="treeBook"
                   listId="treeBook"
-                  listType="page"
+                  listType="card"
                   items={treeBook}
                 />
               </div>
