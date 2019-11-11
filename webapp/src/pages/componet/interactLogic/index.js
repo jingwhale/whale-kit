@@ -121,6 +121,9 @@ export default class IndexUI extends PureComponent {
         items = this.getItem(result.source.droppableId).list;
         items.splice(result.source.index, 1, ...items.splice(result.destination.index, 1, items[result.source.index]))
       }else{//不同column
+        if (result.destination.droppableId=="treeBook"){
+          return;
+        }
         if(result.source.droppableId === "treeBook"){
           var treeBook = JSON.parse(JSON.stringify(this.state.treeBook));
           var sourceItems = treeBook.list;
