@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Button, Input, Icon } from 'antd';
+import { Button, Input, Icon, InputNumber } from 'antd';
 import styles from './index.css'
 import ListUI from './card/list.js'
 import ListTreeUI from './card/listTree.js'
@@ -44,7 +44,12 @@ export default class IndexUI extends PureComponent {
     super(props);
     this.state = {
       items:[],
-      treeBook:treeBook
+      treeBook:treeBook,
+      flowName:"",
+      dist: {
+        step:160,
+        branch:160
+      }
     };
   }
 
@@ -71,6 +76,35 @@ export default class IndexUI extends PureComponent {
         return;
       }
     }
+  };
+
+  stepDistChange = (value) => {//更新stepDist
+    this.state.dist.step = value;
+    console.log(this.state.dist.step)
+  }
+
+  branchDistChange = (value) => {//更新branchDist
+    this.state.dist.branch = value;
+    console.log(this.state.dist.branch)
+  }
+
+  flowNameChange = (e) => {//更新flowName
+    this.setState({
+      flowName:e.target.value
+    })
+  }
+
+  doClick= (e) => {//点击制作流程按钮
+    this.onMakeFlow();
+  }
+
+  onCancel = value => {//取消
+    window.postMessage('closed');
+  };
+
+  onMakeFlow = value => {//向sketch传输数据
+    window.postMessage('fromwebview', this.state);
+    console.log(this.state)
   };
 
   onDragEnd = (result) => {
@@ -100,8 +134,6 @@ export default class IndexUI extends PureComponent {
       return;
     }
 
-    
-
     if(result.type==="column"){//拖拽column
       const items = this.state.items;
 
@@ -115,18 +147,17 @@ export default class IndexUI extends PureComponent {
     if(result.type==="card"){//拖拽card
       var items = [];
       if(result.destination.droppableId===result.source.droppableId){//同column
-        if (result.source.droppableId=="treeBook"){
+        if (result.source.droppableId==="treeBook"){
           return;
         }
         items = this.getItem(result.source.droppableId).list;
         items.splice(result.source.index, 1, ...items.splice(result.destination.index, 1, items[result.source.index]))
       }else{//不同column
-        if (result.destination.droppableId=="treeBook"){
+        if (result.destination.droppableId==="treeBook"){
           return;
         }
         if(result.source.droppableId === "treeBook"){
-          var treeBook = JSON.parse(JSON.stringify(this.state.treeBook));
-          var sourceItems = treeBook.list;
+          var sourceItems = JSON.parse(JSON.stringify(this.state.treeBook)).list;
         }else{
           var sourceItems = this.getItem(result.source.droppableId).list;
         }
@@ -161,7 +192,16 @@ export default class IndexUI extends PureComponent {
   };
 
   render() {
-    var  { items, treeBook } = this.state;
+    var  { items, treeBook, flowName, dist } = this.state;
+    var that = this;
+
+    window.someGlobalFunctionDefinedInTheWebview = function(arg) {
+      console.log(arg)
+      that.setState({
+        date: arg.type
+      });
+    };
+
     return (
       <div>
         <DragDropContext onDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
@@ -224,7 +264,11 @@ export default class IndexUI extends PureComponent {
         </DragDropContext>
         <div className={styles.bottom}>
           <div className={styles.logo}><Icon type="pic-right" />&nbsp;&nbsp;Interact Logic</div>
-          <div className={styles.input}><Input placeholder="输入流程名称"/></div>
+          <div className={styles.inputDist}>
+            <div className={styles.inputItem}><span>StepDist<span className={styles.inputPx}>（px）</span>：</span> <InputNumber size="default"  min={100} max={300} defaultValue={dist.step} onChange={this.stepDistChange} /></div>
+            <div className={styles.inputItem}><span>BranchDist<span className={styles.inputPx}>（px）</span>：</span> <InputNumber size="default"  min={100} max={300} defaultValue={dist.branch} onChange={this.branchDistChange} /></div>
+          </div>
+          <div className={styles.input} ><Input placeholder="输入流程名称" value={flowName} onChange={this.flowNameChange}/></div>
           <div className={styles.doButton}><Button type="primary" onClick={this.doClick}>制作交互流程</Button> </div>
         </div>
       </div>

@@ -86,3 +86,19 @@ h3{
   bottom:13px;
   left: 60px;
 }
+
+.inputDist{
+  position: fixed;
+  bottom:13px;
+  right: 530px;
+}
+
+.inputItem{
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.inputPx{
+  color: #999;
+  font-size: 10px;
+}
