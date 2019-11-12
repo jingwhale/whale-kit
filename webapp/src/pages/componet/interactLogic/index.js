@@ -195,12 +195,12 @@ export default class IndexUI extends PureComponent {
     var  { items, treeBook, flowName, dist } = this.state;
     var that = this;
 
-    window.someGlobalFunctionDefinedInTheWebview = function(arg) {
-      console.log(arg)
-      that.setState({
-        date: arg.type
-      });
-    };
+    // window.someGlobalFunctionDefinedInTheWebview = function(arg) {
+    //   console.log(arg)
+    //   // that.setState({
+    //   //   date: arg.type
+    //   // });
+    // };
 
     return (
       <div>
