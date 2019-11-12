@@ -44,7 +44,7 @@ export default class ListUI extends PureComponent {
             ref={droppableProvided.innerRef}
             style={getListStyle(droppableSnapshot.isDraggingOver,droppableId)}
           >
-            <div><Icon type="border-verticle" /></div>
+          <div><Icon type="border-verticle" /><span className={styles.count}>（{items.list.length}）</span></div>
             {items.list.map((item, index) => (
               <Draggable key={item.id} draggableId={item.id} index={index}>
                 {(draggableProvided, draggableSnapshot) => (
