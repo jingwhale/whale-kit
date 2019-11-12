@@ -2673,16 +2673,37 @@ function openPannel() {
   });
   contents.on('closed', function (s) {
     closeWin();
-  }); //向Webview传送selectedArtBoards数据
-  // setSelectedArtBoards(contents);
+  }); // 向Webview传送selectedArtBoards数据
+
+  setSelectedArtBoards(contents);
 } //向Webview传送selectedArtBoards数据
 
 
 var setSelectedArtBoards = function setSelectedArtBoards(contents) {
-  contents.executeJavaScript("someGlobalFunctionDefinedInTheWebview(".concat(JSON.stringify(selectedArtBoards), ")")).then(function (res) {
+  var serializData = doSerializData(selectedArtBoards);
+  var selectedArtBoardsData = JSON.stringify(serializData);
+  console.log("selectedArtBoards---" + selectedArtBoards);
+  console.log("serializData---" + serializData);
+  contents.executeJavaScript("someGlobalFunctionDefinedInTheWebview(".concat(selectedArtBoardsData, ")")).then(function (res) {
     // do something with the result
     console.log("send data success,from plugin to webview!");
   });
+}; //格式化selectedArtBoards数据
+
+
+var doSerializData = function doSerializData(selectedArtBoards) {
+  var serializDatas = [];
+
+  for (var i = 0; i < selectedArtBoards.length; i++) {
+    serializDatas.push({
+      id: selectedArtBoards[i].id,
+      artBoardId: selectedArtBoards[i].id,
+      content: selectedArtBoards[i].name
+    });
+  }
+
+  ;
+  return serializDatas;
 };
 
 /***/ }),

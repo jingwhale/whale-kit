@@ -42,9 +42,14 @@ const treeBook = {
 export default class IndexUI extends PureComponent {
   constructor(props) {
     super(props);
+    this.treeBookRef=React.createRef();
+
     this.state = {
       items:[],
-      treeBook:treeBook,
+      treeBook:{
+        id:"treeBook",
+        list:[],
+      },
       flowName:"",
       dist: {
         step:160,
@@ -105,6 +110,10 @@ export default class IndexUI extends PureComponent {
   onMakeFlow = value => {//向sketch传输数据
     window.postMessage('fromwebview', this.state);
     console.log(this.state)
+  };
+
+  onUpdateUI = value => {//向sketch传输数据
+    this.forceUpdate();
   };
 
   onDragEnd = (result) => {
@@ -192,15 +201,23 @@ export default class IndexUI extends PureComponent {
   };
 
   render() {
-    var  { items, treeBook, flowName, dist } = this.state;
+    var  { items, treeBook, flowName, dist, treeBookRef } = this.state;
     var that = this;
 
-    // window.someGlobalFunctionDefinedInTheWebview = function(arg) {
-    //   console.log(arg)
-    //   // that.setState({
-    //   //   date: arg.type
-    //   // });
-    // };
+    window.someGlobalFunctionDefinedInTheWebview = function(data) {
+      console.log("from sketch --- "+ data)
+      treeBook.list = data;
+      that.setState({
+        treeBook: treeBook
+      });
+      that.forceUpdate();
+
+      // that.onDragEnd();
+
+      console.log(that.treeBookRef);
+
+      that.treeBookRef.current.forceUpdate();
+    };
 
     return (
       <div>
@@ -215,6 +232,7 @@ export default class IndexUI extends PureComponent {
                   listId="treeBook"
                   listType="card"
                   items={treeBook}
+                  ref={this.treeBookRef}
                 />
               </div>
             </div>
