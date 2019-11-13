@@ -220,7 +220,7 @@ export default class IndexUI extends PureComponent {
   };
 
   render() {
-    var  { items, treeBook, flowName, dist, treeBookRef } = this.state;
+    var  { items, treeBook, flowName, dist } = this.state;
     var that = this;
 
     window.someGlobalFunctionDefinedInTheWebview = function(data) {
@@ -230,10 +230,6 @@ export default class IndexUI extends PureComponent {
         treeBook: treeBook
       });
       that.forceUpdate();
-
-      // that.onDragEnd();
-
-      console.log(that.treeBookRef);
 
       that.treeBookRef.current.forceUpdate();
     };

@@ -8,43 +8,133 @@ const Group = Sketch.Group;
 const Document = Sketch.Document;
 const Rectangle = Sketch.Rectangle;
 const ShapePath = Sketch.ShapePath;
+const Text = Sketch.Text;
 const Artboard = Sketch.Artboard;
 const Page = Sketch.Page;
 const document = Document.getSelectedDocument();
 
 const selectedPage = document.selectedPage;
 const selectedArtBoards = selectedPage.layers;
+const allPages = document.pages;
 
 var flowArtboard = "";
 var flowBoards = [];
 var dist = {};
+var flowName = "交互流程";
+var hasFlowPage = false;
 
-const interactDescriptionWidth = 300;
-const initPositnX = 60;
+const interactDescriptionWidth = 600;
+const initPositnX = 100;
 const initPositnY = 100;
 
-const createPageAndArtboard = (data) =>{//创建交互流程页面与Artboard
-    var flowPage = new Page({
-        name: '交互流程',
-        parent: document
-      })
+const flowArtBoardTilteHeight = 140;
+const flowArtBoardTilteMarginBottom = 80;
+var titleFontSize = 40;
+var titleBold = 600;
+var titleColor = "#fff";
 
-      var flowArtboardFrame = getFlowArtboardFrame();
-      
-      var flowFrame = {
-          x:0,
-          y:0,
-          width:flowArtboardFrame.width+interactDescriptionWidth+initPositnX*2,
-          height: flowArtboardFrame.height+initPositnY*2
-      };
-      
-      flowArtboard = new Artboard({
-        name: '交互流程',
-        parent:flowPage,
-        frame:flowFrame
-      })
+const createPageAndArtboard = () =>{//创建交互流程页面与Artboard
+    var flowPage = doPage();
 
-      makeInteractLogic();
+    var flowArtboardFrame = getFlowArtboardFrame();
+    var newArtBordFrameX = doNewArtBordFrameX(flowPage);
+    var flowFrame = {
+        x:newArtBordFrameX,
+        y:0,
+        width:flowArtboardFrame.width+interactDescriptionWidth+initPositnX*2,
+        height: flowArtboardFrame.height+initPositnY*2+flowArtBoardTilteHeight+flowArtBoardTilteMarginBottom
+    };
+    
+    flowArtboard = new Artboard({
+    name: flowName,
+    parent:flowPage,
+    frame:flowFrame
+    })
+    //建立title
+    createPageAndArtboardTitle();
+
+    //建立交互流程
+    makeInteractLogic();
+};
+
+const doNewArtBordFrameX = (flowPage) =>{//设置flowArtBord的frame.x 
+    var artBordMaxX = 0;
+    var artBordMaxXWidth = 0;
+    var flowPageLayers = flowPage.layers;
+    if(flowPageLayers.length>0){
+        artBordMaxX = flowPageLayers[0].frame.x;
+        artBordMaxXWidth = flowPageLayers[0].frame.x + flowPageLayers[0].frame.width + 100;
+        for(var i=0;i<flowPageLayers.length;i++){
+            if(flowPageLayers[i].frame.x > artBordMaxX){
+                artBordMaxX = flowPageLayers[i].frame.x;
+                artBordMaxXWidth = flowPageLayers[i].frame.x + flowPageLayers[i].frame.width + 100;
+            }
+        }; 
+    }
+
+    return artBordMaxXWidth;
+};
+
+const doPage = () =>{//判断是否有“交互流程”的页面
+    var flowPageItem = "";
+    for(var i=0;i<allPages.length;i++){
+        if(allPages[i].name === "交互流程"){
+            flowPageItem = allPages[i];
+            hasFlowPage = true;
+            break;
+        }
+    };
+
+    if(!flowPageItem){
+        flowPageItem = new Page({
+            name: '交互流程',
+            parent: document
+        });
+    }
+
+    return flowPageItem;
+};
+
+const createPageAndArtboardTitle = () =>{//创建交互流程artboard的title
+    //Title Group
+    var titleGroup = new Group({
+        name: "Title",
+        parent:flowArtboard
+    });
+
+    //Title 背景框bg
+    // var rectTitleFrame = new Rectangle(0, 0, flowArtboard.frame.width, flowArtBoardTilteHeight);
+    const rectTitleBg = new ShapePath({
+        name: "title",
+        frame:{
+            x:0,
+            y:0,
+            width:flowArtboard.frame.width,
+            height: flowArtBoardTilteHeight
+        },
+        shapeType: ShapePath.ShapeType.Rectangle,
+        parent:titleGroup,
+        style:{
+            fills:[{color:'#000'}]
+        }
+    })
+
+    //Title text
+    const titleText = new Text({
+        text: flowName,
+        frame: {
+            x:initPositnX,
+            y:42,
+            width:300,
+            height:titleFontSize
+        },
+        parent: titleGroup,
+        name: "title/name"
+    });
+
+    titleText.style.fontSize = titleFontSize;
+    titleText.style.fontWeight = titleBold;
+    titleText.style.textColor = titleColor;
 };
 
 const getFlowArtboardFrame = (data) =>{//计算flowArtboard的frame
@@ -54,6 +144,7 @@ const getFlowArtboardFrame = (data) =>{//计算flowArtboard的frame
     var heightFrame = 0;
     var widthFrameBoard = 0;
     var heightFrameBoard = 0;
+    var flowArtboardFrame =  {};
     for(var i=0;i<flowBoards.length;i++){
         var flowBoardInst = findArtBoardById(flowBoards[i].list[0].abId);
         widthFrameBoard += flowBoardInst.frame.width;
@@ -74,7 +165,9 @@ const getFlowArtboardFrame = (data) =>{//计算flowArtboard的frame
 
     heightFrame = heightFrameBoard + (maxYList.length-1)*dist.branch;
 
-    return {width:widthFrame, height:heightFrame}
+    flowArtboardFrame = {width:widthFrame, height:heightFrame};
+
+    return flowArtboardFrame
 };
 
 const makeInteractLogic = () =>{//建立交互流程
@@ -96,8 +189,6 @@ const makeInteractLogic = () =>{//建立交互流程
 };
 
 const doPageFlow = (abId,positon) =>{//移动页面到flowArtboard
-    console.log("start---"+positon.x+"---"+positon.y);
-    console.log("abId---"+abId);
     var currentArtboard = findArtBoardById(abId);
 
     //创建移动新组，包含当前Artboard和当前Artboard的框
@@ -135,10 +226,8 @@ const doPageFlow = (abId,positon) =>{//移动页面到flowArtboard
 };
 
 const findArtBoardById = (abId) =>{//通过abId查找artBoard
-    console.log(abId);
     for(var i=0;i<selectedArtBoards.length;i++){
         if(selectedArtBoards[i].id === abId){
-            console.log(selectedArtBoards[i]);
             return selectedArtBoards[i];
         }
     };
@@ -152,7 +241,7 @@ const getCurrentArtboardFrame = (positon,currentArtboard) =>{//获取当前Artbo
         height:currentArtboard.frame.height
     }
     frame.x = getCurrentArtboardFrameX(positon,currentArtboard)+initPositnX;
-    frame.y = getCurrentArtboardFrameY(positon,currentArtboard)+initPositnY;
+    frame.y = getCurrentArtboardFrameY(positon,currentArtboard)+flowArtBoardTilteHeight+flowArtBoardTilteMarginBottom;
 
     return frame;
 };
@@ -161,10 +250,8 @@ const getCurrentArtboardFrameX = (positon) =>{//获取当前Artboard在flowArtbo
     var ArtboardDist = 0;
     var stepDist = 0;
     var distX = 0;
-    console.log("getCurrentArtboardFrameX----"+positon.x+"---"+positon.y);
     for(var i=0;i<positon.x;i++){
         var artboardItemId = flowBoards[i].list[0].abId;
-        console.log(artboardItemId);
         var artboardItem = findArtBoardById(artboardItemId);
         ArtboardDist += artboardItem.frame.width//每一列的第一个元素
     };
@@ -179,29 +266,10 @@ const getCurrentArtboardFrameY = (positon) =>{//获取当前Artboard在flowArtbo
     var ArtboardDist = 0;
     var branchDist = 0;
     var distY = 0;
-    console.log("getCurrentArtboardFrameY----"+positon.x+"---"+positon.y);
-    console.log("--start flowBoards---");
-    for(var i=0;i<flowBoards.length;i++){
-        if(flowBoards[i].list.length >0){
-            var child = flowBoards[i].list;
-            for(var j=0;j<child.length;j++){
-                console.log(child[j].abId);
-            };
-        }
-    };
-    console.log("--end---");
-
-    console.log("--start columnList---");
     var positonX = positon.x;
     var positonY = positon.y;
     var column = flowBoards[positonX];
     var columnList = column.list;
-    for(var i=0;i<columnList.length;i++){
-        console.log(columnList[i].abId);
-        console.log(columnList[i].id);
-        console.log(columnList[i].content);
-    };
-    console.log("--end---");
 
     var positonX = positon.x;
     var positonY = positon.y;
@@ -209,10 +277,6 @@ const getCurrentArtboardFrameY = (positon) =>{//获取当前Artboard在flowArtbo
         var column = flowBoards[positonX];
         var columnList = column.list;
         var artboardItemId = columnList[i].abId;
-        console.log("columnList--"+columnList);
-        console.log("columnList[i]--"+columnList[i]);
-        console.log("columnList[i].abId--"+columnList[i].abId);
-        console.log(artboardItemId);
         var artboardItem = findArtBoardById(artboardItemId);
         ArtboardDist += artboardItem.frame.height;
     };
@@ -272,24 +336,10 @@ function openPannel() {//打开Webview
     //监听webview的事件：webview->plugin
     contents.on('fromwebview', function(data) {
         dist = data.dist;
-        console.log("赋值distx---"+dist.step);
-        console.log("赋值disty---"+dist.branch);
-        console.log("赋值flowName---"+dist.flowName);
         flowBoards = data.items;
-        console.log("--赋值 flowBoards---");
-        for(var i=0;i<flowBoards.length;i++){
-            if(flowBoards[i].list.length >0){
-                var child = flowBoards[i].list;
-                for(var j=0;j<child.length;j++){
-                    console.log(child[j].abId);
-                    console.log(child[j].id);
-                    console.log(child[j].content);
-                };
-            }
-        };
-        console.log("--end---");
-        createPageAndArtboard(data);
-        sketch.UI.message("Successfully inserted Signifiers into Artboard！");
+        flowName = data.flowName || "交互流程";
+        createPageAndArtboard();
+        sketch.UI.message("Successfully flowed pages！");
         closeWin();
     });
 
@@ -306,9 +356,6 @@ function openPannel() {//打开Webview
 const setSelectedArtBoards = (contents) => {
     var serializData = doSerializData(selectedArtBoards);
     var selectedArtBoardsData = JSON.stringify(serializData);
-    
-    console.log("selectedArtBoards---" + selectedArtBoards);
-    console.log("serializData---" + serializData);
 
     contents
         .executeJavaScript(`someGlobalFunctionDefinedInTheWebview(${selectedArtBoardsData})`)
