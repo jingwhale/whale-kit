@@ -2800,10 +2800,10 @@ function openPannel() {
   });
   win.on('closed', function () {
     win = null;
-  });
-  var Panel = "http://localhost:8000/interactLogic.html#".concat(Math.random()); // const Panel = `http://localhost:8000/designsignifiers.html#${Math.random()}`;
+  }); // const Panel = `http://localhost:8000/interactLogic.html#${Math.random()}`;
+  // win.loadURL(Panel);
 
-  win.loadURL(Panel); // win.loadURL('http://whalexplorer.coding.me/whale-kit/designsignifiers.html?'+Math.random());
+  win.loadURL('http://www.jingwhale.com/whalekit/interactLogic.html?' + Math.random());
 
   var closeWin = function closeWin() {
     win.destroy();

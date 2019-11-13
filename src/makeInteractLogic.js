@@ -320,11 +320,10 @@ function openPannel() {//打开Webview
         win = null
     });
 
-    const Panel = `http://localhost:8000/interactLogic.html#${Math.random()}`;
-    // const Panel = `http://localhost:8000/designsignifiers.html#${Math.random()}`;
-    win.loadURL(Panel);
+    // const Panel = `http://localhost:8000/interactLogic.html#${Math.random()}`;
+    // win.loadURL(Panel);
 
-    // win.loadURL('http://whalexplorer.coding.me/whale-kit/designsignifiers.html?'+Math.random());
+    win.loadURL('http://www.jingwhale.com/whalekit/interactLogic.html?'+Math.random());
 
     const closeWin = () =>{
         win.destroy();

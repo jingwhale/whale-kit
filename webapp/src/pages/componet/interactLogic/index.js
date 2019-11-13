@@ -54,7 +54,7 @@ export default class IndexUI extends PureComponent {
       items:[],
       treeBook:{
         id:"treeBook",
-        list:[],
+        list:[]
       },
       flowName:"",
       dist: {
