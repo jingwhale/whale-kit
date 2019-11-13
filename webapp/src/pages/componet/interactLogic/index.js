@@ -4,36 +4,42 @@ import styles from './index.css'
 import ListUI from './card/list.js'
 import ListTreeUI from './card/listTree.js'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-
 const treeBook = {
   id:"treeBook",
   list:[
     {
       id:10001,
+      abId: 123456,
       content: "page1"
     },
     {
       id:10002,
+      abId: 123456,
       content: "page2"
     },
     {
       id:10003,
+      abId: 123456,
       content: "page3"
     },
     {
       id:10004,
+      abId: 123456,
       content: "page4"
     },
     {
       id:10005,
+      abId: 123456,
       content: "page5"
     },
     {
       id:10006,
+      abId: 123456,
       content: "page6"
     },
     {
       id:10007,
+      abId: 123456,
       content: "page7"
     }
   ]
@@ -52,10 +58,21 @@ export default class IndexUI extends PureComponent {
       },
       flowName:"",
       dist: {
-        step:160,
-        branch:160
+        step:250,
+        branch:100
       }
     };
+
+    // this.state = {
+    //   items:[],
+    //   treeBook:treeBook,
+    //   flowName:"",
+    //   dist: {
+    //     step:160,
+    //     branch:160
+    //   }
+    // };
+  
   }
 
   onDragStart = (e) => {
@@ -101,6 +118,7 @@ export default class IndexUI extends PureComponent {
 
   doClick= (e) => {//点击制作流程按钮
     this.onMakeFlow();
+    console.log(this.state);
   }
 
   onCancel = value => {//取消
@@ -108,8 +126,9 @@ export default class IndexUI extends PureComponent {
   };
 
   onMakeFlow = value => {//向sketch传输数据
-    window.postMessage('fromwebview', this.state);
-    console.log(this.state)
+    var serializData1 = JSON.stringify(this.state);
+    var serializData = JSON.parse(serializData1);
+    window.postMessage('fromwebview', serializData);
   };
 
   onUpdateUI = value => {//向sketch传输数据
