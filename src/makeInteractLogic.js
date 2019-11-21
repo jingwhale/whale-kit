@@ -198,20 +198,16 @@ const doPageFlow = (abId,positon) =>{//移动页面到flowArtboard
     });
 
     //拷贝当前Artboard
-    // var copyBoard = currentArtboard.duplicate();
-    //Title Group
-    var artBoardGroup = new Group({
-        name: copyBoard.name,
-        parent:flowGroup
-    });
+    var copyBoard = currentArtboard.duplicate();
     var copyBoardFrame = {
         x:0,
         y:0,
-        width:currentArtboard.frame.width,
-        height:currentArtboard.frame.height
+        width:copyBoard.frame.width,
+        height:copyBoard.frame.height
     };
-    artBoardGroup.frame = copyBoardFrame;
-    artBoardGroup.group = currentArtboard.group;
+    copyBoard.frame = copyBoardFrame;
+    copyBoard.parent = flowGroup;
+
     //创建当前Artboard的框（拷贝图层后，是没有框）
     var rectBgFrame = new Rectangle(0, 0, copyBoard.frame.width, copyBoard.frame.height);
 
