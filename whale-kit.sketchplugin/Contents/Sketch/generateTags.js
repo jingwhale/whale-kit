@@ -118,6 +118,7 @@ var ShapePath = __webpack_require__(/*! sketch/dom */ "sketch/dom").ShapePath;
 var UI = __webpack_require__(/*! sketch/ui */ "sketch/ui");
 
 var tagIndex = "";
+var tagBgColor = "#108EE9";
 
 var createOval = function createOval(currentLayer, index) {
   var group = new Group({
@@ -137,7 +138,7 @@ var createOval = function createOval(currentLayer, index) {
   });
   Oval.style.fills = [{
     fill: Style.FillType.Color,
-    color: '#d8d8d8ff'
+    color: tagBgColor
   }];
   var textTag = tagIndex ? tagIndex : ++index;
   var text = new Text({
@@ -149,6 +150,7 @@ var createOval = function createOval(currentLayer, index) {
   });
   text.style.verticalAlignment = "center";
   text.style.fontSize = 14;
+  text.style.textColor = "#FFF";
   text.style.lineHeight = Oval.frame.height;
   text.style.width = Oval.frame.width;
   text.style.height = Oval.frame.height;

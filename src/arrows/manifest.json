@@ -1,0 +1,224 @@
+{
+  "compatibleVersion": 3,
+  "bundleVersion": 1,
+  "identifier": "me.sabitov.sketch.connectionFlowArrows",
+  "icon": "icon.png",
+  "authorEmail": "farid.sabitov.design@gmail.com",
+  "appcast": "https://raw.githubusercontent.com/faridsabitov/Sketch-Connection-Flow-Arrows/master/.appcast.xml",
+  "author": "Farid Sabitov",
+  "description": "Create auto connected connection flow arrows",
+  "download-url": "https://github.com/faridsabitov/Sketch-user-flows/releases",
+  "repo-url": "https://github.com/faridsabitov/Sketch-user-flows",
+  "homepage": "https://spectrum.chat/sketch-arrows",
+  "commands": [
+    {
+      "name": "Auto Direction arrow",
+      "description": "Select more than one layer, to create a link between first object and others",
+      "identifier": "createAutoArrow",
+      "icon": "icon.png",
+      "shortcut": "command control c",
+      "script": "./script.js",
+      "handler": "createAutoArrow"
+    },
+    {
+      "name": "Arrow to the Right",
+      "description": "Select more than one layer, to create a link between first object and others",
+      "identifier": "createRightArrow",
+      "icon": "icon.png",
+      "shortcut": "command control →",
+      "script": "./script.js",
+      "handler": "createRightArrow"
+    },
+    {
+      "name": "Arrow to the Bottom",
+      "description": "Select more than one layer, to create a link between first object and others",
+      "identifier": "createDownArrow",
+      "icon": "icon.png",
+      "shortcut": "command control ↓",
+      "script": "./script.js",
+      "handler": "createDownArrow"
+    },
+    {
+      "name": "Arrow to the Left",
+      "description": "Select more than one layer, to create a link between first object and others",
+      "identifier": "createLeftArrow",
+      "icon": "icon.png",
+      "shortcut": "command control ←",
+      "script": "./script.js",
+      "handler": "createLeftArrow"
+    },
+    {
+      "name": "Arrow to the Top",
+      "description": "Select more than one layer, to create a link between first object and others",
+      "identifier": "createUpArrow",
+      "icon": "icon.png",
+      "shortcut": "command control ↑",
+      "script": "./script.js",
+      "handler": "createUpArrow"
+    },
+    {
+      "name": "Arrow to the Right with Condition",
+      "description": "Select more than one layer, to create a link between first object and others",
+      "identifier": "createRightArrowWithCondition",
+      "icon": "icon.png",
+      "shortcut": "command control shift →",
+      "script": "./script.js",
+      "handler": "createRightArrowWithCondition"
+    },
+    {
+      "name": "Arrow to the Bottom with Condition",
+      "description": "Select more than one layer, to create a link between first object and others",
+      "identifier": "createDownArrowWithCondition",
+      "icon": "icon.png",
+      "shortcut": "command control shift ↓",
+      "script": "./script.js",
+      "handler": "createDownArrowWithCondition"
+    },
+    {
+      "name": "Arrow to the Left with Condition",
+      "description": "Select more than one layer, to create a link between first object and others",
+      "identifier": "createLeftArrowWithCondition",
+      "icon": "icon.png",
+      "shortcut": "command control shift ←",
+      "script": "./script.js",
+      "handler": "createLeftArrowWithCondition"
+    },
+    {
+      "name": "Arrow to the Top with Condition",
+      "description": "Select more than one layer, to create a link between first object and others",
+      "identifier": "createUpArrowWithCondition",
+      "icon": "icon.png",
+      "shortcut": "command control shift ↑",
+      "script": "./script.js",
+      "handler": "createUpArrowWithCondition"
+    },
+    {
+      "name": "Update arrows between selected",
+      "description": "Update connection between selected layers",
+      "identifier": "updateSelectedArrows",
+      "shortcut": "command control u",
+      "script": "./script.js",
+      "icon": "icon.png",
+      "handler": "updateSelectedArrows"
+    },
+    {
+      "name": "Auto update arrows between selected",
+      "script": "autoUpdate.js",
+      "handlers": {
+        "actions": {
+          "LayersMoved.finish": "autoUpdateSelectedArrows",
+          "LayersResized.finish": "autoUpdateSelectedArrows"
+        }
+      },
+      "identifier": "autoUpdateSelectedArrows"
+    },
+    {
+      "name": "Update arrows from the selected artboard",
+      "description": "Update all the arrows from selected artboard",
+      "identifier": "updateArtboardArrows",
+      "shortcut": "command control a",
+      "script": "./script.js",
+      "icon": "icon.png",
+      "handler": "updateArtboardArrows"
+    },
+    {
+      "name": "Update all arrows",
+      "description": "Update all the arrows",
+      "identifier": "updateAllArrows",
+      "shortcut": "command control p",
+      "script": "./script.js",
+      "icon": "icon.png",
+      "handler": "updateAllArrows"
+    },
+    {
+      "name": "Delete arrows between selected",
+      "description": "Delete all connections between selected ones",
+      "identifier": "deleteSelectedArrows",
+      "shortcut": "command control ⌫",
+      "script": "./script.js",
+      "icon": "icon.png",
+      "handler": "deleteSelectedArrows"
+    },
+    {
+      "name": "Delete arrows from selected artboard",
+      "description": "Delete all connections from selected artboard",
+      "identifier": "deleteArtboardArrows",
+      "script": "./script.js",
+      "icon": "icon.png",
+      "handler": "deleteArtboardArrows"
+    },
+    {
+      "name": "Delete all arrows",
+      "description": "Delete all connections",
+      "identifier": "deleteAllArrows",
+      "script": "./script.js",
+      "icon": "icon.png",
+      "handler": "deleteAllArrows"
+    },
+    {
+      "name": "Settings",
+      "description": "Provide settings for the arrows",
+      "identifier": "settings",
+      "script": "./settings.js",
+      "icon": "icon.png",
+      "handler": "settings"
+    },
+    {
+      "name": "Toggle Panel",
+      "description": "Show or hide Connection Arrows Panel",
+      "identifier": "panel",
+      "script": "./script.js",
+      "icon": "icon.png",
+      "handler": "panel"
+    },
+    {
+      "name": "Get Free Library",
+      "description": "Download library for having interactive arrows",
+      "identifier": "getLibrary",
+      "script": "./utilities/links.js",
+      "icon": "icon.png",
+      "handler": "getLibrary"
+    },
+    {
+      "name": "Join Community",
+      "description": "Share all the suggestions, bugs or just say Hi",
+      "identifier": "joinCommunity",
+      "script": "./utilities/links.js",
+      "icon": "icon.png",
+      "handler": "joinCommunity"
+    }
+  ],
+  "menu": {
+    "title": "👉 Connection Arrows",
+    "items": [
+      {
+        "title": "Create or Recreate Connection",
+        "items": [
+          "createAutoArrow",
+          "-",
+          "createRightArrow",
+          "createDownArrow",
+          "createLeftArrow",
+          "createUpArrow",
+          "-",
+          "createRightArrowWithCondition",
+          "createDownArrowWithCondition",
+          "createLeftArrowWithCondition",
+          "createUpArrowWithCondition"
+        ]
+      },
+      {
+        "title": "Delete Connection",
+        "items": [
+          "deleteSelectedArrows",
+          "deleteArtboardArrows",
+          "deleteAllArrows"
+        ]
+      },
+      "settings",
+      "-",
+      "getLibrary",
+      "joinCommunity"
+    ]
+  }
+}

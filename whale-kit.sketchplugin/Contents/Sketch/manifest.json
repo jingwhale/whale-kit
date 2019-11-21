@@ -106,6 +106,110 @@
       "identifier": "sketch-webview-kit.my-command14",
       "script": "generateWritingFormat.js",
       "handler": "onRun"
+    },
+    {
+      "name": "Auto Direction arrow",
+      "description": "Select more than one layer, to create a link between first object and others",
+      "identifier": "createAutoArrow",
+      "icon": "icon.png",
+      "shortcut": "command control c",
+      "script": "script.js",
+      "handler": "createAutoArrow"
+    },
+    {
+      "name": "Arrow to the Right",
+      "description": "Select more than one layer, to create a link between first object and others",
+      "identifier": "createRightArrow",
+      "icon": "icon.png",
+      "shortcut": "command control →",
+      "script": "script.js",
+      "handler": "createRightArrow"
+    },
+    {
+      "name": "Arrow to the Bottom",
+      "description": "Select more than one layer, to create a link between first object and others",
+      "identifier": "createDownArrow",
+      "icon": "icon.png",
+      "shortcut": "command control ↓",
+      "script": "script.js",
+      "handler": "createDownArrow"
+    },
+    {
+      "name": "Arrow to the Left",
+      "description": "Select more than one layer, to create a link between first object and others",
+      "identifier": "createLeftArrow",
+      "icon": "icon.png",
+      "shortcut": "command control ←",
+      "script": "script.js",
+      "handler": "createLeftArrow"
+    },
+    {
+      "name": "Arrow to the Top",
+      "description": "Select more than one layer, to create a link between first object and others",
+      "identifier": "createUpArrow",
+      "icon": "icon.png",
+      "shortcut": "command control ↑",
+      "script": "script.js",
+      "handler": "createUpArrow"
+    },
+    {
+      "name": "Update arrows between selected",
+      "description": "Update connection between selected layers",
+      "identifier": "updateSelectedArrows",
+      "script": "script.js",
+      "icon": "icon.png",
+      "handler": "updateSelectedArrows"
+    },
+    {
+      "name": "Auto update arrows between selected",
+      "script": "autoUpdate.js",
+      "handlers": {
+        "actions": {
+          "LayersMoved.finish": "autoUpdateSelectedArrows",
+          "LayersResized.finish": "autoUpdateSelectedArrows"
+        }
+      },
+      "identifier": "autoUpdateSelectedArrows"
+    },
+    {
+      "name": "Update arrows from the selected artboard",
+      "description": "Update all the arrows from selected artboard",
+      "identifier": "updateArtboardArrows",
+      "script": "script.js",
+      "icon": "icon.png",
+      "handler": "updateArtboardArrows"
+    },
+    {
+      "name": "Update all arrows",
+      "description": "Update all the arrows",
+      "identifier": "updateAllArrows",
+      "script": "script.js",
+      "icon": "icon.png",
+      "handler": "updateAllArrows"
+    },
+    {
+      "name": "Settings",
+      "description": "Provide settings for the arrows",
+      "identifier": "settings",
+      "script": "settings.js",
+      "icon": "icon.png",
+      "handler": "settings"
+    },
+    {
+      "name": "Toggle Panel",
+      "description": "Show or hide Connection Arrows Panel",
+      "identifier": "panel",
+      "script": "script.js",
+      "icon": "icon.png",
+      "handler": "panel"
+    },
+    {
+      "name": "Get Free Library",
+      "description": "Download library for having interactive arrows",
+      "identifier": "getLibrary",
+      "script": "links.js",
+      "icon": "icon.png",
+      "handler": "getLibrary"
     }
   ],
   "menu": {
@@ -121,6 +225,17 @@
       "sketch-webview-kit.my-command12",
       "sketch-webview-kit.my-command13",
       "sketch-webview-kit.my-command15",
+      {
+        "title": "Create or Recreate Connection",
+        "items": [
+          "createAutoArrow",
+          "-",
+          "createRightArrow",
+          "createDownArrow",
+          "createLeftArrow",
+          "createUpArrow"
+        ]
+      },
       "-",
       "sketch-webview-kit.my-command8",
       "sketch-webview-kit.my-command9",

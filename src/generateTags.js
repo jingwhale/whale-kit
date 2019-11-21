@@ -8,6 +8,7 @@ var ShapePath = require('sketch/dom').ShapePath;
 var UI  = require('sketch/ui');
 
 var tagIndex = "";
+const tagBgColor = "#108EE9";
 
 const createOval = (currentLayer,index) =>{
     var group = new Group({
@@ -25,7 +26,7 @@ const createOval = (currentLayer,index) =>{
     Oval.style.fills = [
         {
             fill: Style.FillType.Color,
-            color: '#d8d8d8ff'
+            color: tagBgColor
         }
     ];
 
@@ -40,6 +41,7 @@ const createOval = (currentLayer,index) =>{
 
     text.style.verticalAlignment = "center";
     text.style.fontSize = 14;
+    text.style.textColor = "#FFF";
     text.style.lineHeight = Oval.frame.height;
     text.style.width = Oval.frame.width;
     text.style.height = Oval.frame.height;

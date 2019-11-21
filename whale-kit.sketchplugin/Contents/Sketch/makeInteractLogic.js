@@ -2671,16 +2671,21 @@ var doPageFlow = function doPageFlow(abId, positon) {
     name: currentArtboard.name,
     frame: getCurrentArtboardFrame(positon, currentArtboard)
   }); //拷贝当前Artboard
+  // var copyBoard = currentArtboard.duplicate();
+  //Title Group
 
-  var copyBoard = currentArtboard.duplicate();
+  var artBoardGroup = new Group({
+    name: copyBoard.name,
+    parent: flowGroup
+  });
   var copyBoardFrame = {
     x: 0,
     y: 0,
-    width: copyBoard.frame.width,
-    height: copyBoard.frame.height
+    width: currentArtboard.frame.width,
+    height: currentArtboard.frame.height
   };
-  copyBoard.frame = copyBoardFrame;
-  copyBoard.parent = flowGroup; //创建当前Artboard的框（拷贝图层后，是没有框）
+  artBoardGroup.frame = copyBoardFrame;
+  artBoardGroup.group = currentArtboard.group; //创建当前Artboard的框（拷贝图层后，是没有框）
 
   var rectBgFrame = new Rectangle(0, 0, copyBoard.frame.width, copyBoard.frame.height);
   var rectBg = new ShapePath({
