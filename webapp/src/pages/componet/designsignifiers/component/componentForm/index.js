@@ -201,7 +201,6 @@ class ComponentFormUI extends React.Component {
 
   makeSignifiers = (e) => {
     e.preventDefault();
-    debugger
     var that = this;
     if(this.myRef.current){
       this.myRef.current.validateFieldsAndScroll((err, values) => {

@@ -1,7 +1,8 @@
 .body{
   padding: 10px 0 33px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif,
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif,
   "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  overflow:hidden
 }
 
 .root{
@@ -27,20 +28,23 @@
   align-items: flex-start;
   /* background: rgba(0, 0, 0, 0.1); */
   /* padding: 16px; */
-  max-height: 800px;
-  overflow: auto;
+  /* max-height: 800px;
+  overflow: auto; */
 }
 
 .treeBook{
   width: 20%;
-  padding: 16px 0 16px;
+  /* padding: 16px 0 16px; */
   float: left;
 }
 
 .list{
   width: 80%;
   float: left;
-  padding-top: 16px;
+  /* padding-top: 16px; */
+}
+.listCnt{
+  overflow: auto
 }
 
 .treeBookWrap{
@@ -77,7 +81,7 @@ h3{
   width: 300px;
   position: fixed;
   bottom:13px;
-  right: 200px;
+  right: 320px;
 }
 
 .logo{
@@ -90,7 +94,7 @@ h3{
 .inputDist{
   position: fixed;
   bottom:13px;
-  right: 530px;
+  right: 660px;
 }
 
 .inputItem{
@@ -101,4 +105,52 @@ h3{
 .inputPx{
   color: #999;
   font-size: 10px;
+}
+
+.buttonMargin{
+  margin-right: 16px;
+}
+
+.drawerDialog{
+  position: fixed;
+  top:30px;
+  right: 44px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.redo{
+  position: fixed;
+  top:30px;
+  right: 88px;
+
+  font-size: 14px;
+  cursor: pointer;
+}
+
+
+.itemFlow{
+  cursor: pointer;
+  height: 32px;
+  line-height: 32px;
+}
+.itemFlow:hover{
+  color: #1890FF;
+  width: 100%;
+}
+
+.itemFlowClose{
+  color: #F5222D;
+  float: right;
+  margin-left: 8px;
+  width: 10px;
+  height: 32px;
+  line-height: 32px;
+}
+
+.itemFlowName{
+  width: 190px;
+  float: left;
+  height: 32px;
+  line-height: 32px;
 }

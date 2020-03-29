@@ -3,6 +3,8 @@ import Sketch from 'sketch/dom';
 import BrowserWindow from "sketch-module-web-view";
 import {identifier} from "./lib/config";
 import {getWebview} from 'sketch-module-web-view/remote';
+var Settings = require('sketch/settings')
+
 
 const Group = Sketch.Group;
 const Document = Sketch.Document;
@@ -17,21 +19,28 @@ const selectedPage = document.selectedPage;
 const selectedArtBoards = selectedPage.layers;
 const allPages = document.pages;
 
+const settingFlowKey = "settingFlowKey";
+var settingFlowData = [];
+
 var flowArtboard = "";
 var flowBoards = [];
 var dist = {};
 var flowName = "交互流程";
 var hasFlowPage = false;
 
-const interactDescriptionWidth = 600;
+const interactDescriptionWidth = 0;
 const initPositnX = 100;
 const initPositnY = 100;
 
 const flowArtBoardTilteHeight = 140;
 const flowArtBoardTilteMarginBottom = 80;
 var titleFontSize = 40;
+var flowNameFontSize = 16;
+var flowNameDist = 12;
+var flowNameColor = "#333";
 var titleBold = 600;
 var titleColor = "#fff";
+
 
 const createPageAndArtboard = () =>{//创建交互流程页面与Artboard
     var flowPage = doPage();
@@ -42,7 +51,7 @@ const createPageAndArtboard = () =>{//创建交互流程页面与Artboard
         x:newArtBordFrameX,
         y:0,
         width:flowArtboardFrame.width+interactDescriptionWidth+initPositnX*2,
-        height: flowArtboardFrame.height+initPositnY*2+flowArtBoardTilteHeight+flowArtBoardTilteMarginBottom
+        height: flowArtboardFrame.height+flowArtBoardTilteHeight+flowArtBoardTilteMarginBottom*2
     };
     
     flowArtboard = new Artboard({
@@ -182,13 +191,14 @@ const makeInteractLogic = () =>{//建立交互流程
                     x:i,
                     y:j
                 };
-                doPageFlow(abId,positonIndex);
+                
+                doPageFlow(abId,positonIndex,child[j].fillType);
             };
         }
     };
 };
 
-const doPageFlow = (abId,positon) =>{//移动页面到flowArtboard
+const doPageFlow = (abId,positon,fillType) =>{//移动页面到flowArtboard
     var currentArtboard = findArtBoardById(abId);
 
     //创建移动新组，包含当前Artboard和当前Artboard的框
@@ -196,33 +206,62 @@ const doPageFlow = (abId,positon) =>{//移动页面到flowArtboard
         name: currentArtboard.name,
         frame: getCurrentArtboardFrame(positon,currentArtboard)
     });
+    if(!fillType){
+        //拷贝当前Artboard
+        var copyBoard = currentArtboard.duplicate();
+        var copyBoardFrame = {
+            x:0,
+            y:0,
+            width:copyBoard.frame.width,
+            height:copyBoard.frame.height
+        };
+        copyBoard.frame = copyBoardFrame;
+        copyBoard.parent = flowGroup;
 
-    //拷贝当前Artboard
-    var copyBoard = currentArtboard.duplicate();
-    var copyBoardFrame = {
-        x:0,
-        y:0,
-        width:copyBoard.frame.width,
-        height:copyBoard.frame.height
-    };
-    copyBoard.frame = copyBoardFrame;
-    copyBoard.parent = flowGroup;
+        // const artBoardGroup = new Group({
+        //     name: currentArtboard.name,
+        //     frame: copyBoard.frame,
+        //     layers: copyBoard.layers
+        // });
 
-    //创建当前Artboard的框（拷贝图层后，是没有框）
-    var rectBgFrame = new Rectangle(0, 0, copyBoard.frame.width, copyBoard.frame.height);
+        // artBoardGroup.parent = flowGroup;
+        // copyBoard.delete();
 
-    const rectBg = new ShapePath({
-        name: "layput",
-        frame:rectBgFrame,
-        shapeType: ShapePath.ShapeType.Rectangle,
-        parent:flowGroup,
-        style:{
-            borders:[{color:'#C9C9C9'}]
+        //创建当前Artboard的框（拷贝图层后，是没有框）
+        var rectBgFrame = new Rectangle(0, 0, copyBoard.frame.width, copyBoard.frame.height);
+
+        const rectBg = new ShapePath({
+            name: "layput",
+            frame:rectBgFrame,
+            shapeType: ShapePath.ShapeType.Rectangle,
+            parent:flowGroup,
+            style:{
+                borders:[{color:'#C9C9C9'}]
+            }
+        })
+        
+        if(positon.x<2){
+            //Title text
+            const flowNameText = new Text({
+                text: flowName,
+                frame: {
+                    x:rectBgFrame.x,
+                    y:rectBgFrame.y-flowNameFontSize-flowNameDist,
+                    width:88,
+                    height:flowNameFontSize
+                },
+                parent: flowGroup,
+                name: "Flow Name"
+            });
+            flowNameText.style.fontSize = flowNameFontSize;
+            flowNameText.style.lineHeight = flowNameFontSize;
+            flowNameText.style.textColor = flowNameColor;
         }
-    })
-
-    //将flowGroup移动到flowArtboard中
-    flowGroup.parent = flowArtboard;
+        
+        //将flowGroup移动到flowArtboard中
+        flowGroup.parent = flowArtboard;
+    }
+    
 };
 
 const findArtBoardById = (abId) =>{//通过abId查找artBoard
@@ -291,7 +330,7 @@ const getCurrentArtboardFrameY = (positon) =>{//获取当前Artboard在flowArtbo
 export default function onRun(context) {
     if(selectedPage && selectedArtBoards.length>0){//打开Webview
         openPannel();
-    }else{//选择一个ArtBord
+    }else{//选择一个ArtBoard
         sketch.UI.message("Please select an Page!")
     }
 }
@@ -320,10 +359,10 @@ function openPannel() {//打开Webview
         win = null
     });
 
-    // const Panel = `http://localhost:8000/interactLogic.html#${Math.random()}`;
-    // win.loadURL(Panel);
+    const Panel = `http://localhost:8000/interactLogic.html#${Math.random()}`;
+    win.loadURL(Panel);
 
-    win.loadURL('http://www.jingwhale.com/whalekit/interactLogic.html?'+Math.random());
+    // win.loadURL('http://www.jingwhale.com/whalekit/interactLogic.html?'+Math.random());
 
     const closeWin = () =>{
         win.destroy();
@@ -334,12 +373,32 @@ function openPannel() {//打开Webview
 
     //监听webview的事件：webview->plugin
     contents.on('fromwebview', function(data) {
-        dist = data.dist;
-        flowBoards = data.items;
-        flowName = data.flowName || "交互流程";
-        createPageAndArtboard();
-        sketch.UI.message("Successfully flowed pages！");
-        closeWin();
+        console.log("data.checkSave---"+data)
+        if(data.type === "updateFlowData"){
+            settingFlowData = data.settingFlowData || [];
+            Settings.setDocumentSettingForKey(document, settingFlowKey, settingFlowData);
+        }else if(data.type === "doFlow"){
+            dist = data.dist;
+            dist.branch = dist.step;
+            flowBoards = data.items;
+            flowName = data.flowName || "交互流程";
+            createPageAndArtboard();
+            sketch.UI.message("Successfully flowed pages！");
+
+            settingFlowData = data.settingFlowData || [];
+
+            if(!!data.checkSave){
+                var settingFlowDataItem = {
+                    id: 'flow' + (new Date()).getTime(),
+                    name:flowName,
+                    items:data.items
+                };
+
+                settingFlowData.unshift(settingFlowDataItem);
+                Settings.setDocumentSettingForKey(document, settingFlowKey, settingFlowData);
+            }
+            closeWin();
+        }
     });
 
     contents.on('closed', function(s) {
@@ -353,8 +412,13 @@ function openPannel() {//打开Webview
 
 //向Webview传送selectedArtBoards数据
 const setSelectedArtBoards = (contents) => {
-    var serializData = doSerializData(selectedArtBoards);
-    var selectedArtBoardsData = JSON.stringify(serializData);
+    var treeBook = doSerializData(selectedArtBoards);
+    settingFlowData = Settings.documentSettingForKey(document, settingFlowKey) || [];
+    var setData = [];
+    setData.push(treeBook);
+    setData.push(settingFlowData);
+
+    var selectedArtBoardsData = JSON.stringify(setData);
 
     contents
         .executeJavaScript(`someGlobalFunctionDefinedInTheWebview(${selectedArtBoardsData})`)
@@ -371,7 +435,8 @@ const doSerializData = (selectedArtBoards) => {
         serializDatas.push({
             id: selectedArtBoards[i].id,
             abId: selectedArtBoards[i].id,
-            content: selectedArtBoards[i].name
+            content: selectedArtBoards[i].name,
+            fillType: selectedArtBoards[i].fillType || false
         });
     };
 

@@ -5,11 +5,11 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 
   const grid = 8;
 
-  const getListStyle = (isDraggingOver,droppableId) => ({
-    background: isDraggingOver ? '#60c5ba' : (droppableId==="treeBook" ? '#a5dff9' : '#60c5ba'),
+  const getListStyle = (isDraggingOver,droppableId,clientHeight) => ({
+    background: isDraggingOver ? '#1890ff' : (droppableId==="treeBook" ? '#a5dff9' : '#40a9ff'),
     padding: grid,
     width: 250,
-    borderRadius: 4
+    borderRadius: 2
   });
 
   const getItemStyle = (isDragging, draggableStyle,droppableId,index) => ({
@@ -17,9 +17,10 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
     userSelect: 'none',
     padding: droppableId==="treeBook" ? grid : grid * 2,
     margin: `10px 0 ${grid}px 0`,
+    height:'74px',
   
     // change background colour if dragging
-    background: isDragging ? '#feee7d' : ((index===0&&droppableId!=="treeBook") ? "#f4f0e6":'#FFF'),
+    background: isDragging ? '#91d5ff' : ((index===0&&droppableId!=="treeBook") ? "#e6f7ff":'#FFF'),
   
     // styles we need to apply on draggables
     ...draggableStyle,
@@ -32,7 +33,7 @@ export default class ListUI extends PureComponent {
   };
 
   render() {
-    var  { items, droppableId, listType, ignoreContainerClipping, isCombineEnabled} = this.state;
+    var  { items, droppableId, listType, ignoreContainerClipping, isCombineEnabled, clientHeight} = this.state;
     return (
       <Droppable droppableId={droppableId}
       type={listType}
@@ -42,7 +43,7 @@ export default class ListUI extends PureComponent {
         {(droppableProvided, droppableSnapshot) => (
           <div
             ref={droppableProvided.innerRef}
-            style={getListStyle(droppableSnapshot.isDraggingOver,droppableId)}
+            style={getListStyle(droppableSnapshot.isDraggingOver,droppableId,clientHeight)}
           >
           <div><Icon type="border-verticle" /><span className={styles.count}>（{items.list.length}）</span></div>
             {items.list.map((item, index) => (
@@ -60,11 +61,12 @@ export default class ListUI extends PureComponent {
                     )}
                   >
                     {item.content}
-                    {(index===0) ? (
+                    {(!item.fillType) ? (
                       <span className={styles.arrow}>→</span> 
                     ):(
-                      <span className={styles.arrow}>↓</span> 
+                      ""
                     )}
+                    
                   </div>
                 )}
               </Draggable>

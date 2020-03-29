@@ -8,6 +8,7 @@
   "bundleVersion": 1,
   "icon": "icon.png",
   "version": "0.5.3",
+  "suppliesData": true,
   "commands": [
     {
       "name": "Efficient design spec",

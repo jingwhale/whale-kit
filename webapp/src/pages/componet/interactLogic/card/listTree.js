@@ -3,11 +3,12 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 
   const grid = 8;
 
-  const getListStyle = (isDraggingOver,droppableId) => ({
-    background: isDraggingOver ? '#a5dff9' : '#a5dff9',
+  const getListStyle = (isDraggingOver,droppableId,clientHeight) => ({
+    background: isDraggingOver ? '#EBECF0' : '#E6EAEE',
     padding: grid,
     width: 250,
-    borderRadius: 4
+    "max-height": clientHeight-60,
+    borderRadius: 2
   });
 
   const getItemStyle = (isDragging, draggableStyle,droppableId,index) => ({
@@ -30,7 +31,7 @@ export default class ListTreeUI extends PureComponent {
   };
 
   render() {
-    var  { items, droppableId, listType, ignoreContainerClipping, isCombineEnabled} = this.state;
+    var  { items, droppableId, listType, ignoreContainerClipping, isCombineEnabled, clientHeight} = this.state;
     return (
       <Droppable droppableId={droppableId}
       type={listType}
@@ -40,7 +41,7 @@ export default class ListTreeUI extends PureComponent {
         {(droppableProvided, droppableSnapshot) => (
           <div
             ref={droppableProvided.innerRef}
-            style={getListStyle(droppableSnapshot.isDraggingOver,droppableId)}
+            style={getListStyle(droppableSnapshot.isDraggingOver,droppableId,clientHeight)}
           >
             {items.list.map((item, index) => (
               <Draggable key={item.id} draggableId={item.id} index={index}>
