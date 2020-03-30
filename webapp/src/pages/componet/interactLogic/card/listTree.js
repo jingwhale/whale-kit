@@ -7,7 +7,7 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
     background: isDraggingOver ? '#EBECF0' : '#E6EAEE',
     padding: grid,
     width: 250,
-    "max-height": clientHeight-60,
+    "max-height": clientHeight-140,
     borderRadius: 2
   });
 

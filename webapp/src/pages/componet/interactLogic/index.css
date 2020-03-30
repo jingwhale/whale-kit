@@ -119,13 +119,11 @@ h3{
   cursor: pointer;
 }
 
-.redo{
-  position: fixed;
-  top:30px;
-  right: 88px;
-
+.actionItem{
+  display: inline-block;
   font-size: 14px;
   cursor: pointer;
+  margin-right: 24px;
 }
 
 
@@ -153,4 +151,13 @@ h3{
   float: left;
   height: 32px;
   line-height: 32px;
+}
+
+.action{
+  position: fixed;
+  top:30px;
+  right: 268px;
+
+  font-size: 14px;
+  cursor: pointer;
 }

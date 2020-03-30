@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Button, Input, Icon, InputNumber, Modal, Upload, Checkbox, Message, Drawer } from 'antd';
+import { Button, Input, Icon, InputNumber, Modal, Upload, Checkbox, Message, Drawer, Tooltip } from 'antd';
 import styles from './index.css'
 import ListUI from './card/list.js'
 import ListTreeUI from './card/listTree.js'
@@ -242,27 +242,87 @@ export default class IndexUI extends PureComponent {
     this.forceUpdate();
   };
 
-  doFillFlow = (result,fillFlowData) => {//横向建立流程
-    var fillCount = fillFlowData.currenDragIndex - fillFlowData.fillItem.list.length;
-    const fillItemLength = fillFlowData.fillItem.list.length;
-    for(var i=0;i<fillCount;i++){
-      var objString = JSON.stringify(fillFlowData.currenItem.list[fillItemLength+i]);
+  doFillFlow = (fillFlowData) => {//横向建立流程
+    var fillLength = (fillFlowData.type === "fillLeft") ? fillFlowData.currenItem.list.length:(fillFlowData.currenItem.list.length-1);
+
+    for(var i=fillFlowData.fillItem.list.length;i<fillLength;i++){
+      var objString = JSON.stringify(fillFlowData.currenItem.list[i]);
       var currenItemIndexInsert = JSON.parse(objString);
       currenItemIndexInsert.fillType = true;
       currenItemIndexInsert.content = "";
       currenItemIndexInsert.id = 'item'+ (new Date()).getTime()+i;
       fillFlowData.fillItem.list.push(currenItemIndexInsert);
     }
-    this.listUIRef.current.forceUpdate();
+    var items = JSON.parse(JSON.stringify(this.state.items));
+
+    this.setState({
+      items:[]
+    })
+
+    this.forceUpdate();
+  
+    this.setState({
+      items:items
+    })
+
+    this.treeBookRef.current.forceUpdate();
+  }
+
+  fillBlankFlow= (result) => {//fillBlank
+    var fillFlowData = {};
+    var currenItem = this.getItem(result.source.droppableId); 
+    var currenItemIndex = currenItem.index;
+    var currenDragIndex = result.source.index;
+    var flagData = this.getFillItem(currenItem,currenItemIndex); 
+    if(currenDragIndex === (currenItem.list.length -1) && (currenItem.list.length>1)){
+      if(flagData.hasLengthThanCurrent){
+        fillFlowData = {
+          currenItem: flagData.maxItem,
+          fillItem: currenItem,
+          type:"fillLeft"
+        }
+      }else{
+        if(currenItemIndex === (this.state.items.length-1)){
+          var columnData = {
+            id:'column'+(new Date()).getTime(),
+            list: []
+          }
+          this.state.items.push(columnData)
+        }
+        fillFlowData = {
+          currenItem: currenItem,
+          fillItem: this.state.items[currenItemIndex+1],
+          type:"fillRigt"
+        }
+      }
+      this.showConfirm(fillFlowData);
+    }
   };
 
-  showConfirm = (result,fillFlowData) => {//弹窗提醒横向建立流程
+
+  getFillItem= (currenItem,currenItemIndex) => {//fillBlank
+    var maxItem = currenItem;
+    var hasLengthThanCurrent = false;
+    for(var i=(currenItemIndex+1);i<this.state.items.length;i++){
+			if(this.state.items[i].list.length > maxItem.list.length){
+        maxItem = this.state.items[i];
+        hasLengthThanCurrent = true;
+      }
+    }
+    var data = {
+      maxItem:maxItem,
+      hasLengthThanCurrent:hasLengthThanCurrent
+    }
+    return data;
+  };
+
+  showConfirm = (fillFlowData) => {//弹窗提醒横向建立流程
     var that = this;
     confirm({
       title: '要横向建立流程吗?',
-      content: '横向建立流程后，会自动填充后面一列的内容，横向对齐本行流程。',
+      content: '横向建立流程后，会自动填空白内容，便于横向向建立流程。',
       onOk() {
-        that.doFillFlow(result,fillFlowData);
+        that.doFillFlow(fillFlowData);
       },
       onCancel() {
         console.log('Cancel');
@@ -326,19 +386,7 @@ export default class IndexUI extends PureComponent {
           return;
         }
         if(result.destination.index===result.source.index){
-          debugger
-          if(this.state.items.length>1){
-            var fillFlowData = {};
-            fillFlowData.currenItem = JSON.parse(JSON.stringify(this.getItem(result.source.droppableId))); 
-            fillFlowData.currenItemIndex = fillFlowData.currenItem.index;
-            fillFlowData.currenDragIndex = result.source.index;
-            if(this.state.items.length>(fillFlowData.currenItemIndex+1)){
-              fillFlowData.fillItem = this.state.items[fillFlowData.currenItemIndex+1]; 
-              if(fillFlowData.currenDragIndex>fillFlowData.fillItem.list.length){
-                this.showConfirm(result,fillFlowData);
-              }
-            }
-          }
+          this.fillBlankFlow(result);
         }else{
           items = this.getItem(result.source.droppableId).list;
           items.splice(result.source.index, 1, ...items.splice(result.destination.index, 1, items[result.source.index]))
@@ -479,7 +527,14 @@ export default class IndexUI extends PureComponent {
             <Checkbox onChange={this.onSaveDataChange} checked={checkSave}>保存</Checkbox>
           </div>
         </div>
-        <div className={styles.redo} onClick={e=>this.changeFlow(e,"")}><Icon type="redo"/></div>
+        <div className={styles.action}>
+          <div className={styles.actionItem} onClick={e=>this.changeFlow(e,"")}>
+            <Tooltip placement="left" title="清空当前流程">
+              <Icon type="redo"/>
+            </Tooltip>
+          </div>
+        </div>
+        
         {(settingFlowData.length>0) ? (    
         <div className={styles.drawerDialog}>
           <div onClick={this.showDrawer}>
