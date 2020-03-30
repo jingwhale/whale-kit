@@ -2710,26 +2710,22 @@ var doPageFlow = function doPageFlow(abId, positon, fillType) {
           color: '#C9C9C9'
         }]
       }
+    }); //Title text
+
+    var flowNameText = new Text({
+      text: copyBoard.name,
+      frame: {
+        x: rectBgFrame.x,
+        y: rectBgFrame.y - flowNameFontSize - flowNameDist,
+        width: 88,
+        height: flowNameFontSize
+      },
+      parent: flowGroup,
+      name: copyBoard.name
     });
-
-    if (positon.x < 2) {
-      //Title text
-      var flowNameText = new Text({
-        text: flowName,
-        frame: {
-          x: rectBgFrame.x,
-          y: rectBgFrame.y - flowNameFontSize - flowNameDist,
-          width: 88,
-          height: flowNameFontSize
-        },
-        parent: flowGroup,
-        name: "Flow Name"
-      });
-      flowNameText.style.fontSize = flowNameFontSize;
-      flowNameText.style.lineHeight = flowNameFontSize;
-      flowNameText.style.textColor = flowNameColor;
-    } //将flowGroup移动到flowArtboard中
-
+    flowNameText.style.fontSize = flowNameFontSize;
+    flowNameText.style.lineHeight = flowNameFontSize;
+    flowNameText.style.textColor = flowNameColor; //将flowGroup移动到flowArtboard中
 
     flowGroup.parent = flowArtboard;
   }
@@ -2842,7 +2838,8 @@ function openPannel() {
   win.loadURL(Panel); // win.loadURL('http://www.jingwhale.com/whalekit/interactLogic.html?'+Math.random());
 
   var closeWin = function closeWin() {
-    win.destroy(); // win.close();
+    win.destroy();
+    win.close();
   };
 
   var contents = win.webContents; //监听webview的事件：webview->plugin

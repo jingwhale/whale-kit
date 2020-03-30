@@ -56,7 +56,10 @@ export default class IndexUI extends PureComponent {
 
     this.state = {
       items:[],
-      treeBook:treeBook,
+      treeBook:{
+        id:"treeBook",
+        list:[]
+      },
       flowName:"",
       clientHeight:0,
       showUploadList:false,
