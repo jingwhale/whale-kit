@@ -169,7 +169,6 @@ export default class IndexUI extends PureComponent {
       title: '确定要删除'+data.name+'流程吗？',
       content: '删除后不可恢复。',
       onOk() {
-        debugger
         var settingFlowData = that.state.settingFlowData;
         for(var i=0;i<settingFlowData.length;i++){
             if(settingFlowData[i].id === data.id){
@@ -255,17 +254,14 @@ export default class IndexUI extends PureComponent {
     }
     var items = JSON.parse(JSON.stringify(this.state.items));
 
-    this.setState({
-      items:[]
-    })
-
     this.forceUpdate();
-  
-    this.setState({
-      items:items
-    })
 
     this.treeBookRef.current.forceUpdate();
+  
+    this.setState({
+      items:this.state.items
+    })
+
   }
 
   fillBlankFlow= (result) => {//fillBlank
@@ -274,7 +270,7 @@ export default class IndexUI extends PureComponent {
     var currenItemIndex = currenItem.index;
     var currenDragIndex = result.source.index;
     var flagData = this.getFillItem(currenItem,currenItemIndex); 
-    if(currenDragIndex === (currenItem.list.length -1) && (currenItem.list.length>1)){
+    if(currenDragIndex === (currenItem.list.length -1)){
       if(flagData.hasLengthThanCurrent){
         fillFlowData = {
           currenItem: flagData.maxItem,
@@ -282,7 +278,7 @@ export default class IndexUI extends PureComponent {
           type:"fillLeft"
         }
       }else{
-        if(currenItemIndex === (this.state.items.length-1)){
+        if(currenItemIndex === (this.state.items.length-1)&& (currenItem.list.length>1)){
           var columnData = {
             id:'column'+(new Date()).getTime(),
             list: []
@@ -439,7 +435,9 @@ export default class IndexUI extends PureComponent {
       console.log("from sketch --- "+ data);
       console.log("from sketch data[1] --- "+ data[1]);
       // var getData = JSON.parse(data);
+
       treeBook.list = data[0];
+
       that.setState({
         treeBook: treeBook,
         settingFlowData: data[1]
