@@ -126,31 +126,34 @@ h3{
   margin-right: 24px;
 }
 
-
 .itemFlow{
   cursor: pointer;
-  height: 32px;
-  line-height: 32px;
+  margin-bottom: 8px;
 }
+
+.itemFlow:hover .itemFlowClose{
+  display: inline-block;
+}
+
 .itemFlow:hover{
   color: #1890FF;
   width: 100%;
 }
 
 .itemFlowClose{
+  display: none;
   color: #F5222D;
-  float: right;
   margin-left: 8px;
   width: 10px;
   height: 32px;
   line-height: 32px;
+  margin-left: 8px;
 }
 
 .itemFlowName{
+  display: inline-block;
   width: 190px;
-  float: left;
-  height: 32px;
-  line-height: 32px;
+  line-height: 22px;
 }
 
 .action{
@@ -160,4 +163,10 @@ h3{
 
   font-size: 14px;
   cursor: pointer;
+}
+
+.spin{
+  position: absolute;
+  margin: 0 auto;
+  top: 40%; /*偏移*/
 }

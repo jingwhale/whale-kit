@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Button, Input, Icon, InputNumber, Modal, Upload, Checkbox, Message, Drawer, Tooltip } from 'antd';
+import { Button, Input, Icon, InputNumber, Modal, Checkbox, Message, Drawer, Tooltip, Spin, Switch } from 'antd';
 import styles from './index.css'
 import ListUI from './card/list.js'
 import ListTreeUI from './card/listTree.js'
@@ -67,6 +67,8 @@ export default class IndexUI extends PureComponent {
       settingFlowData:[],
       drawerVisible:false,
       type:"doFlow",
+      spinFlag:false,
+      hasArrow:true,
       dist: {
         step:150,
         branch:150
@@ -166,7 +168,7 @@ export default class IndexUI extends PureComponent {
     e.preventDefault();
     var that = this;
     confirm({
-      title: '确定要删除'+data.name+'流程吗？',
+      title: '确定要删除"'+data.name+'"流程吗？',
       content: '删除后不可恢复。',
       onOk() {
         var settingFlowData = that.state.settingFlowData;
@@ -228,8 +230,10 @@ export default class IndexUI extends PureComponent {
 
   onMakeFlow = (type) => {//向sketch传输数据
     debugger
+    var spinFlag = (type==="doFlow") ? true : false;
     this.setState({
-      type:type
+      type:type,
+      spinFlag:spinFlag
     });
     this.state.type = type;
     var serializData1 = JSON.stringify(this.state);
@@ -332,6 +336,12 @@ export default class IndexUI extends PureComponent {
     });
   };
 
+  changeHasFlow = (checked,e) => {
+    this.setState({
+      hasArrow: checked,
+    });
+  };
+
   onClose = () => {
     this.setState({
       drawerVisible: false
@@ -428,7 +438,7 @@ export default class IndexUI extends PureComponent {
   };
 
   render() {
-    var  { items, treeBook, flowName, dist, clientHeight, showUploadList, checkSave, settingFlowData } = this.state;
+    var  { items, treeBook, flowName, dist, clientHeight, checkSave, settingFlowData, spinFlag, hasArrow } = this.state;
     var that = this;
 
     window.someGlobalFunctionDefinedInTheWebview = function(data) {
@@ -449,6 +459,7 @@ export default class IndexUI extends PureComponent {
 
     return (
       <div>
+        <Spin className={styles.spin} tip="流程制作中..." spinning={spinFlag}></Spin>
         <DragDropContext onDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
           <div className={styles.treeBook}>
             <h3 className={styles.marginLeft}>Page（{treeBook.list.length}）</h3>
@@ -515,14 +526,15 @@ export default class IndexUI extends PureComponent {
         </DragDropContext>
         <div className={styles.bottom}>
           <div className={styles.logo}><Icon type="pic-right" />&nbsp;&nbsp;Interact Logic</div>
-          
+
           <div className={styles.inputDist}>
+            <Checkbox onChange={this.onSaveDataChange} checked={checkSave}>保存数据</Checkbox>
             <div className={styles.inputItem}><span>StepDist<span className={styles.inputPx}>（px）</span>：</span> <InputNumber size="default"  min={100} max={300} defaultValue={dist.step} onChange={this.stepDistChange} /></div>
           </div>
           <div className={styles.input} ><Input placeholder="输入流程名称" value={flowName} onChange={this.flowNameChange}/></div>
           <div className={styles.doButton}>
             <Button type="primary" className={styles.buttonMargin} onClick={this.doClick}>制作流程</Button>
-            <Checkbox onChange={this.onSaveDataChange} checked={checkSave}>保存</Checkbox>
+            <Switch checkedChildren="带箭头" unCheckedChildren="无箭头" checked={hasArrow} onChange={this.changeHasFlow}/>
           </div>
         </div>
         <div className={styles.action}>

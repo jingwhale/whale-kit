@@ -3358,13 +3358,11 @@ var createPageAndArtboard = function createPageAndArtboard() {
     name: flowName,
     parent: flowPage,
     frame: flowFrame
-  });
-  currentFlowArtboardSelected(); //建立title
+  }); //建立title
 
   createPageAndArtboardTitle(); //建立交互流程
 
   makeInteractLogic();
-  doFlowArrows();
 };
 
 var currentFlowArtboardSelected = function currentFlowArtboardSelected() {
@@ -3377,6 +3375,16 @@ var currentFlowArtboardSelected = function currentFlowArtboardSelected() {
 
   ;
   flowArtboard.selected = true;
+};
+
+var clearFlowPageSelected = function clearFlowPageSelected() {
+  //
+  // document.selectedPage = currentSelectedPage;
+  for (var i = 0; i < flowPage.layers.length; i++) {
+    flowPage.layers[i].selected = false;
+  }
+
+  ;
 };
 
 var doNewArtBordFrameX = function doNewArtBordFrameX(flowPage) {
@@ -3423,6 +3431,7 @@ var doPage = function doPage() {
     });
   }
 
+  flowPageItem.selected = false;
   return flowPageItem;
 };
 
@@ -3619,6 +3628,7 @@ var createArrows = function createArrows(arrowIds) {
     for (var i = 0; i < arrowIds.blockIds.length; i++) {
       if (arrowIds.blockIds[i].blockId != firstObjectID) {
         var secondObjectID = String(arrowIds.blockIds[i].blockId);
+        currentFlowArtboardSelected();
         var connection = Object(_arrows_createArrow__WEBPACK_IMPORTED_MODULE_6__["createArrow"])(firstObjectID, secondObjectID, null, null, "Right", null, false, document, docData);
       }
     }
@@ -3668,12 +3678,14 @@ var getFlowArr = function getFlowArr(index, startIndex, endIndex) {
   var firstArr = [];
 
   for (var i = startIndex; i < endIndex; i++) {
-    if (!flowBoards[index].list[i].fillType) {
-      var item = {
-        index: i,
-        blockId: findFlowBlockId(flowBoards[index].list[i].id)
-      };
-      firstArr.push(item);
+    if (flowBoards[index] && flowBoards[index].list[i]) {
+      if (!flowBoards[index].list[i].fillType) {
+        var item = {
+          index: i,
+          blockId: findFlowBlockId(flowBoards[index].list[i].id)
+        };
+        firstArr.push(item);
+      }
     }
   }
 
@@ -3816,9 +3828,15 @@ function openPannel() {
         };
         settingFlowData.unshift(settingFlowDataItem);
         sketch_settings__WEBPACK_IMPORTED_MODULE_2___default.a.setDocumentSettingForKey(document, settingFlowKey, settingFlowData);
-      } //flowArtboard.selected = false;
+      }
 
+      if (data.hasArrow) {
+        doFlowArrows();
+      } else {
+        currentFlowArtboardSelected();
+      }
 
+      clearFlowPageSelected();
       closeWin();
     }
   });

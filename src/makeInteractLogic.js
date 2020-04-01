@@ -16,9 +16,11 @@ const Page = Sketch.Page;
 const document = Document.getSelectedDocument();
 
 const selectedPage = document.selectedPage;
+
 const selectedArtBoards = selectedPage.layers;
 const allPages = document.pages;
 let docData = context.document.documentData();
+
 
 const settingFlowKey = "settingFlowKey";
 var settingFlowData = [];
@@ -62,15 +64,11 @@ const createPageAndArtboard = () =>{//创建交互流程页面与Artboard
         frame:flowFrame
     });
 
-    currentFlowArtboardSelected();
-
     //建立title
     createPageAndArtboardTitle();
 
     //建立交互流程
     makeInteractLogic();
-
-    doFlowArrows();
 };
 
 const currentFlowArtboardSelected = () =>{//
@@ -79,6 +77,13 @@ const currentFlowArtboardSelected = () =>{//
         flowPage.layers[i].selected = false;
     }; 
     flowArtboard.selected = true;
+};
+
+const clearFlowPageSelected = () =>{//
+    // document.selectedPage = currentSelectedPage;
+    for(var i=0;i<flowPage.layers.length;i++){
+        flowPage.layers[i].selected = false;
+    }; 
 };
 
 const doNewArtBordFrameX = (flowPage) =>{//设置flowArtBord的frame.x 
@@ -115,6 +120,7 @@ const doPage = () =>{//判断是否有“交互流程”的页面
             parent: document
         });
     }
+    flowPageItem.selected = false;
 
     return flowPageItem;
 };
@@ -305,6 +311,7 @@ const createArrows = (arrowIds) =>{//创建arrows
           if(arrowIds.blockIds[i].blockId != firstObjectID){
             let secondObjectID = String(arrowIds.blockIds[i].blockId);
 
+            currentFlowArtboardSelected();
             let connection = createArrow(firstObjectID, secondObjectID, null, null, "Right", null, false, document, docData);
           }
         }
@@ -350,12 +357,14 @@ const getFlowArr = (index,startIndex,endIndex) =>{//创建flow arrows
     var firstArr = [];
 
     for(var i=startIndex;i<endIndex;i++){
-        if(!flowBoards[index].list[i].fillType){
-            var item = {
-                index:i,
-                blockId:findFlowBlockId(flowBoards[index].list[i].id)
+        if(flowBoards[index] && flowBoards[index].list[i]){
+            if(!flowBoards[index].list[i].fillType){
+                var item = {
+                    index:i,
+                    blockId:findFlowBlockId(flowBoards[index].list[i].id)
+                }
+                firstArr.push(item);
             }
-            firstArr.push(item);
         }
     }
 
@@ -495,7 +504,13 @@ function openPannel() {//打开Webview
                 settingFlowData.unshift(settingFlowDataItem);
                 Settings.setDocumentSettingForKey(document, settingFlowKey, settingFlowData);
             }
-            //flowArtboard.selected = false;
+            if(data.hasArrow){
+                doFlowArrows();
+            }else{
+                currentFlowArtboardSelected();
+            }
+            clearFlowPageSelected();
+
             closeWin();
         }
     });
