@@ -298,14 +298,14 @@ const findArtBoardById = (abId) =>{//通过abId查找artBoard
 };
 
 const createArrows = (arrowIds) =>{//创建arrows
-    if(arrowIds.blockIds.length> 1 && arrowIds.firstId){
-        let firstObjectID = arrowIds.firstId;
+    if(arrowIds.blockIds.length> 0 && arrowIds.firstBlock){
+        let firstObjectID = arrowIds.firstBlock.blockId;
 
         for(let i = 0; i < arrowIds.blockIds.length; i++) {
-          if(arrowIds.blockIds[i] != firstObjectID){
-            let secondObjectID = String(arrowIds.blockIds[i]);
+          if(arrowIds.blockIds[i].blockId != firstObjectID){
+            let secondObjectID = String(arrowIds.blockIds[i].blockId);
 
-            let connection = createArrow(firstObjectID, secondObjectID, null, null, "Auto", null, false, document, docData);
+            let connection = createArrow(firstObjectID, secondObjectID, null, null, "Right", null, false, document, docData);
           }
         }
       } else {
@@ -319,17 +319,47 @@ const createArrows = (arrowIds) =>{//创建arrows
 const doFlowArrows = () =>{//创建flow arrows
     var blockIds = [];
 
-    for(var i=0;i<flowBoards[1].list.length;i++){
-        blockIds.push(findFlowBlockId(flowBoards[1].list[i].id));
+    for(var i=0;i<flowBoards.length;i++){
+        if(i<(flowBoards.length-1)){
+            var firstFlowArr = getFlowArr(i,0,flowBoards[i].list.length);
+            for(var j=0;j<firstFlowArr.length;j++){
+                var firstBlock = firstFlowArr[j];
+                if(j === (firstFlowArr.length-1)){
+                    blockIds = getFlowArr(i+1,firstFlowArr[j].index,flowBoards[i+1].list.length);
+                }else{
+                    blockIds = getFlowArr(i+1,firstFlowArr[j].index,firstFlowArr[j+1].index);
+                }
+
+                var arrowIds = {
+                    firstBlock:firstBlock,
+                    blockIds:blockIds
+                };
+
+                console.log("firstBlockId-" + arrowIds.firstBlock.blockId);
+                for(var k=0;k<arrowIds.blockIds.length;k++){
+                    console.log("arrowIds-"+k+"--"+arrowIds.blockIds[k].blockId);
+                }
+                
+                createArrows(arrowIds);
+            }
+        }
+    }
+};
+
+const getFlowArr = (index,startIndex,endIndex) =>{//创建flow arrows
+    var firstArr = [];
+
+    for(var i=startIndex;i<endIndex;i++){
+        if(!flowBoards[index].list[i].fillType){
+            var item = {
+                index:i,
+                blockId:findFlowBlockId(flowBoards[index].list[i].id)
+            }
+            firstArr.push(item);
+        }
     }
 
-    var data = flowBoards[0].list[0];
-    var arrowIds = {
-        firstId:findFlowBlockId(data.id),
-        blockIds:blockIds
-    };
-
-    createArrows(arrowIds);
+    return firstArr;
 };
 
 const findFlowBlockId = (id) =>{//通过abId查找artBoard
@@ -465,7 +495,7 @@ function openPannel() {//打开Webview
                 settingFlowData.unshift(settingFlowDataItem);
                 Settings.setDocumentSettingForKey(document, settingFlowKey, settingFlowData);
             }
-            flowArtboard.selected = false;
+            //flowArtboard.selected = false;
             closeWin();
         }
     });

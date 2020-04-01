@@ -3613,13 +3613,13 @@ var findArtBoardById = function findArtBoardById(abId) {
 
 var createArrows = function createArrows(arrowIds) {
   //创建arrows
-  if (arrowIds.blockIds.length > 1 && arrowIds.firstId) {
-    var firstObjectID = arrowIds.firstId;
+  if (arrowIds.blockIds.length > 0 && arrowIds.firstBlock) {
+    var firstObjectID = arrowIds.firstBlock.blockId;
 
     for (var i = 0; i < arrowIds.blockIds.length; i++) {
-      if (arrowIds.blockIds[i] != firstObjectID) {
-        var secondObjectID = String(arrowIds.blockIds[i]);
-        var connection = Object(_arrows_createArrow__WEBPACK_IMPORTED_MODULE_6__["createArrow"])(firstObjectID, secondObjectID, null, null, "Auto", null, false, document, docData);
+      if (arrowIds.blockIds[i].blockId != firstObjectID) {
+        var secondObjectID = String(arrowIds.blockIds[i].blockId);
+        var connection = Object(_arrows_createArrow__WEBPACK_IMPORTED_MODULE_6__["createArrow"])(firstObjectID, secondObjectID, null, null, "Right", null, false, document, docData);
       }
     }
   } else {
@@ -3634,16 +3634,50 @@ var doFlowArrows = function doFlowArrows() {
   //创建flow arrows
   var blockIds = [];
 
-  for (var i = 0; i < flowBoards[1].list.length; i++) {
-    blockIds.push(findFlowBlockId(flowBoards[1].list[i].id));
+  for (var i = 0; i < flowBoards.length; i++) {
+    if (i < flowBoards.length - 1) {
+      var firstFlowArr = getFlowArr(i, 0, flowBoards[i].list.length);
+
+      for (var j = 0; j < firstFlowArr.length; j++) {
+        var firstBlock = firstFlowArr[j];
+
+        if (j === firstFlowArr.length - 1) {
+          blockIds = getFlowArr(i + 1, firstFlowArr[j].index, flowBoards[i + 1].list.length);
+        } else {
+          blockIds = getFlowArr(i + 1, firstFlowArr[j].index, firstFlowArr[j + 1].index);
+        }
+
+        var arrowIds = {
+          firstBlock: firstBlock,
+          blockIds: blockIds
+        };
+        console.log("firstBlockId-" + arrowIds.firstBlock.blockId);
+
+        for (var k = 0; k < arrowIds.blockIds.length; k++) {
+          console.log("arrowIds-" + k + "--" + arrowIds.blockIds[k].blockId);
+        }
+
+        createArrows(arrowIds);
+      }
+    }
+  }
+};
+
+var getFlowArr = function getFlowArr(index, startIndex, endIndex) {
+  //创建flow arrows
+  var firstArr = [];
+
+  for (var i = startIndex; i < endIndex; i++) {
+    if (!flowBoards[index].list[i].fillType) {
+      var item = {
+        index: i,
+        blockId: findFlowBlockId(flowBoards[index].list[i].id)
+      };
+      firstArr.push(item);
+    }
   }
 
-  var data = flowBoards[0].list[0];
-  var arrowIds = {
-    firstId: findFlowBlockId(data.id),
-    blockIds: blockIds
-  };
-  createArrows(arrowIds);
+  return firstArr;
 };
 
 var findFlowBlockId = function findFlowBlockId(id) {
@@ -3782,9 +3816,9 @@ function openPannel() {
         };
         settingFlowData.unshift(settingFlowDataItem);
         sketch_settings__WEBPACK_IMPORTED_MODULE_2___default.a.setDocumentSettingForKey(document, settingFlowKey, settingFlowData);
-      }
+      } //flowArtboard.selected = false;
 
-      flowArtboard.selected = false;
+
       closeWin();
     }
   });
