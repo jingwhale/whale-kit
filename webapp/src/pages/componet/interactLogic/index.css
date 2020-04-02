@@ -56,6 +56,19 @@
 h3{
   color: #4A4A4A;
   margin-bottom: 16px;
+  padding-top: 20px!important;
+}
+
+.top{
+  position: fixed;
+  top:14px;
+  left:30%;
+}
+
+.topFixed{
+  padding-top: 45px;
+  margin-bottom: 16px;
+  height: 32px;
 }
 
 .marginLeft{
@@ -63,9 +76,8 @@ h3{
 }
 
 .doButton{
-  position: fixed;
-  bottom:13px;
-  right: 60px;
+  display: inline-block;
+  margin-left: 52px;
 }
 
 .bottom{
@@ -75,13 +87,12 @@ h3{
   left: 0;
   height: 60px;
   background: #f4f5f9;
+  background-color: rgba(244,245,249, 0.3);
 }
 
 .input{
-  width: 300px;
-  position: fixed;
-  bottom:13px;
-  right: 320px;
+  width: 260px;
+  display: inline-block;
 }
 
 .logo{
@@ -92,9 +103,7 @@ h3{
 }
 
 .inputDist{
-  position: fixed;
-  bottom:13px;
-  right: 660px;
+  display: inline-block;
 }
 
 .inputItem{
@@ -105,25 +114,24 @@ h3{
 .inputPx{
   color: #999;
   font-size: 10px;
+  width: 60px;
 }
 
 .buttonMargin{
-  margin-right: 16px;
+  margin-left: 8px;
 }
 
 .drawerDialog{
-  position: fixed;
-  top:30px;
-  right: 44px;
+  display: inline-block;
   font-size: 14px;
   cursor: pointer;
+  margin-left: 36px;
 }
 
 .actionItem{
   display: inline-block;
   font-size: 14px;
   cursor: pointer;
-  margin-right: 24px;
 }
 
 .itemFlow{
@@ -158,8 +166,8 @@ h3{
 
 .action{
   position: fixed;
-  top:30px;
-  right: 268px;
+  top:14px;
+  right: 28px;
 
   font-size: 14px;
   cursor: pointer;
@@ -169,4 +177,9 @@ h3{
   position: absolute;
   margin: 0 auto;
   top: 40%; /*偏移*/
+}
+
+.menu{
+  display: inline-block;
+  margin-left: 100px;
 }

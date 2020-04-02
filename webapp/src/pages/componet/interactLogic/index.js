@@ -336,9 +336,9 @@ export default class IndexUI extends PureComponent {
     });
   };
 
-  changeHasFlow = (checked,e) => {
+  changeHasArrow = (e) => {
     this.setState({
-      hasArrow: checked,
+      hasArrow: e.target.checked
     });
   };
 
@@ -478,7 +478,45 @@ export default class IndexUI extends PureComponent {
             </div>
           </div>
           <div className={styles.list}>
-          <h3>Flow（{items.length}）</h3>
+          <div className={styles.topFixed}></div> 
+          <div className={styles.top}>
+            <div className={styles.logo}><Icon type="pic-right" />&nbsp;&nbsp;Interact Logic</div>
+            <div className={styles.input} ><Input placeholder="输入流程名称" value={flowName} onChange={this.flowNameChange}/></div>
+            <div className={styles.inputDist}>
+              <div className={styles.inputItem}><span>StepDist<span className={styles.inputPx}>（px）</span>：</span> <InputNumber size="default"  min={100} max={300} defaultValue={dist.step} onChange={this.stepDistChange} /></div>
+            </div>
+            <div className={styles.menu} >
+              <div className={styles.actionItem} onClick={e=>this.changeFlow(e,"")}>
+                <Tooltip placement="left" title="清空当前流程">
+                  <Icon type="redo"/>
+                </Tooltip>
+              </div>
+              {(settingFlowData.length>0) ? (    
+              <div className={styles.drawerDialog}>
+                <div onClick={this.showDrawer}>
+                  <Icon type="save" />
+                </div>
+                <Drawer
+                  title="保存的流程"
+                  placement="right"
+                  closable={false}
+                  onClose={this.onClose}
+                  visible={this.state.drawerVisible}
+                >
+                  {settingFlowData.map((item, index) => (
+                    <div className={styles.itemFlow}>
+                      <div className={styles.itemFlowName} onClick={e=>this.changeFlow(e,item)} >{item.name}</div>
+                      <div className={styles.itemFlowClose} onClick={e=>this.deleteFlow(e,item)}><Icon type="close" /></div>
+                    </div>
+                  ))}
+                </Drawer>
+              </div>
+              ):(
+                ""
+              )}
+            </div>
+          </div>
+          
           <div style={{'max-height':clientHeight,overflow: "auto"}}>
           <Droppable 
           droppableId="column"
@@ -524,50 +562,12 @@ export default class IndexUI extends PureComponent {
           </div>
         </div>
         </DragDropContext>
-        <div className={styles.bottom}>
-          <div className={styles.logo}><Icon type="pic-right" />&nbsp;&nbsp;Interact Logic</div>
-
-          <div className={styles.inputDist}>
-            <Checkbox onChange={this.onSaveDataChange} checked={checkSave}>保存数据</Checkbox>
-            <div className={styles.inputItem}><span>StepDist<span className={styles.inputPx}>（px）</span>：</span> <InputNumber size="default"  min={100} max={300} defaultValue={dist.step} onChange={this.stepDistChange} /></div>
-          </div>
-          <div className={styles.input} ><Input placeholder="输入流程名称" value={flowName} onChange={this.flowNameChange}/></div>
-          <div className={styles.doButton}>
-            <Button type="primary" className={styles.buttonMargin} onClick={this.doClick}>制作流程</Button>
-            <Switch checkedChildren="带箭头" unCheckedChildren="无箭头" checked={hasArrow} onChange={this.changeHasFlow}/>
-          </div>
-        </div>
         <div className={styles.action}>
-          <div className={styles.actionItem} onClick={e=>this.changeFlow(e,"")}>
-            <Tooltip placement="left" title="清空当前流程">
-              <Icon type="redo"/>
-            </Tooltip>
+          <div className={styles.doButton}>
+            <Checkbox onChange={this.changeHasArrow} checked={hasArrow}>箭头</Checkbox>
+            <Button type="primary" className={styles.buttonMargin} onClick={this.doClick}>确定</Button>
           </div>
         </div>
-        
-        {(settingFlowData.length>0) ? (    
-        <div className={styles.drawerDialog}>
-          <div onClick={this.showDrawer}>
-            <Icon type="save" />
-          </div>
-          <Drawer
-            title="保存的流程"
-            placement="right"
-            closable={false}
-            onClose={this.onClose}
-            visible={this.state.drawerVisible}
-          >
-            {settingFlowData.map((item, index) => (
-              <div className={styles.itemFlow}>
-                <div className={styles.itemFlowName} onClick={e=>this.changeFlow(e,item)} >{item.name}</div>
-                <div className={styles.itemFlowClose} onClick={e=>this.deleteFlow(e,item)}><Icon type="close" /></div>
-              </div>
-            ))}
-          </Drawer>
-        </div>
-        ):(
-          ""
-        )}
       </div>
     );
   }
