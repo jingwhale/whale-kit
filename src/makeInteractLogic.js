@@ -501,7 +501,7 @@ function openPannel() {//打开Webview
                     items:data.items
                 };
 
-                settingFlowData.unshift(settingFlowDataItem);
+                settingFlowData.push(settingFlowDataItem);
                 Settings.setDocumentSettingForKey(document, settingFlowKey, settingFlowData);
             }
             if(data.hasArrow){

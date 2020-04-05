@@ -3826,7 +3826,7 @@ function openPannel() {
           name: flowName,
           items: data.items
         };
-        settingFlowData.unshift(settingFlowDataItem);
+        settingFlowData.push(settingFlowDataItem);
         sketch_settings__WEBPACK_IMPORTED_MODULE_2___default.a.setDocumentSettingForKey(document, settingFlowKey, settingFlowData);
       }
 

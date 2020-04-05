@@ -183,3 +183,16 @@ h3{
   display: inline-block;
   margin-left: 100px;
 }
+
+.FlowItemModalTips{
+  margin-top: 20px;
+}
+
+.FlowItem{
+  position: absolute;
+  right: -8px;
+  z-index: 9999;
+}
+.ant-menu-inline{
+  border-right:0!important;
+}

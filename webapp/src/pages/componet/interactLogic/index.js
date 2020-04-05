@@ -1,11 +1,13 @@
 import React, { PureComponent } from 'react';
-import { Button, Input, Icon, InputNumber, Modal, Checkbox, Message, Drawer, Tooltip, Spin, Switch } from 'antd';
+import { Button, Input, Icon, InputNumber, Modal, Checkbox, Message, Drawer, Tooltip, Spin, Menu, Dropdown } from 'antd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import styles from './index.css'
 import ListUI from './card/list.js'
 import ListTreeUI from './card/listTree.js'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
 
 const { confirm } = Modal;
+const { SubMenu } = Menu;
 
 const treeBook = {
   id:"treeBook",
@@ -53,7 +55,9 @@ export default class IndexUI extends PureComponent {
     super(props);
     this.treeBookRef=React.createRef();
     this.listUIRef=React.createRef();
-
+    var data = [
+      {id:"1234",name:"test"}
+    ]
     this.state = {
       items:[],
       treeBook:{
@@ -69,11 +73,15 @@ export default class IndexUI extends PureComponent {
       type:"doFlow",
       spinFlag:false,
       hasArrow:true,
+      visibleFlowItem:false,
+      flowTreeData:[],
+      currentEditFlow:{},
       dist: {
         step:150,
         branch:150
       }
     };
+    
 
     // this.state = {
     //   items:[],
@@ -141,8 +149,7 @@ export default class IndexUI extends PureComponent {
     })
   }
 
-  changeFlow = (e,data) => {//上传flowArr
-    e.preventDefault();
+  changeFlow = (data) => {//上传flowArr
     if(data.items && data.items.length>0){
       this.setState({
         items:[],
@@ -164,8 +171,7 @@ export default class IndexUI extends PureComponent {
     }
   }
 
-  deleteFlow = (e,data) => {//上传flowArr
-    e.preventDefault();
+  deleteFlow = (data) => {//上传flowArr
     var that = this;
     confirm({
       title: '确定要删除"'+data.name+'"流程吗？',
@@ -181,7 +187,7 @@ export default class IndexUI extends PureComponent {
         that.setState({
           settingFlowData:settingFlowData
         })
-
+        that.showDrawer();
         that.onMakeFlow("updateFlowData");
 
         that.onUpdateUI();
@@ -213,6 +219,78 @@ export default class IndexUI extends PureComponent {
     e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
     a.dispatchEvent(e);
   } 
+
+  addOneTree = (addArr,item) => {//流程跟随，补齐子流程空白块
+    var newData = "";
+    for(var i=0;i<addArr.length;i++){
+      if(addArr[i].name === item.name){
+        newData = addArr[i];
+      }else{
+        newData = item;
+      }
+    }
+
+    return newData;
+  } 
+
+  formatFlowData= (data) => {//点击制作流程按钮
+    debugger
+
+    this.setState({
+      flowTreeData:[]
+    });
+    if(data.length<1) return;
+
+    var settingFlowData = data;
+    var flowTreeData = [];
+    var addArr = [];
+
+    for(var i=0;i<settingFlowData.length;i++){
+      var item = settingFlowData[i].name.split('/');
+      if(item.length===1){
+        settingFlowData[i].pid = 0;
+        addArr.push(settingFlowData[i]);
+      }else if(item.length>1){
+        var item1 = this.mergeFlowTreeData(addArr,item[0])
+        if(!item1){
+          var item1 = {
+            id:'item'+ (new Date()).getTime()+i,
+            name:item[0],
+            pid:0
+          }
+          addArr.push(item1);
+        }
+
+        settingFlowData[i].pid = item1.id;
+        addArr.push(settingFlowData[i]); 
+      }
+    }
+
+    flowTreeData = this.formateList(addArr,'pid',0);
+    
+
+    return flowTreeData;
+    debugger
+    console.log("s");
+  }
+
+  mergeFlowTreeData = (data,name) => {//hebing
+    for(var i=0;i<data.length;i++){
+      if(data[i].name === name){
+        return data[i]
+      }
+    }
+  }
+
+  formateList= (list, parent_key, init_value = undefined, master_key = 'id') => {//点击制作流程按钮
+    var that = this;
+    let data = {formate: [], remainder: []}
+    list.forEach(item => data[item[parent_key] === init_value ? 'formate' : 'remainder'].push(item))
+    return data.formate.map(item => ({
+        ...item,
+        list: that.formateList(data.remainder, parent_key, item[master_key])
+    }))
+  }
 
   doClick= (e) => {//点击制作流程按钮
     if(this.state.items.length>0){
@@ -333,8 +411,69 @@ export default class IndexUI extends PureComponent {
   showDrawer = () => {
     this.setState({
       drawerVisible: true,
+      flowTreeData:this.formatFlowData(this.state.settingFlowData)
     });
   };
+
+  onClickFlowClick = (e) => {
+    var targetDom = e.domEvent.target;
+    var data = this.getFlowById(e.key);
+    if(targetDom && targetDom.matches('a')){
+      if(targetDom.innerText === "删除"){
+        this.deleteFlow(data);
+      }else{
+        this.showFlowItemModal(data)
+      }
+    }else{
+      this.changeFlow(data);
+    }
+  };
+
+  getFlowById = (id) => {
+    var settingFlowData = this.state.settingFlowData;
+    for(var i=0;i<settingFlowData.length;i++){
+        if(settingFlowData[i].id === id){
+          return settingFlowData[i];
+        }
+    }
+  };
+
+  showFlowItemModal = (data) => {
+    this.setState({
+      visibleFlowItem: true,
+      currentEditFlow:data
+    });
+  };
+
+  handleFlowItemModalOk = e => {
+    console.log(e);
+    this.setState({
+      visibleFlowItem: false,
+    });
+    this.showDrawer();
+    this.onMakeFlow("updateFlowData");
+    this.onUpdateUI();
+  };
+
+  onEditFlowNameChange = e => {
+    debugger
+    var currentEditFlow = this.state.currentEditFlow;
+    currentEditFlow.name = e.target.value;
+    this.setState({
+      currentEditFlow:currentEditFlow
+    })
+
+    this.forceUpdate();
+  };
+
+  handleFlowItemModalCancel = e => {
+    console.log(e);
+    this.setState({
+      visibleFlowItem: false,
+      currentEditFlow:{}
+    });
+  };
+
 
   changeHasArrow = (e) => {
     this.setState({
@@ -438,20 +577,35 @@ export default class IndexUI extends PureComponent {
   };
 
   render() {
-    var  { items, treeBook, flowName, dist, clientHeight, checkSave, settingFlowData, spinFlag, hasArrow } = this.state;
+    var  { items, treeBook, flowName, dist, clientHeight, currentEditFlow, settingFlowData, spinFlag, hasArrow, flowTreeData} = this.state;
     var that = this;
+
+    const flowMenu = (
+      <Menu>
+        <Menu.Item key="edit">
+          <a className={styles.flowEdit}>
+            编辑名称
+          </a>
+        </Menu.Item>
+        <Menu.Item>
+          <a className={styles.flowDelete}>
+            删除
+          </a>
+        </Menu.Item>
+      </Menu>
+    );
 
     window.someGlobalFunctionDefinedInTheWebview = function(data) {
       console.log("from sketch --- "+ data);
       console.log("from sketch data[1] --- "+ data[1]);
       // var getData = JSON.parse(data);
-
+      
       treeBook.list = data[0];
-
       that.setState({
         treeBook: treeBook,
         settingFlowData: data[1]
       });
+
       that.forceUpdate();
 
       that.treeBookRef.current.forceUpdate();
@@ -486,11 +640,21 @@ export default class IndexUI extends PureComponent {
               <div className={styles.inputItem}><span>StepDist<span className={styles.inputPx}>（px）</span>：</span> <InputNumber size="default"  min={100} max={300} defaultValue={dist.step} onChange={this.stepDistChange} /></div>
             </div>
             <div className={styles.menu} >
-              <div className={styles.actionItem} onClick={e=>this.changeFlow(e,"")}>
+              <div className={styles.actionItem} onClick={e=>this.changeFlow("")}>
                 <Tooltip placement="left" title="清空当前流程">
                   <Icon type="redo"/>
                 </Tooltip>
               </div>
+              <Modal
+                title="编辑流程名称"
+                visible={this.state.visibleFlowItem}
+                onOk={this.handleFlowItemModalOk}
+                onCancel={this.handleFlowItemModalCancel}
+                okText={"确定"}
+                cancelText={"取消"}
+              >
+                <Input value={currentEditFlow.name || ""} onChange={this.onEditFlowNameChange}></Input>
+              </Modal>
               {(settingFlowData.length>0) ? (    
               <div className={styles.drawerDialog}>
                 <div onClick={this.showDrawer}>
@@ -503,12 +667,33 @@ export default class IndexUI extends PureComponent {
                   onClose={this.onClose}
                   visible={this.state.drawerVisible}
                 >
-                  {settingFlowData.map((item, index) => (
-                    <div className={styles.itemFlow}>
-                      <div className={styles.itemFlowName} onClick={e=>this.changeFlow(e,item)} >{item.name}</div>
-                      <div className={styles.itemFlowClose} onClick={e=>this.deleteFlow(e,item)}><Icon type="close" /></div>
-                    </div>
-                  ))}
+                  <Menu mode="vertical"  onClick={this.onClickFlowClick}>
+                  {flowTreeData.map((item, index) => (
+                    (item.list.length>0) ? (
+                      <SubMenu title={item.name}>
+                      {item.list.map((seconditem, secondndex) => (
+                        <Menu.Item key={seconditem.id}>
+                            <Dropdown className={styles.FlowItem} overlay={flowMenu}>
+                              <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                                <Icon type="more" />
+                              </a>
+                            </Dropdown>
+                            {seconditem.name}
+                        </Menu.Item>
+                      ))}
+                      </SubMenu>
+                    ):(
+                      <Menu.Item key={item.id}>
+                      <Dropdown className={styles.FlowItem} overlay={flowMenu}>
+                        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                          <Icon type="more" />
+                        </a>
+                      </Dropdown>
+                      <span>{item.name}</span>
+                    </Menu.Item>
+                    )
+                    ))}
+                  </Menu>
                 </Drawer>
               </div>
               ):(
