@@ -216,15 +216,6 @@
   "menu": {
     "title": "Whale Kit",
     "items": [
-      "sketch-webview-kit.my-command",
-      "-",
-      "sketch-webview-kit.my-command2",
-      "sketch-webview-kit.my-command3",
-      "sketch-webview-kit.my-command4",
-      "sketch-webview-kit.my-command7",
-      "-",
-      "sketch-webview-kit.my-command12",
-      "sketch-webview-kit.my-command13",
       "sketch-webview-kit.my-command15",
       {
         "title": "Create or Recreate Connection",
@@ -238,12 +229,24 @@
         ]
       },
       "-",
+      "sketch-webview-kit.my-command13",
+      "-",
       "sketch-webview-kit.my-command8",
       "sketch-webview-kit.my-command9",
       "-",
-      "sketch-webview-kit.my-command5",
       "sketch-webview-kit.my-command10",
-      "sketch-webview-kit.my-command14"
+      "sketch-webview-kit.my-command14",
+      "-",
+      {
+        "title": "Prototype Tool",
+        "items": [
+          "sketch-webview-kit.my-command2",
+          "-",
+          "sketch-webview-kit.my-command3",
+          "sketch-webview-kit.my-command4",
+          "sketch-webview-kit.my-command7"
+        ]
+      }
     ]
   },
   "disableCocoaScriptPreprocessor": true,

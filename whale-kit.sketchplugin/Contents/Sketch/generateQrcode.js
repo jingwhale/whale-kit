@@ -378,8 +378,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sketch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sketch */ "sketch");
 /* harmony import */ var sketch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sketch__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var whale_qrcode__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! whale-qrcode */ "./node_modules/whale-qrcode/qrcode.js");
-/* harmony import */ var sketch_ui__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sketch/ui */ "sketch/ui");
-/* harmony import */ var sketch_ui__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sketch_ui__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sketch/dom */ "sketch/dom");
+/* harmony import */ var sketch_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sketch_dom__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var sketch_ui__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! sketch/ui */ "sketch/ui");
+/* harmony import */ var sketch_ui__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(sketch_ui__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
  // documentation: https://developer.sketchapp.com/reference/api/
@@ -392,17 +395,17 @@ selection.forEach(function (layer) {
 });
 var dist = buttonRect.frame.width > buttonRect.frame.height ? buttonRect.frame.width : buttonRect.frame.height;
 function onRun(context) {
-  sketch_ui__WEBPACK_IMPORTED_MODULE_2___default.a.getInputFromUser("Please fill in the QR code content：", {
+  sketch_ui__WEBPACK_IMPORTED_MODULE_3___default.a.getInputFromUser("Please fill in the QR code content：", {
     initialValue: 'https://www.jingwhale.cc/'
   }, function (err, value) {
     if (buttonRect && buttonRect.shapeType == "Rectangle") {
       if (!!value) {
         generate("", value);
       } else {
-        sketch_ui__WEBPACK_IMPORTED_MODULE_2___default.a.message("Please fill in the QR code content!");
+        sketch_ui__WEBPACK_IMPORTED_MODULE_3___default.a.message("Please fill in the QR code content!");
       }
     } else {
-      sketch_ui__WEBPACK_IMPORTED_MODULE_2___default.a.message("Please select a Rectangle!");
+      sketch_ui__WEBPACK_IMPORTED_MODULE_3___default.a.message("Please select a Rectangle!");
     }
 
     if (err) {
@@ -441,7 +444,7 @@ function generate(inputSettings, value) {
           style: {
             fills: [{
               color: "".concat(options.color),
-              fill: "".concat(options.background)
+              fillType: sketch_dom__WEBPACK_IMPORTED_MODULE_2__["Style"].FillType.Color
             }],
             borders: []
           }
@@ -466,7 +469,7 @@ function generate(inputSettings, value) {
 
 function getDefaultSettings() {
   return {
-    padding: 2,
+    padding: 4,
     width: dist,
     height: dist,
     typeNumber: 4,
@@ -486,6 +489,17 @@ function getDefaultSettings() {
 /***/ (function(module, exports) {
 
 module.exports = require("sketch");
+
+/***/ }),
+
+/***/ "sketch/dom":
+/*!*****************************!*\
+  !*** external "sketch/dom" ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("sketch/dom");
 
 /***/ }),
 

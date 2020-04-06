@@ -1,5 +1,6 @@
 import sketch from 'sketch';
 import QRCode from 'whale-qrcode';
+import { Style } from 'sketch/dom';
 import UI from 'sketch/ui';
 // documentation: https://developer.sketchapp.com/reference/api/
 
@@ -64,7 +65,7 @@ function generate(inputSettings, value){
             fills: [
               {
                 color: `${options.color}`,
-                fill: `${options.background}`
+                fillType: Style.FillType.Color
               }
             ],
             borders: []
@@ -91,7 +92,7 @@ function generate(inputSettings, value){
 
 function getDefaultSettings(){
   return {
-		padding: 2,
+		padding: 4,
 		width: dist,
 		height: dist,
 		typeNumber: 4,
