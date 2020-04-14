@@ -108,7 +108,7 @@ export default class IndexUI extends PureComponent {
   }
 
   onDragStart = (e) => {
-    console.log(e);
+    debugger
   };
 
   getItem = (droppableId) => {
@@ -270,8 +270,6 @@ export default class IndexUI extends PureComponent {
     
 
     return flowTreeData;
-    debugger
-    console.log("s");
   }
 
   mergeFlowTreeData = (data,name) => {//hebing
@@ -333,17 +331,14 @@ export default class IndexUI extends PureComponent {
       currenItemIndexInsert.content = "";
       currenItemIndexInsert.id = 'item'+ (new Date()).getTime()+i;
       fillFlowData.fillItem.list.push(currenItemIndexInsert);
+      this.forceUpdate();
     }
-    var items = JSON.parse(JSON.stringify(this.state.items));
+    // var items = JSON.parse(JSON.stringify(this.state.items));
 
-    this.forceUpdate();
-
-    this.treeBookRef.current.forceUpdate();
-  
     this.setState({
       items:this.state.items
     })
-
+    
   }
 
   fillBlankFlow= (result) => {//fillBlank
@@ -488,6 +483,7 @@ export default class IndexUI extends PureComponent {
   };
 
   onDragEnd = (result) => {
+    debugger
     if (!result.destination) {
       if(result.source.droppableId==="treeBook"){
         var listData = [];
@@ -732,7 +728,6 @@ export default class IndexUI extends PureComponent {
                   index={index}
                   items={item}
                   clientHeight={clientHeight}
-                  ref={this.listUIRef}
                 />
               </div>
             </div>

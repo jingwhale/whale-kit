@@ -5,6 +5,7 @@ import BrowserWindow from "sketch-module-web-view";
 import {identifier} from "./lib/config";
 import {getWebview} from 'sketch-module-web-view/remote';
 import { createArrow } from "./arrows/createArrow";
+import { getFullArtboardList, DrawArtboardsRows } from "./lib/arrangeArtboards";
 
 const Group = Sketch.Group;
 const Document = Sketch.Document;
@@ -19,6 +20,10 @@ const selectedPage = document.selectedPage;
 
 const selectedArtBoards = selectedPage.layers;
 const allPages = document.pages;
+
+const horizontalGutter = 100;
+const verticalGutter = 30;
+
 let docData = context.document.documentData();
 
 
@@ -434,15 +439,20 @@ const getCurrentArtboardFrameY = (positon) =>{//获取当前Artboard在flowArtbo
     return distY;
 };
 
+const arrangeArtboards = (context) =>{//重排Artboards
+    var artboardList = getFullArtboardList(context);
+    DrawArtboardsRows(artboardList,0,0,horizontalGutter,verticalGutter);
+};
+
 export default function onRun(context) {
     if(selectedPage && selectedArtBoards.length>0){//打开Webview
-        openPannel();
+        openPannel(context);
     }else{//选择一个ArtBoard
         sketch.UI.message("Please select an Page!")
     }
 }
 
-function openPannel() {//打开Webview
+function openPannel(context) {//打开Webview
     const existingWebview = getWebview(identifier);
     if (existingWebview) {
         if (existingWebview.isVisible()) {
@@ -485,6 +495,7 @@ function openPannel() {//打开Webview
             settingFlowData = data.settingFlowData || [];
             Settings.setDocumentSettingForKey(document, settingFlowKey, settingFlowData);
         }else if(data.type === "doFlow"){
+            arrangeArtboards(context);//重排Artboards
             dist = data.dist;
             dist.branch = dist.step;
             flowBoards = data.items;
