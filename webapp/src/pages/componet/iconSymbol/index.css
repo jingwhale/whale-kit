@@ -1,0 +1,62 @@
+.body{
+  padding: 10px 0 33px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif,
+  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.textArea{
+  display: inline-block;
+  width: 460px;
+}
+
+.formTile{
+  display: inline-block;
+  width: 100px;
+  text-align: right;
+  position: absolute;
+  left: -28px;
+}
+
+.form{
+  width: 660px;
+  margin: 40px auto 0;
+  position: relative;
+}
+
+.formItem{
+  width: 100%;
+  margin-bottom: 28px;
+  position: relative;
+}
+
+.button{
+  position: absolute;
+  right: 99px;
+  bottom: -60px;
+}
+
+.header{
+  height: 60px;
+  line-height: 60px;
+  background-color: #FAFAFA;
+}
+
+.title{
+  width: 711px;
+  text-align: left;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 16px;
+  position: relative;
+}
+
+.save{
+  position: absolute;
+  top:0;
+  right: 0;
+  cursor: pointer;
+}
+
+.checkbox{
+  margin-right: 20px;
+}

@@ -211,6 +211,13 @@
       "script": "links.js",
       "icon": "icon.png",
       "handler": "getLibrary"
+    },
+    {
+      "name": "IconFont Symbol",
+      "shortcut": "ctrl shift option y",
+      "identifier": "sketch-webview-kit.my-command16",
+      "script": "iconSymbol.js",
+      "handler": "onRun"
     }
   ],
   "menu": {
@@ -236,6 +243,7 @@
       "-",
       "sketch-webview-kit.my-command10",
       "sketch-webview-kit.my-command14",
+      "sketch-webview-kit.my-command16",
       "-",
       {
         "title": "Prototype Tool",
