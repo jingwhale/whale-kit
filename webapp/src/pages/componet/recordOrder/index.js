@@ -2,9 +2,7 @@ import React, { PureComponent } from 'react';
 import { Button, Input, Icon, InputNumber } from 'antd';
 import styles from './index.css'
 
-// const items = ["陈远兮","吴婷婷","金荣株","柏跑","胡骏","于文晓","张云龙"];
-
-const items = ["柏跑","胡骏","于文晓","张云龙","陈远兮","吴婷婷","金荣株"];
+const items = ["于文晓","张云龙","胡骏","金荣株","吴婷婷"];
 
 export default class IndexUI extends PureComponent {
   constructor(props) {

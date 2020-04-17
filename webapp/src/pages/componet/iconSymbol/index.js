@@ -66,7 +66,7 @@ export default class PageLayoutUI extends PureComponent {
     var symbolIcons = symbols.slice(1);
    
     this.state.symbolIcons = symbolIcons;
-    debugger
+
     this.onMake();
   }
 
