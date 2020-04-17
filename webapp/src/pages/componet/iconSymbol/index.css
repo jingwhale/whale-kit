@@ -60,3 +60,11 @@
 .checkbox{
   margin-right: 20px;
 }
+
+.spin{
+  position: absolute;
+  margin: 0 auto;
+  left:43%;
+  top: 40%; /*偏移*/
+  z-index: 9999;
+}

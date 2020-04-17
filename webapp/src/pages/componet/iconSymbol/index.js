@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Button, Checkbox, Input, Drawer, Icon, Message} from 'antd';
+import { Button, Checkbox, Input, Drawer, Icon, Message, Spin} from 'antd';
 import styles from './index.css'
 
 const { TextArea } = Input;
@@ -13,7 +13,8 @@ export default class PageLayoutUI extends PureComponent {
       visible: false,
       checkboxVisible:true,
       symbolIcons:[],
-      allData:[]
+      allData:[],
+      spinFlag:false
     };
 
   };
@@ -31,6 +32,9 @@ export default class PageLayoutUI extends PureComponent {
 
   onMake = () => {//向sketch传输数据
     debugger
+    this.setState({
+      spinFlag:true
+    });
     var serializData1 = JSON.stringify(this.state);
     var serializData = JSON.parse(serializData1);
     window.postMessage('fromwebview', serializData);
@@ -62,8 +66,28 @@ export default class PageLayoutUI extends PureComponent {
     var symbolIcons = symbols.slice(1);
    
     this.state.symbolIcons = symbolIcons;
+    debugger
     this.onMake();
   }
+
+  formatData = (symbolIcons) => {
+    var formatData = [];
+    for(var i=0;i<symbolIcons.length;i++){
+      var symbolstring = symbolIcons[i];
+      var flagIndex = symbolstring.indexOf('<path');
+
+      var need1 = symbolstring.substring(1,flagIndex);
+      var need2 = symbolstring.substring(flagIndex);
+
+      var need1json = need1.split(" ");
+      var name = need1json[0].split("=")[1];
+
+      console.log(name)
+      var item = '<symbol> id="'+name+'" viewBox='+'"0 0 16 16">'+need2;
+      formatData.push(item);
+    }
+    return formatData;
+  };
 
   showDrawer = () => {
     this.setState({
@@ -85,7 +109,7 @@ export default class PageLayoutUI extends PureComponent {
 
 
   render() {
-    var  { symbolString, iconName, checkboxVisible } = this.state;
+    var  { symbolString, iconName, checkboxVisible, spinFlag } = this.state;
     var that = this;
 
     window.someGlobalFunctionDefinedInTheWebview = function(data) {
@@ -96,6 +120,7 @@ export default class PageLayoutUI extends PureComponent {
 
     return (
       <div className={styles.body}>
+        <Spin className={styles.spin} tip="Icon Symbol制作中..." spinning={spinFlag}></Spin>
         <div className={styles.header}>
           <div className={styles.title}>
             <span>iconfont图标symbol化平台</span>

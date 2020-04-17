@@ -4,6 +4,8 @@ import Settings from 'sketch/settings';
 import BrowserWindow from "sketch-module-web-view";
 import {identifier} from "./lib/config";
 import {getWebview} from 'sketch-module-web-view/remote';
+import { getFullArtboardList, DrawArtboardsRows } from "./lib/arrangeArtboards";
+const SymbolMaster = Sketch.SymbolMaster
 
 
 const Group = Sketch.Group;
@@ -20,36 +22,82 @@ var doc = sketch.getSelectedDocument();
 var selection = doc.selectedLayers;
 
 const settingFlowKey = "settingFlowKey";
+const lineCount = 22;
+const iconDist = 32;
+const iconWidth = 32;
+const horizontalGutter = 100;
+const verticalGutter = 30;
 
-var artboard = "";
-selection.forEach(layer => (artboard=layer));
+var symbolsPage = "";
 
+const doIconSymbol = (symbolstring,name,i) =>{//doIconSymbol
+    var newArtboard = new Artboard({
+        name: name,
+        frame:{
+            x:i*(1024+iconDist),
+            y:0,
+            width:1024,
+            height:1024
+        }
+    })
 
-const insertIcon = () =>{//插入Icon
+    var group = sketch.createLayerFromData(symbolstring, 'svg');
+    group.name = name.toString();
+    group.frame.x= (newArtboard.frame.width-group.frame.width)/2
+    group.frame.y= (newArtboard.frame.height-group.frame.height)/2
+    group.parent = newArtboard;
 
+    group.exportFormats = ['png'];
+
+    var master = SymbolMaster.fromArtboard(newArtboard)
+
+    master.parent = symbolsPage;
 };
 
-const insertIconTitle = (data) =>{//插入标题
-
-};
-
-const doIconSymbol = (data) =>{//doIconSymbol
-    var symbolIcons = data.symbolIcons;
-    //insertIconTitle(data);
-    for(var i=0;i<6;i++){
-        var svgString = '<symbol>'+symbolIcons[i];
-        var group = sketch.createLayerFromData(svgString, 'svg');
-        group.name = "test";
-        group.parent = artboard;
+const checkIcon = (name) => {
+    var icons = symbolsPage.layers || [];
+    for(var i=0;i<icons.length;i++){
+      if(icons[i].name === name){
+        return true
+      }
     }
+    return false
+};
+
+const insertIcon = (symbolIcons) => {
+    for(var i=0;i<symbolIcons.length;i++){
+      var symbolstring = symbolIcons[i];
+      var flagIndex = symbolstring.indexOf('<path');
+
+      var need1 = symbolstring.substring(1,flagIndex);
+      var need2 = symbolstring.substring(flagIndex);
+
+      var need1json = need1.split(" ");
+      var name = need1json[0].split("=")[1];
+      var pureName = name.split('"')[1];
+
+      console.log(pureName)
+      var item = '<symbol> id="'+name+'" viewBox='+'"0 0 1024 1024">'+need2;
+      if(!checkIcon(pureName)){
+        doIconSymbol(item,pureName,i);
+      }
+    }
+};
+
+const arrangeArtboards = (context) =>{//重排Artboards
+    var artboardList = getFullArtboardList(context);
+    DrawArtboardsRows(artboardList,0,0,horizontalGutter,verticalGutter);
 };
 
 export default function onRun(context) {
-    if(artboard && artboard.type=="Artboard"){
-        openPannel();
-    }else{//选择一个ArtBord
-        sketch.UI.message("Please select an ArtBord!")
+    symbolsPage = Page.getSymbolsPage(document) || "";
+    if(!symbolsPage){
+        symbolsPage = Page.createSymbolsPage()
+        symbolsPage.parent = document
     }
+
+    openPannel(context);
+
 }
 
 function openPannel(context) {//打开Webview
@@ -91,8 +139,10 @@ function openPannel(context) {//打开Webview
 
     //监听webview的事件：webview->plugin
     contents.on('fromwebview', function(data) {
-        doIconSymbol(data);
-        saveSerializData();
+        insertIcon(data.symbolIcons);
+        symbolsPage.selected = true;
+        //saveSerializData(data);
+        arrangeArtboards(context);
         closeWin();
     });
 

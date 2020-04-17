@@ -2430,12 +2430,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib_config__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_lib_config__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! sketch-module-web-view/remote */ "./node_modules/sketch-module-web-view/remote.js");
 /* harmony import */ var sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _lib_arrangeArtboards__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./lib/arrangeArtboards */ "./src/lib/arrangeArtboards.js");
 
 
 
 
 
 
+
+var SymbolMaster = sketch_dom__WEBPACK_IMPORTED_MODULE_1___default.a.SymbolMaster;
 var Group = sketch_dom__WEBPACK_IMPORTED_MODULE_1___default.a.Group;
 var Document = sketch_dom__WEBPACK_IMPORTED_MODULE_1___default.a.Document;
 var Rectangle = sketch_dom__WEBPACK_IMPORTED_MODULE_1___default.a.Rectangle;
@@ -2448,36 +2451,79 @@ var selectedPage = document.selectedPage;
 var doc = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.getSelectedDocument();
 var selection = doc.selectedLayers;
 var settingFlowKey = "settingFlowKey";
-var artboard = "";
-selection.forEach(function (layer) {
-  return artboard = layer;
-});
+var lineCount = 22;
+var iconDist = 32;
+var iconWidth = 32;
+var horizontalGutter = 100;
+var verticalGutter = 30;
+var symbolsPage = "";
 
-var insertIcon = function insertIcon() {//插入Icon
-};
-
-var insertIconTitle = function insertIconTitle(data) {//插入标题
-};
-
-var doIconSymbol = function doIconSymbol(data) {
+var doIconSymbol = function doIconSymbol(symbolstring, name, i) {
   //doIconSymbol
-  var symbolIcons = data.symbolIcons; //insertIconTitle(data);
+  var newArtboard = new Artboard({
+    name: name,
+    frame: {
+      x: i * (1024 + iconDist),
+      y: 0,
+      width: 1024,
+      height: 1024
+    }
+  });
+  var group = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.createLayerFromData(symbolstring, 'svg');
+  group.name = name.toString();
+  group.frame.x = (newArtboard.frame.width - group.frame.width) / 2;
+  group.frame.y = (newArtboard.frame.height - group.frame.height) / 2;
+  group.parent = newArtboard;
+  group.exportFormats = ['png'];
+  var master = SymbolMaster.fromArtboard(newArtboard);
+  master.parent = symbolsPage;
+};
 
-  for (var i = 0; i < 6; i++) {
-    var svgString = '<symbol>' + symbolIcons[i];
-    var group = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.createLayerFromData(svgString, 'svg');
-    group.name = "test";
-    group.parent = artboard;
+var checkIcon = function checkIcon(name) {
+  var icons = symbolsPage.layers || [];
+
+  for (var i = 0; i < icons.length; i++) {
+    if (icons[i].name === name) {
+      return true;
+    }
   }
+
+  return false;
+};
+
+var insertIcon = function insertIcon(symbolIcons) {
+  for (var i = 0; i < symbolIcons.length; i++) {
+    var symbolstring = symbolIcons[i];
+    var flagIndex = symbolstring.indexOf('<path');
+    var need1 = symbolstring.substring(1, flagIndex);
+    var need2 = symbolstring.substring(flagIndex);
+    var need1json = need1.split(" ");
+    var name = need1json[0].split("=")[1];
+    var pureName = name.split('"')[1];
+    console.log(pureName);
+    var item = '<symbol> id="' + name + '" viewBox=' + '"0 0 1024 1024">' + need2;
+
+    if (!checkIcon(pureName)) {
+      doIconSymbol(item, pureName, i);
+    }
+  }
+};
+
+var arrangeArtboards = function arrangeArtboards(context) {
+  //重排Artboards
+  var artboardList = Object(_lib_arrangeArtboards__WEBPACK_IMPORTED_MODULE_6__["getFullArtboardList"])(context);
+  Object(_lib_arrangeArtboards__WEBPACK_IMPORTED_MODULE_6__["DrawArtboardsRows"])(artboardList, 0, 0, horizontalGutter, verticalGutter);
 };
 
 function onRun(context) {
-  if (artboard && artboard.type == "Artboard") {
-    openPannel();
-  } else {
-    //选择一个ArtBord
-    sketch__WEBPACK_IMPORTED_MODULE_0___default.a.UI.message("Please select an ArtBord!");
+  symbolsPage = Page.getSymbolsPage(document) || "";
+
+  if (!symbolsPage) {
+    symbolsPage = Page.createSymbolsPage();
+    symbolsPage.parent = document;
   }
+
+  openPannel(context);
 }
 
 function openPannel(context) {
@@ -2516,8 +2562,10 @@ function openPannel(context) {
   var contents = win.webContents; //监听webview的事件：webview->plugin
 
   contents.on('fromwebview', function (data) {
-    doIconSymbol(data);
-    saveSerializData();
+    insertIcon(data.symbolIcons);
+    symbolsPage.selected = true; //saveSerializData(data);
+
+    arrangeArtboards(context);
     closeWin();
   });
   contents.on('closed', function (s) {
@@ -2547,6 +2595,170 @@ var saveSerializData = function saveSerializData(data) {
   settingData.push(item);
   sketch_settings__WEBPACK_IMPORTED_MODULE_2___default.a.setDocumentSettingForKey(document, settingFlowKey, settingData);
 };
+
+/***/ }),
+
+/***/ "./src/lib/arrangeArtboards.js":
+/*!*************************************!*\
+  !*** ./src/lib/arrangeArtboards.js ***!
+  \*************************************/
+/*! exports provided: DrawArtboards, DrawArtboardsRows, getDescendants, getBrothers, sortArtboardsFunction, getFullArtboardList, zoomToView, ShowConfirmation */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DrawArtboards", function() { return DrawArtboards; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DrawArtboardsRows", function() { return DrawArtboardsRows; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDescendants", function() { return getDescendants; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getBrothers", function() { return getBrothers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sortArtboardsFunction", function() { return sortArtboardsFunction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getFullArtboardList", function() { return getFullArtboardList; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "zoomToView", function() { return zoomToView; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ShowConfirmation", function() { return ShowConfirmation; });
+var alreadyProcessed = [];
+var artboardList = [];
+function DrawArtboards(artboards, x, y, horizontalGutter, verticalGutter) {
+  var incrementY = 0;
+
+  for (var i = 0; i < artboards.length; i++) {
+    if (alreadyProcessed.indexOf(artboards[i]) < 0) {
+      //console.log(who+": Allocating "+artboards[i].name()+" to ("+x+","+(y+incrementY)+")"); 
+      var yAcc = 0;
+      var descendants = [];
+      var brothers = [];
+      var hadChildren = false;
+      var hadBrothers = false;
+      artboards[i].frame().x = x;
+      artboards[i].frame().y = y + incrementY;
+      var nodes = artboards[i].name().split("/").map(function (name) {
+        return name.trim();
+      });
+      var prefix = "";
+      var fullPrefix = "";
+
+      for (var j = 0; j < nodes.length; j++) {
+        if (j < nodes.length - 1) prefix += nodes[j] + "/";
+        fullPrefix += nodes[j] + "/";
+      }
+
+      descendants = getDescendants(fullPrefix);
+      brothers = getBrothers(prefix);
+      alreadyProcessed.push(artboards[i]);
+      var yDescendants = DrawArtboards(descendants, x + artboards[i].frame().width() + horizontalGutter, y + incrementY);
+      if (yDescendants > artboards[i].frame().height()) incrementY += yDescendants;else incrementY += artboards[i].frame().height();
+      if (i < artboards.length - 1) incrementY += verticalGutter;
+      var yBrothers = DrawArtboards(brothers, x, y + incrementY);
+      incrementY += yBrothers;
+      if (i < artboards.length - 1 && brothers.length > 0) incrementY += verticalGutter;
+    }
+  }
+
+  return incrementY;
+}
+function DrawArtboardsRows(artboards, x, y, horizontalGutter, verticalGutter) {
+  var incrementX = 0;
+
+  for (var i = 0; i < artboards.length; i++) {
+    if (alreadyProcessed.indexOf(artboards[i]) < 0) {
+      //console.log(who+": Allocating "+artboards[i].name()+" to ("+x+","+(y+incrementY)+")"); 
+      var xAcc = 0;
+      var descendants = [];
+      var brothers = [];
+      var hadChildren = false;
+      var hadBrothers = false;
+      artboards[i].frame().x = x + incrementX;
+      artboards[i].frame().y = y;
+      var nodes = artboards[i].name().split("/").map(function (name) {
+        return name.trim();
+      });
+      var prefix = "";
+      var fullPrefix = "";
+
+      for (var j = 0; j < nodes.length; j++) {
+        if (j < nodes.length - 1) prefix += nodes[j] + "/";
+        fullPrefix += nodes[j] + "/";
+      }
+
+      descendants = getDescendants(fullPrefix);
+      brothers = getBrothers(prefix);
+      alreadyProcessed.push(artboards[i]);
+      var xDescendants = DrawArtboardsRows(descendants, x + incrementX, y + artboards[i].frame().height() + verticalGutter);
+      if (xDescendants > artboards[i].frame().width()) incrementX += xDescendants;else incrementX += artboards[i].frame().width();
+      if (i < artboards.length - 1) incrementX += horizontalGutter;
+      var xBrothers = DrawArtboardsRows(brothers, x + incrementX, y);
+      incrementX += xBrothers;
+      if (i < artboards.length - 1 && brothers.length > 0) incrementX += horizontalGutter;
+    }
+  }
+
+  return incrementX;
+}
+function getDescendants(nodeName) {
+  var descendants = [];
+  artboardList.forEach(function (artboard) {
+    var compareName = "";
+    var nodes = artboard.name().split("/").map(function (name) {
+      return name.trim();
+    });
+
+    for (var i = 0; i < nodes.length; i++) {
+      compareName += nodes[i] + "/";
+    }
+
+    var startsbythis = compareName.startsWith(nodeName);
+
+    if (startsbythis) {
+      descendants.push(artboard);
+    }
+  });
+  descendants.sort(sortArtboardsFunction); //console.log("Descendants of: "+nodeName);
+  //descendants.forEach(function(artboard){ console.log("  "+artboard.name()); });
+
+  return descendants;
+}
+function getBrothers(nodeName) {
+  var brothers = [];
+  var slashCount = nodeName.split("/").length;
+  artboardList.forEach(function (artboard) {
+    var startsbythis = artboard.name().startsWith(nodeName);
+
+    if (startsbythis && artboard.name().split("/").length == slashCount) {
+      brothers.push(artboard);
+    }
+  });
+  brothers.sort(sortArtboardsFunction); //console.log("Brothers of: "+nodeName);
+  //brothers.forEach(function(artboard){ console.log("  "+artboard.name()); });
+
+  return brothers;
+}
+function sortArtboardsFunction(a, b) {
+  if (a.name() === b.name()) {
+    return 0;
+  } else {
+    return a.name() < b.name() ? -1 : 1;
+  }
+}
+function getFullArtboardList(context) {
+  var page = context.document.currentPage();
+  var doc = context.document;
+  var artboardList = page.artboards();
+  artboardList.sort(sortArtboardsFunction);
+  return artboardList;
+}
+function zoomToView(context) {
+  var view;
+
+  if (MSApplicationMetadata.metadata().appVersion < 48) {
+    view = context.document.currentView();
+  } else {
+    view = context.document.contentDrawView();
+  }
+
+  view.centerLayersInCanvas();
+}
+function ShowConfirmation(context, message) {
+  context.document.showMessage(message);
+}
 
 /***/ }),
 
