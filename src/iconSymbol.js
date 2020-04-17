@@ -27,6 +27,7 @@ const iconDist = 32;
 const iconWidth = 32;
 const horizontalGutter = 100;
 const verticalGutter = 30;
+var checkboxVisible = true;
 
 var symbolsPage = "";
 
@@ -47,8 +48,10 @@ const doIconSymbol = (symbolstring,name,i) =>{//doIconSymbol
     group.frame.y= (newArtboard.frame.height-group.frame.height)/2
     group.parent = newArtboard;
 
-    group.exportFormats = ['png'];
-
+    if(checkboxVisible){
+        group.exportFormats = ['png'];
+    }
+    
     var master = SymbolMaster.fromArtboard(newArtboard)
 
     master.parent = symbolsPage;
@@ -139,6 +142,7 @@ function openPannel(context) {//打开Webview
 
     //监听webview的事件：webview->plugin
     contents.on('fromwebview', function(data) {
+        checkboxVisible = data.checkboxVisible;
         insertIcon(data.symbolIcons);
         symbolsPage.selected = true;
         //saveSerializData(data);

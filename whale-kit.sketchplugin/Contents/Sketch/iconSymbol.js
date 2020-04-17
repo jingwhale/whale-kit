@@ -2456,6 +2456,7 @@ var iconDist = 32;
 var iconWidth = 32;
 var horizontalGutter = 100;
 var verticalGutter = 30;
+var checkboxVisible = true;
 var symbolsPage = "";
 
 var doIconSymbol = function doIconSymbol(symbolstring, name, i) {
@@ -2474,7 +2475,11 @@ var doIconSymbol = function doIconSymbol(symbolstring, name, i) {
   group.frame.x = (newArtboard.frame.width - group.frame.width) / 2;
   group.frame.y = (newArtboard.frame.height - group.frame.height) / 2;
   group.parent = newArtboard;
-  group.exportFormats = ['png'];
+
+  if (checkboxVisible) {
+    group.exportFormats = ['png'];
+  }
+
   var master = SymbolMaster.fromArtboard(newArtboard);
   master.parent = symbolsPage;
 };
@@ -2562,6 +2567,7 @@ function openPannel(context) {
   var contents = win.webContents; //监听webview的事件：webview->plugin
 
   contents.on('fromwebview', function (data) {
+    checkboxVisible = data.checkboxVisible;
     insertIcon(data.symbolIcons);
     symbolsPage.selected = true; //saveSerializData(data);
 
