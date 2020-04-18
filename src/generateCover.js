@@ -303,7 +303,7 @@ function getDefaultSettings(){//默认设置
 		projectName: "项目名称",
 		projectModule: "项目模块",
 		version: "1.0",
-        participants: "鲸鱼工作室"
+        participants: "JINGWHALE"
 	}
 }
 
