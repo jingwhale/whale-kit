@@ -2450,14 +2450,18 @@ var document = Document.getSelectedDocument();
 var selectedPage = document.selectedPage;
 var doc = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.getSelectedDocument();
 var selection = doc.selectedLayers;
+var prefixStringChange = false;
+var symbolStringChange = false;
+var settingData = {};
 var settingFlowKey = "settingFlowKey";
-var lineCount = 22;
+var iconSize = 16;
 var iconDist = 32;
-var iconWidth = 32;
 var horizontalGutter = 100;
 var verticalGutter = 30;
 var checkboxVisible = true;
+var prefixArr = [];
 var symbolsPage = "";
+var iconsPage = "";
 
 var doIconSymbol = function doIconSymbol(symbolstring, name, i) {
   //doIconSymbol
@@ -2471,24 +2475,20 @@ var doIconSymbol = function doIconSymbol(symbolstring, name, i) {
     }
   });
   var group = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.createLayerFromData(symbolstring, 'svg');
-  group.name = name.toString();
+  group.name = name;
   group.frame.x = (newArtboard.frame.width - group.frame.width) / 2;
   group.frame.y = (newArtboard.frame.height - group.frame.height) / 2;
   group.parent = newArtboard;
-
-  if (checkboxVisible) {
-    group.exportFormats = ['png'];
-  }
-
   var master = SymbolMaster.fromArtboard(newArtboard);
-  master.parent = symbolsPage;
+  master.parent = iconsPage;
+  doSize(master, i, name);
 };
 
 var checkIcon = function checkIcon(name) {
   var icons = symbolsPage.layers || [];
 
   for (var i = 0; i < icons.length; i++) {
-    if (icons[i].name === name) {
+    if (icons[i].layers[0].name === name) {
       return true;
     }
   }
@@ -2496,20 +2496,94 @@ var checkIcon = function checkIcon(name) {
   return false;
 };
 
-var insertIcon = function insertIcon(symbolIcons) {
-  for (var i = 0; i < symbolIcons.length; i++) {
-    var symbolstring = symbolIcons[i];
-    var flagIndex = symbolstring.indexOf('<path');
-    var need1 = symbolstring.substring(1, flagIndex);
-    var need2 = symbolstring.substring(flagIndex);
-    var need1json = need1.split(" ");
-    var name = need1json[0].split("=")[1];
-    var pureName = name.split('"')[1];
-    console.log(pureName);
-    var item = '<symbol> id="' + name + '" viewBox=' + '"0 0 1024 1024">' + need2;
+var doSize = function doSize(master, i, name) {
+  var prefixName = getPrefix(name);
+  var newArtboard = new Artboard({
+    name: prefixName ? prefixName + "/" + name : name,
+    frame: {
+      x: i * (iconSize + iconDist),
+      y: 0,
+      width: iconSize,
+      height: iconSize
+    }
+  });
+  var instance = master.createNewInstance();
+  instance.frame = {
+    x: 0,
+    y: 0,
+    width: 16,
+    height: 16
+  };
+  instance.parent = newArtboard;
+  newArtboard.parent = symbolsPage;
+  var group = instance.detach({
+    recursively: true
+  });
+  group.name = name;
 
-    if (!checkIcon(pureName)) {
-      doIconSymbol(item, pureName, i);
+  if (checkboxVisible) {
+    group.exportFormats = ['png'];
+  }
+
+  var newMaster = SymbolMaster.fromArtboard(newArtboard);
+  newMaster.parent = symbolsPage;
+  var artboard = master.toArtboard();
+  artboard.name = name;
+};
+
+var getPrefix = function getPrefix(name) {
+  var prefixName = "";
+
+  if (prefixArr && prefixArr.length > 0) {
+    for (var i = 0; i < prefixArr.length; i++) {
+      if (name.indexOf(prefixArr[i]) === 0) {
+        return prefixArr[i];
+      }
+    }
+
+    prefixName = "";
+  } else {
+    var nameArr = name.split("-");
+
+    if (nameArr.length > 1) {
+      prefixName = nameArr[0];
+    }
+  }
+
+  return prefixName;
+};
+
+var insertIcon = function insertIcon(symbolIcons) {
+  if (!settingData.iconsPageId) {
+    iconsPage = new Page({
+      parent: document,
+      name: settingData.prefixString || 'All Icons'
+    });
+    settingData.iconsPageId = iconsPage.id;
+  }
+
+  symbolsPage = Page.getSymbolsPage(document) || "";
+
+  if (!symbolsPage) {
+    symbolsPage = Page.createSymbolsPage();
+    symbolsPage.parent = document;
+  }
+
+  if (symbolStringChange) {
+    for (var i = 0; i < symbolIcons.length; i++) {
+      var symbolstring = symbolIcons[i];
+      var flagIndex = symbolstring.indexOf('<path');
+      var need1 = symbolstring.substring(1, flagIndex);
+      var need2 = symbolstring.substring(flagIndex);
+      var need1json = need1.split(" ");
+      var name = need1json[0].split("=")[1];
+      var pureName = name.split('"')[1];
+      console.log(pureName);
+      var item = '<symbol> id="' + name + '" viewBox=' + '"0 0 1024 1024">' + need2;
+
+      if (!checkIcon(pureName)) {
+        doIconSymbol(item, pureName, i);
+      }
     }
   }
 };
@@ -2520,14 +2594,19 @@ var arrangeArtboards = function arrangeArtboards(context) {
   Object(_lib_arrangeArtboards__WEBPACK_IMPORTED_MODULE_6__["DrawArtboardsRows"])(artboardList, 0, 0, horizontalGutter, verticalGutter);
 };
 
-function onRun(context) {
-  symbolsPage = Page.getSymbolsPage(document) || "";
+var changeIconsPageName = function changeIconsPageName() {
+  var pages = document.pages;
 
-  if (!symbolsPage) {
-    symbolsPage = Page.createSymbolsPage();
-    symbolsPage.parent = document;
+  for (var i = 0; i < pages.length; i++) {
+    if (settingData.iconsPageId === pages[i].id) {
+      pages[i].name = settingData.prefixString;
+      return;
+    }
   }
+};
 
+function onRun(context) {
+  settingData = sketch_settings__WEBPACK_IMPORTED_MODULE_2___default.a.documentSettingForKey(document, settingFlowKey) || {};
   openPannel(context);
 }
 
@@ -2568,9 +2647,19 @@ function openPannel(context) {
 
   contents.on('fromwebview', function (data) {
     checkboxVisible = data.checkboxVisible;
-    insertIcon(data.symbolIcons);
-    symbolsPage.selected = true; //saveSerializData(data);
+    prefixArr = data.prefixArr;
 
+    if (data.prefixString != settingData.prefixString) {
+      prefixStringChange = true;
+    }
+
+    if (data.symbolString != settingData.symbolString) {
+      symbolStringChange = true;
+    }
+
+    insertIcon(data.symbolIcons);
+    symbolsPage.selected = true;
+    saveSerializData(data);
     arrangeArtboards(context);
     closeWin();
   });
@@ -2583,7 +2672,6 @@ function openPannel(context) {
 
 
 var setSaveIconProject = function setSaveIconProject(contents) {
-  var settingData = sketch_settings__WEBPACK_IMPORTED_MODULE_2___default.a.documentSettingForKey(document, settingFlowKey) || [];
   var allData = JSON.stringify(settingData);
   contents.executeJavaScript("someGlobalFunctionDefinedInTheWebview(".concat(allData, ")")).then(function (res) {
     // do something with the result
@@ -2593,13 +2681,8 @@ var setSaveIconProject = function setSaveIconProject(contents) {
 
 
 var saveSerializData = function saveSerializData(data) {
-  var settingData = sketch_settings__WEBPACK_IMPORTED_MODULE_2___default.a.documentSettingForKey(document, settingFlowKey) || [];
-  var item = {
-    name: data.name,
-    symbolIcons: data.symbolIcons
-  };
-  settingData.push(item);
-  sketch_settings__WEBPACK_IMPORTED_MODULE_2___default.a.setDocumentSettingForKey(document, settingFlowKey, settingData);
+  //var settingData = Settings.documentSettingForKey(document, settingFlowKey) || [];
+  sketch_settings__WEBPACK_IMPORTED_MODULE_2___default.a.setDocumentSettingForKey(document, settingFlowKey, data);
 };
 
 /***/ }),

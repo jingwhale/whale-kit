@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Button, Checkbox, Input, Drawer, Icon, Message, Spin} from 'antd';
+import { Button, Checkbox, Input, Drawer, Icon, Message, Spin } from 'antd';
 import styles from './index.css'
 
 const { TextArea } = Input;
@@ -8,13 +8,16 @@ export default class PageLayoutUI extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      iconName:"示例项目",
+      prefixString:"",
       symbolString:"",
       visible: false,
       checkboxVisible:true,
+      checkboxDisabled:false,
+      inputDisabled:false,
       symbolIcons:[],
       allData:[],
-      spinFlag:false
+      spinFlag:false,
+      prefixArr:[]
     };
 
   };
@@ -30,11 +33,26 @@ export default class PageLayoutUI extends PureComponent {
     window.postMessage('closed');
   };
 
+  getPrefixArr = value => {//
+    var prefixArr = [];
+    var prefixString = this.state.prefixString;
+    if(prefixString){
+      prefixString = prefixString.replace(/\s*/g,"");
+      prefixString=prefixString.replace(/；/ig,';');
+      prefixArr = prefixString.split(";");
+      if(prefixArr.length===0){
+        prefixArr.push(prefixString);
+      }
+    };
+    this.state.prefixArr = prefixArr;
+  };
+
   onMake = () => {//向sketch传输数据
     debugger
     this.setState({
       spinFlag:true
     });
+    this.state.prefixString = this.state.prefixString || "All Icons";
     var serializData1 = JSON.stringify(this.state);
     var serializData = JSON.parse(serializData1);
     window.postMessage('fromwebview', serializData);
@@ -47,27 +65,32 @@ export default class PageLayoutUI extends PureComponent {
   }
 
   inputChange = (e) =>{
+    debugger
     this.setState({
-      iconName: e.target.value
+      prefixString: e.target.value
     })
   }
 
   textAreaBtn = (e) =>{//处理symbolString数据
-    var myString = this.state.symbolString;
-    var startIndex=myString.indexOf('<svg>');
-    var endIndex=myString.indexOf('</svg>');
-    console.log(startIndex);
-    console.log(endIndex);
-    var symbolString = myString.substring(startIndex+5,endIndex);
-    //console.log(symbolString);
+    if(!this.state.symbolString){
+      Message.error('请粘贴iconfont.js！');
+    }else{
+      var myString = this.state.symbolString;
+      var startIndex=myString.indexOf('<svg>');
+      var endIndex=myString.indexOf('</svg>');
+      console.log(startIndex);
+      console.log(endIndex);
+      var symbolString = myString.substring(startIndex+5,endIndex);
+      //console.log(symbolString);
 
-    var symbols = symbolString.split("<symbol");
+      var symbols = symbolString.split("<symbol");
 
-    var symbolIcons = symbols.slice(1);
-   
-    this.state.symbolIcons = symbolIcons;
+      var symbolIcons = symbols.slice(1);
+    
+      this.state.symbolIcons = symbolIcons;
 
-    this.onMake();
+      this.onMake();
+    }
   }
 
   formatData = (symbolIcons) => {
@@ -101,26 +124,32 @@ export default class PageLayoutUI extends PureComponent {
     });
   };
 
-  onCheckboxChange = () => {
+  onCheckboxChange = (e) => {
     this.setState({
-      checkboxVisible: false,
+      checkboxVisible: e.target.checked,
     });
   };
 
 
   render() {
-    var  { symbolString, iconName, checkboxVisible, spinFlag } = this.state;
+    var  { symbolString, prefixString, checkboxVisible, spinFlag, checkboxDisabled, inputDisabled } = this.state;
     var that = this;
-
     window.someGlobalFunctionDefinedInTheWebview = function(data) {
+      var flag = data.symbolString ? true : false;
+
       that.setState({
-        allData: data
+        prefixString: data.prefixString,
+        symbolString: data.symbolString,
+        checkboxDisabled: flag,
+        inputDisabled: flag
       });
+
+      that.forceUpdate();
     };
 
     return (
       <div className={styles.body}>
-        <Spin className={styles.spin} tip="Icon Symbol制作中..." spinning={spinFlag}></Spin>
+        <Spin className={styles.spin} tip="Icon Symbol制作中..." spinning={spinFlag}>
         <div className={styles.header}>
           <div className={styles.title}>
             <span>iconfont图标symbol化平台</span>
@@ -131,8 +160,8 @@ export default class PageLayoutUI extends PureComponent {
         </div>
         <div className={styles.form}>
           <div className={styles.formItem}>
-            <span className={styles.formTile}>标题:</span>
-            <div className={styles.textArea}> <Input onChange={this.inputChange} value={iconName} /></div>
+            <span className={styles.formTile}>图标库的名称:</span>
+            <div className={styles.textArea}> <Input placeholder="图标库的名称；默认All Icons" onChange={this.inputChange} value={prefixString} disabled={inputDisabled}/></div>
           </div>
 
           <div className={styles.formItem}>
@@ -141,21 +170,11 @@ export default class PageLayoutUI extends PureComponent {
           </div>
           
           <div className={styles.button}>
-            <span className={styles.checkbox}><Checkbox onChange={this.onCheckboxChange} checked={checkboxVisible}>导出</Checkbox></span>
+            <span className={styles.checkbox}><Checkbox onChange={this.onCheckboxChange} checked={checkboxVisible} disabled={checkboxDisabled} >导出</Checkbox></span>
             <Button type="primary" onClick={this.textAreaBtn}>生成</Button>
             </div>
         </div>
-        <Drawer
-          title="保存的Icon项目"
-          placement="right"
-          closable={false}
-          onClose={this.onClose}
-          visible={this.state.visible}
-        >
-          <p>Icon项目1</p>
-          <p>Icon项目2</p>
-          <p>Icon项目3</p>
-        </Drawer>
+        </Spin>
       </div>
     );
   }

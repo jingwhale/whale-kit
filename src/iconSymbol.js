@@ -20,16 +20,21 @@ const selectedPage = document.selectedPage;
 
 var doc = sketch.getSelectedDocument();
 var selection = doc.selectedLayers;
+var prefixStringChange = false;
+var symbolStringChange = false;
+var settingData = {};
 
 const settingFlowKey = "settingFlowKey";
-const lineCount = 22;
+const iconSize = 16;
 const iconDist = 32;
-const iconWidth = 32;
 const horizontalGutter = 100;
 const verticalGutter = 30;
 var checkboxVisible = true;
+var prefixArr = [];
+
 
 var symbolsPage = "";
+var iconsPage = "";
 
 const doIconSymbol = (symbolstring,name,i) =>{//doIconSymbol
     var newArtboard = new Artboard({
@@ -43,47 +48,122 @@ const doIconSymbol = (symbolstring,name,i) =>{//doIconSymbol
     })
 
     var group = sketch.createLayerFromData(symbolstring, 'svg');
-    group.name = name.toString();
+    group.name = name;
     group.frame.x= (newArtboard.frame.width-group.frame.width)/2
     group.frame.y= (newArtboard.frame.height-group.frame.height)/2
     group.parent = newArtboard;
 
-    if(checkboxVisible){
-        group.exportFormats = ['png'];
-    }
-    
     var master = SymbolMaster.fromArtboard(newArtboard)
 
-    master.parent = symbolsPage;
+    master.parent = iconsPage;
+    
+    doSize(master,i,name);
 };
 
 const checkIcon = (name) => {
     var icons = symbolsPage.layers || [];
     for(var i=0;i<icons.length;i++){
-      if(icons[i].name === name){
+      if(icons[i].layers[0].name === name){
         return true
       }
     }
     return false
 };
 
+const doSize = (master,i,name) => {
+    var prefixName = getPrefix(name);
+    var newArtboard = new Artboard({
+        name: prefixName ? (prefixName+"/"+name):name,
+        frame:{
+            x:i*(iconSize+iconDist),
+            y:0,
+            width:iconSize,
+            height:iconSize
+        }
+    })
+    
+    var instance = master.createNewInstance()
+    instance.frame = {
+        x:0,
+        y:0,
+        width:16,
+        height:16
+    }
+    
+    instance.parent = newArtboard;
+    newArtboard.parent = symbolsPage
+
+    var group = instance.detach({
+        recursively: true
+    })
+    group.name = name;
+
+    if(checkboxVisible){
+        group.exportFormats = ['png'];
+    }
+
+    var newMaster = SymbolMaster.fromArtboard(newArtboard)
+        
+    newMaster.parent = symbolsPage;
+
+    var artboard = master.toArtboard();
+    artboard.name = name;
+};
+
+const getPrefix = (name) => {
+    var prefixName = "";
+
+    if(prefixArr && prefixArr.length>0){
+        for(var i=0;i<prefixArr.length;i++){
+            if(name.indexOf(prefixArr[i])===0){
+                return prefixArr[i]
+            }
+        }
+        prefixName = "";
+    }else{
+        var nameArr = name.split("-");
+        if(nameArr.length>1){
+            prefixName = nameArr[0];
+        }
+    }
+
+    return prefixName
+};
+
 const insertIcon = (symbolIcons) => {
-    for(var i=0;i<symbolIcons.length;i++){
-      var symbolstring = symbolIcons[i];
-      var flagIndex = symbolstring.indexOf('<path');
+    if(!settingData.iconsPageId){
+        iconsPage = new Page({
+            parent: document,
+            name: settingData.prefixString || 'All Icons'
+        })
+        settingData.iconsPageId = iconsPage.id;
+    }
 
-      var need1 = symbolstring.substring(1,flagIndex);
-      var need2 = symbolstring.substring(flagIndex);
+    symbolsPage = Page.getSymbolsPage(document) || "";
+    if(!symbolsPage){
+        symbolsPage = Page.createSymbolsPage()
+        symbolsPage.parent = document
+    }
+    
+    if(symbolStringChange){
+        for(var i=0;i<symbolIcons.length;i++){
+            var symbolstring = symbolIcons[i];
+            var flagIndex = symbolstring.indexOf('<path');
 
-      var need1json = need1.split(" ");
-      var name = need1json[0].split("=")[1];
-      var pureName = name.split('"')[1];
+            var need1 = symbolstring.substring(1,flagIndex);
+            var need2 = symbolstring.substring(flagIndex);
 
-      console.log(pureName)
-      var item = '<symbol> id="'+name+'" viewBox='+'"0 0 1024 1024">'+need2;
-      if(!checkIcon(pureName)){
-        doIconSymbol(item,pureName,i);
-      }
+            var need1json = need1.split(" ");
+            var name = need1json[0].split("=")[1];
+            var pureName = name.split('"')[1];
+
+            console.log(pureName)
+            var item = '<symbol> id="'+name+'" viewBox='+'"0 0 1024 1024">'+need2;
+
+            if(!checkIcon(pureName)){
+                doIconSymbol(item,pureName,i);
+            }
+        }
     }
 };
 
@@ -92,15 +172,20 @@ const arrangeArtboards = (context) =>{//重排Artboards
     DrawArtboardsRows(artboardList,0,0,horizontalGutter,verticalGutter);
 };
 
-export default function onRun(context) {
-    symbolsPage = Page.getSymbolsPage(document) || "";
-    if(!symbolsPage){
-        symbolsPage = Page.createSymbolsPage()
-        symbolsPage.parent = document
+const changeIconsPageName = () =>{
+    var pages = document.pages;
+    for(var i=0;i<pages.length;i++){
+        if(settingData.iconsPageId===pages[i].id){
+            pages[i].name = settingData.prefixString
+            return;
+        }
     }
+};
+
+export default function onRun(context) {
+    settingData = Settings.documentSettingForKey(document, settingFlowKey) || {};
 
     openPannel(context);
-
 }
 
 function openPannel(context) {//打开Webview
@@ -143,9 +228,19 @@ function openPannel(context) {//打开Webview
     //监听webview的事件：webview->plugin
     contents.on('fromwebview', function(data) {
         checkboxVisible = data.checkboxVisible;
+        prefixArr = data.prefixArr;
+
+        if(data.prefixString!=settingData.prefixString){
+            prefixStringChange = true;
+        }
+
+        if(data.symbolString!=settingData.symbolString){
+            symbolStringChange = true;
+        }
+
         insertIcon(data.symbolIcons);
         symbolsPage.selected = true;
-        //saveSerializData(data);
+        saveSerializData(data);
         arrangeArtboards(context);
         closeWin();
     });
@@ -161,8 +256,6 @@ function openPannel(context) {//打开Webview
 
 //向Webview传送allData数据
 const setSaveIconProject = (contents) => {
-    var settingData = Settings.documentSettingForKey(document, settingFlowKey) || [];
-
     var allData= JSON.stringify(settingData);
 
     contents
@@ -175,15 +268,9 @@ const setSaveIconProject = (contents) => {
 
 //save data
 const saveSerializData = (data) => {
-    var settingData = Settings.documentSettingForKey(document, settingFlowKey) || [];
-    var item = {
-        name:data.name,
-        symbolIcons: data.symbolIcons
-    };
+    //var settingData = Settings.documentSettingForKey(document, settingFlowKey) || [];
 
-    settingData.push(item);
-
-    Settings.setDocumentSettingForKey(document, settingFlowKey, settingData);
+    Settings.setDocumentSettingForKey(document, settingFlowKey, data);
 };
 
 
