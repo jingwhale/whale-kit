@@ -95,13 +95,6 @@
       "handler" : "onRun"
     },
     {
-      "name": "Interact Logic",
-      "shortcut": "ctrl shift option i",
-      "identifier": "sketch-webview-kit.my-command15",
-      "script": "makeInteractLogic.js",
-      "handler" : "onRun"
-    },
-    {
       "name": "Generate Writing Format",
       "shortcut": "ctrl shift option w",
       "identifier": "sketch-webview-kit.my-command14",
@@ -211,19 +204,11 @@
       "script": "./arrows/utilities/links.js",
       "icon": "icon.png",
       "handler": "getLibrary"
-    },
-    {
-      "name": "IconFont Symbol",
-      "shortcut": "ctrl shift option y",
-      "identifier": "sketch-webview-kit.my-command16",
-      "script": "iconSymbol.js",
-      "handler" : "onRun"
     }
   ],
   "menu": {
     "title": "Whale Kit",
     "items": [
-      "sketch-webview-kit.my-command15",
       {
         "title": "Create or Recreate Connection",
         "items": [
@@ -243,7 +228,6 @@
       "-",
       "sketch-webview-kit.my-command10",
       "sketch-webview-kit.my-command14",
-      "sketch-webview-kit.my-command16",
       "-",
       {
         "title": "Prototype Tool",
