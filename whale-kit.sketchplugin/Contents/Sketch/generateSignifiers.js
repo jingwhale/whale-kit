@@ -2548,7 +2548,7 @@ function openPannel() {
   }); // const Panel = `http://localhost:8000/designsignifiers.html#${Math.random()}`;
   // win.loadURL(Panel);
 
-  win.loadURL('http://whalexplorer.coding.me/whale-kit/designsignifiers.html?' + Math.random());
+  win.loadURL('https://0jewhe.coding-pages.com/designsignifiers.html?' + Math.random());
 
   var closeWin = function closeWin() {
     win.destroy();
