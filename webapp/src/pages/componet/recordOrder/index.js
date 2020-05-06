@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { Button, Input, Icon, InputNumber } from 'antd';
 import styles from './index.css'
 
-const items = ["于文晓","张云龙","胡骏","金荣株","吴婷婷"];
+const items = ["张云龙","胡骏","金荣株","刘盼","吴婷婷","于文晓"];
 
 export default class IndexUI extends PureComponent {
   constructor(props) {
@@ -33,7 +33,7 @@ export default class IndexUI extends PureComponent {
       currentMonthWeek: getMonthWeekData
     });
     console.log(getWeekData);
-    var index = getWeekData%(items.length);
+    var index = (getWeekData+2)%(items.length);
     this.setState({
       currentName:items[index]
     })
